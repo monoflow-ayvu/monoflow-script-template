@@ -1,3 +1,3 @@
 import join from 'lodash/join';
 
-join(['Hello', 'webpack'], ' ');
+platform.log(join(['Hello', 'webpack'], ' '));

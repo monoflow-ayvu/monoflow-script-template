@@ -2,11 +2,27 @@
   "compilerOptions": {
     "outDir": "./dist/",
     "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "skipLibCheck": true,
     "sourceMap": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es5",
+    "target": "es2016",
     "allowJs": true,
+    // "lib": [
+    //   "ES5"
+    // ],
     "moduleResolution": "node",
-  }
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
+    "types": [
+      "firebase"
+    ]
+  },
+  "exclude": [
+    "./node_modules/@types/node",
+    "./node_modules/@fermuch/telematree"
+  ]
 }
