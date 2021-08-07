@@ -14,10 +14,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/telematree@2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-2.8.0.tgz#fe7a8a2bab9a9e3ea6b058bc94d9c3101428f2c0"
-  integrity sha512-3p724BYZcZJeQ+S+sxaoLZDg/1+s96vPIbcrtq+jv5n22ov1qxF0CqQl7MfuZh4Xp069PVVcSZpm4nYmdnS1HQ==
+"@fermuch/telematree@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-2.9.0.tgz#055602c7460155621c79d99d1e434b7b2142906f"
+  integrity sha512-hH9ZA8dl0BcJiqs60BLHQCSpyQrhOJfp9K+WDPLSKqS5hlYiS/prB665Os6wznmJki6UFL9A2CFyKy/RvA2Wwg==
   dependencies:
     eval5 "^1.4.6"
     lodash "^4.17.21"

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "license": "EULA",
   "private": true,
-  "sideEffects": false,
+  "scripts": {
+    "build": "webpack --mode production"
+  },
   "devDependencies": {
     "@types/firebase": "^3.2.1",
     "@types/lodash": "^4.14.172",
@@ -15,7 +17,7 @@
     "webpack-cli": "^4.7.2"
   },
   "dependencies": {
-    "@fermuch/telematree": "2.8.0",
+    "@fermuch/telematree": "2.9.0",
     "cross-fetch": "^3.1.4",
     "firebase": "^8.9.0",
     "mobx": "^6.3.2",

@@ -1,3 +1,5 @@
 import join from 'lodash/join';
 
-platform.log(join(['Hello', 'webpack'], ' '));
+when.onEvent = (evt) => {
+  platform.log(join(['Hello', 'webpack'], ' '));
+}
