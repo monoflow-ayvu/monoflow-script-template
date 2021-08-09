@@ -1,6 +1,6 @@
 import TypedEmitter from "typed-emitter"
 import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/src/tree/dynamic_data';
-import * as events from '@fermuch/telematree/src/events';
+import events from '@fermuch/telematree/src/events';
 import telematree from '@fermuch/telematree/src/library';
 
 
@@ -13,10 +13,10 @@ type v4 = v4Buffer & v4String;
 // ** Globals **
 declare global { 
   const platform: KnowPlatformTools;
-  const events: events;
+  // const events: events;
   const telematree: telematree;
   const data: DataProperty;
-  const globals: DynamicData['globals'];
+  const global: DynamicData['globals'];
   const messages: TypedEmitter<EventArgs>;
   const uuid: v4;
 

@@ -1,10 +1,4 @@
-import _ from 'lodash';
-import {GPSSensorEvent, BaseEvent, AccelerometerSensorEvent, GenericEvent} from '@fermuch/telematree/src/events'
-
-
-
-
-when.onInit = function() {
+function onInit() {
   platform.log('onInit');
 
 // acelerometro
@@ -38,18 +32,18 @@ when.onInit = function() {
   }
 }
 
-when.onLogin = (l: string) => {
+function onLogin(l: string) {
   data.PIKIN_TARGET_REL1 = false;
 }
 
-when.onLogout = () => {
+function onLogout() {
   data.PIKIN_TARGET_REL1 = true;
 }
 
-// function onSubmit(subm: string, task: string, form: string): void {}
-// function onPageChange(newPage: string): void {}
+function onSubmit(subm: string, task: string, form: string): void {}
+function onPageChange(newPage: string): void {}
 
-when.onEvent = (evt: BaseEvent) => {
+function onEvent(evt: BaseEvent) {
   if (evt.kind === 'sensor-gps') {
     onGPS(evt as GPSSensorEvent);
   } else if (evt.kind === 'sensor-accelerometer') {
@@ -111,7 +105,7 @@ function detectCollision(evt: AccelerometerSensorEvent) {
             position: 'top',
         });
     }
-    global.project?.logout();
+    globals.project?.logout();
   }
 
   // next read needs to use next position
@@ -128,12 +122,10 @@ const currentGPS = {
   speeds: [] as number[],
 }
 function onGPS(evt: GPSSensorEvent) {
-  const event = new GenericEvent('custom-gps', {
-    ...evt.getData(),
-    speeds: currentGPS.speeds || [],
-  }, {
+  const event: typeof events.GenericEvent = new events.GenericEvent('custom-gps', evt.getData(), {
       deviceId: data.DEVICE_ID,
-      login: global.currentLogin?.key || false,
+      login: globals.currentLogin || false,
+      speeds: currentGPS.speeds || [],
   });
 
   const lastGps = currentGPS;
@@ -147,7 +139,7 @@ function onGPS(evt: GPSSensorEvent) {
   currentGPS.speeds.push(currentGPS.speed)
 
   if ((now - lastGps.ts) > (1000 * 60)) {
-    global.project?.saveEvent(event);
+    globals.project?.saveEvent(event);
     currentGPS.speeds = [];
     platform.log('guardado evento de gps');
   } else {
@@ -164,7 +156,7 @@ function updateWidgets() {
     gpsLastUpdate: 'XVDcXkTbC3or9w6Q6wpb'
   }
 
-  global.project?.widgetsManager.widgets.forEach((w) => {
+  globals.project?.widgetsManager.widgets.forEach((w) => {
     if (w.$modelId === widgetIds.gpsSpeed) {
       w._setRaw({
         value: String(currentGPS.speed.toFixed(2)),
@@ -225,14 +217,14 @@ function onPikinEvent(evt: GenericEvent<any>) {
     if (state !== IOActivityRegistry[io].state) {
       IOActivityRegistry[io].totalSeconds = (now - IOActivityRegistry[io].since) / 1000;
       // state change! send to server
-      const newEvent = new GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
+      const newEvent = new events.GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
         deviceId: data.DEVICE_ID,
-        login: global.currentLogin?.key || false,
+        login: global.currentLogin || false,
       });
 
-      global.project?.saveEvent(newEvent);
+      globals.project?.saveEvent(newEvent);
       
-      const col = global.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
+      const col = globals.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
       if (col) {
         const key = data.DEVICE_ID + '_' + io;
         const oldValue = Number(col.store[key] || 0);
