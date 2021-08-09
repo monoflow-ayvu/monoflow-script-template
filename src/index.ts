@@ -1,5 +1,6 @@
-import join from 'lodash/join';
+import _ from 'lodash';
 
 when.onEvent = (_evt) => {
-  platform.log(join(['Hello', 'webpack'], ' '));
+  const name = _.get(globals, 'currentLogin.prettyName', 'default');
+  platform.log(_.join(['Hello', 'webpack', name], ' '));
 }

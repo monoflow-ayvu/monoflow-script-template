@@ -1,4 +1,5 @@
-import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs } from '@fermuch/telematree/src/tree/dynamic_data';
+import TypedEmitter from "typed-emitter"
+import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/src/tree/dynamic_data';
 import * as events from '@fermuch/telematree/src/events';
 import telematree from '@fermuch/telematree/src/library';
 
@@ -16,6 +17,7 @@ declare global {
   const telematree: telematree;
   const data: DataProperty;
   const globals: DynamicData['globals'];
+  const messages: TypedEmitter<EventArgs>;
   const uuid: v4;
 
   let when: FNArgs;
