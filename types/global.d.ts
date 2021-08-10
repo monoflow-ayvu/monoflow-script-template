@@ -10,15 +10,27 @@ type v4String = (options?: V4Options) => string;
 type v4Buffer = <T extends OutputBuffer>(options: V4Options | null | undefined, buffer: T, offset?: number) => T;
 type v4 = v4Buffer & v4String;
 
+interface ScriptGlobal {
+  platform: KnowPlatformTools;
+  telematree: telematree;
+  data: DataProperty;
+  env: DynamicData['env'];
+  messages: TypedEmitter<EventArgs>;
+  uuid: v4;
+  when: FNArgs;
+}
+
 // ** Globals **
-declare global { 
+declare global {
+  const global: ScriptGlobal;
+
   const platform: KnowPlatformTools;
-  // const events: events;
   const telematree: telematree;
   const data: DataProperty;
-  const global: DynamicData['globals'];
+  const env: DynamicData['env'];
   const messages: TypedEmitter<EventArgs>;
   const uuid: v4;
-
-  let when: FNArgs;
+  const when: FNArgs;
 }
+
+interface globalThis extends ScriptGlobal { }

@@ -1,21 +1,24 @@
 import _ from 'lodash';
-import {GPSSensorEvent, BaseEvent, AccelerometerSensorEvent, GenericEvent} from '@fermuch/telematree/src/events'
+import { GPSSensorEvent, BaseEvent, AccelerometerSensorEvent, GenericEvent } from '@fermuch/telematree/src/events'
 
-
-
-
-when.onInit = function() {
-  platform.log('onInit');
+when.onInit = () => {
+  platform.log('before event');
+  const initEvt = new GenericEvent('boot', { deviceId: data.DEVICE_ID }, {a: 1});
+  platform.log('event json: ', initEvt.toJSON());
+  platform.log('before save event', Object.keys(global));
+  env.project?.saveEvent(initEvt);
+  platform.log('after save event');
 
 // acelerometro
   data.accelerometer_requested = true;
   data.accelerometer_frequency = 20;
 
-// restaurar bloqueo/desbloqueo
-  global.setData('PIKIN_TARGET_REL1', global.isLoggedIn ? false : true);
-  
 // bluetooth
   data.BLE_TARGET = '40:f5:20:b6:8b:22';
+
+// restaurar bloqueo/desbloqueo
+  data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
+  // env.setData('PIKIN_TARGET_REL1', env.isLoggedIn ? false : true);
 
 // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
@@ -32,6 +35,7 @@ when.onInit = function() {
   // let i = 0;
   // const logTimer = setInterval(() => platform.log(++i), 5000);
 
+  platform.log('ended init');
   return () => {
     // clearInterval(logTimer);
     clearInterval(widgetsTimer);
@@ -111,13 +115,12 @@ function detectCollision(evt: AccelerometerSensorEvent) {
             position: 'top',
         });
     }
-    global.project?.logout();
+    env.project?.logout();
   }
 
   // next read needs to use next position
   collisionCurrentIndex = (collisionCurrentIndex + 1) % MAX_COLLISION_SAMPLES;
 }
-
 
 const currentGPS = {
   ts: 0,
@@ -127,31 +130,32 @@ const currentGPS = {
   speed: 0,
   speeds: [] as number[],
 }
-function onGPS(evt: GPSSensorEvent) {
+const onGPS = (evt: GPSSensorEvent) => {
   const event = new GenericEvent('custom-gps', {
     ...evt.getData(),
     speeds: currentGPS.speeds || [],
   }, {
       deviceId: data.DEVICE_ID,
-      login: global.currentLogin?.key || false,
+      login: env.currentLogin?.key || false,
   });
 
   const lastGps = currentGPS;
   const now = Number(new Date());
 
   currentGPS.realTS = now;
-  currentGPS.ts = now;
   currentGPS.lat = evt.latitude;
   currentGPS.lng = evt.longitude;
   currentGPS.speed = evt.speed !== -1 ? (evt.speed * 3.6) : lastGps.speed;
   currentGPS.speeds.push(currentGPS.speed)
 
   if ((now - lastGps.ts) > (1000 * 60)) {
-    global.project?.saveEvent(event);
+    env.project?.saveEvent(event);
+    currentGPS.ts = now;
     currentGPS.speeds = [];
     platform.log('guardado evento de gps');
   } else {
-    platform.log('omitido evento de gps por ser muy cercano en tiempo al anterior');
+    const diff = (now - lastGps.ts) / 1000;
+    platform.log(`omitido por diferencia de tiempo: ${diff}`);
   }
 }
 
@@ -164,7 +168,7 @@ function updateWidgets() {
     gpsLastUpdate: 'XVDcXkTbC3or9w6Q6wpb'
   }
 
-  global.project?.widgetsManager.widgets.forEach((w) => {
+  env.project?.widgetsManager.widgets.forEach((w) => {
     if (w.$modelId === widgetIds.gpsSpeed) {
       w._setRaw({
         value: String(currentGPS.speed.toFixed(2)),
@@ -227,12 +231,12 @@ function onPikinEvent(evt: GenericEvent<any>) {
       // state change! send to server
       const newEvent = new GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
         deviceId: data.DEVICE_ID,
-        login: global.currentLogin?.key || false,
+        login: env.currentLogin?.key || false,
       });
 
-      global.project?.saveEvent(newEvent);
+      env.project?.saveEvent(newEvent);
       
-      const col = global.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
+      const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
       if (col) {
         const key = data.DEVICE_ID + '_' + io;
         const oldValue = Number(col.store[key] || 0);
