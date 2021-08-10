@@ -3,9 +3,8 @@ const fs = require('fs');
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require('brotli-webpack-plugin');
 
-const projectRoot = path.resolve(path.dirname(require.main.filename));
-const entryFile = path.resolve(projectRoot, 'src/index.ts');
-const distDir = path.resolve(projectRoot, 'dist');
+const entryFile = path.resolve(__dirname, 'src/index.ts');
+const distDir = path.resolve(__dirname, 'dist');
 
 if (!fs.existsSync(entryFile)) {
   console.error('entry file not found: ', entryFile);
