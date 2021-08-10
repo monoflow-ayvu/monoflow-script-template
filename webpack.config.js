@@ -1,6 +1,20 @@
 const path = require('path');
+const fs = require('fs');
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require('brotli-webpack-plugin');
+
+const projectRoot = path.resolve(path.dirname(require.main.filename));
+const entryFile = path.resolve(projectRoot, 'src/index.ts');
+const distDir = path.resolve(projectRoot, 'dist');
+
+if (!fs.existsSync(entryFile)) {
+  console.error('entry file not found: ', entryFile);
+  process.exit(1);
+}
+
+if (!fs.existsSync(distDir)) {
+  fs.mkdirSync(distDir);
+}
 
 var babelOptions = {
   presets: [
@@ -20,7 +34,7 @@ var babelOptions = {
 };
 
 module.exports = {
-  entry: './src/index.ts',
+  entry: entryFile,
   target: ['es5'],
   // devtool: 'inline-source-map',
   module: {
@@ -48,7 +62,7 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: distDir,
     chunkFormat: 'commonjs',
   },
   optimization: {
