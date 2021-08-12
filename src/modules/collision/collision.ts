@@ -6,7 +6,7 @@ interface CollisionItem {
 }
 
 class CollisionEvent extends BaseEvent {
-  kind: 'collision';
+  kind = 'collision';
   userId: string;
   collisionLog: CollisionItem[] = [];
 

@@ -5,6 +5,19 @@ import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
+class StartAppEvent extends BaseEvent {
+  kind = 'start-app';
+  getData() {
+    const keys = Object.keys(data).filter((k) => k.startsWith('DEVICE_'))
+    const deviceData = {}
+    keys.forEach((k) => {
+      const val = data[k]
+      deviceData[k] = val
+    });
+    return deviceData || {}
+  }
+}
+
 when.onInit = () => {  
   // bluetooth
   data.BLE_TARGET = '40:f5:20:b6:8b:22';
@@ -19,11 +32,13 @@ when.onInit = () => {
   gpsInstaller();
   hourmeterInstaller();
 
+  const startEvt = 
+
   platform.log('ended init');
 }
 
 class SessionEvent extends BaseEvent {
-  kind: 'session';
+  kind = 'session';
   type: 'start' | 'end';
   userId: string;
 
@@ -55,7 +70,7 @@ when.onLogout = (l: string) => {
 
 
 class FormSubmittedEvent extends BaseEvent {
-  kind: 'form-submit';
+  kind = 'form-submit';
   type: 'start' | 'end';
   formId?: string;
   taskId?: string;
