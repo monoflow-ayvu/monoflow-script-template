@@ -1,136 +1,90 @@
 import _ from 'lodash';
-import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
+import { BaseEvent } from '@fermuch/telematree/src/events'
 
 import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
+import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
 when.onInit = () => {  
   // bluetooth
   data.BLE_TARGET = '40:f5:20:b6:8b:22';
 
-  // restaurar bloqueo/desbloqueo
-  data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
-  // env.setData('PIKIN_TARGET_REL1', env.isLoggedIn ? false : true);
-
   // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
 
+  // restaurar bloqueo/desbloqueo
+  data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
+
   collisionInstaller();
   gpsInstaller();
-
-  // const widgetsTimer = setInterval(updateWidgets, 300);
-  // let i = 0;
-  // const logTimer = setInterval(() => platform.log(++i), 5000);
+  hourmeterInstaller();
 
   platform.log('ended init');
-  return () => {
-    // clearInterval(logTimer);
-    // clearInterval(widgetsTimer);
+}
+
+class SessionEvent extends BaseEvent {
+  kind: 'session';
+  type: 'start' | 'end';
+  userId: string;
+
+  constructor(type: 'start' | 'end', userId: string) {
+    super();
+
+    this.type = type;
+    this.userId = userId;
+  }
+
+  getData() {
+    return {
+      deviceId: data.DEVICE_ID || '',
+      type: this.type,
+      userId: this.userId,
+    }
   }
 }
 
 when.onLogin = (l: string) => {
   data.PIKIN_TARGET_REL1 = false;
+  env.project?.saveEvent(new SessionEvent('start', l));
 }
 
-when.onLogout = () => {
+when.onLogout = (l: string) => {
   data.PIKIN_TARGET_REL1 = true;
+  env.project?.saveEvent(new SessionEvent('end', l));
 }
 
-// function onSubmit(subm: string, task: string, form: string): void {}
-// function onPageChange(newPage: string): void {}
 
-when.onEvent = (evt: BaseEvent) => {
-  if (evt.kind === 'generic' && (evt as GenericEvent<any>).type === 'pikin-event') {
-    onPikinEvent(evt as GenericEvent<any>);
-  } else {
-    // platform.log('unknown event: ', evt.kind, evt.getData());
+class FormSubmittedEvent extends BaseEvent {
+  kind: 'form-submit';
+  type: 'start' | 'end';
+  formId?: string;
+  taskId?: string;
+  submitId?: string;
+
+  constructor(type: 'start' | 'end', submitId?: string, formId?: string, taskId?: string) {
+    super();
+
+    this.type = type;
+    this.formId = formId;
+    this.taskId = taskId;
+    this.submitId = submitId;
   }
-}
 
-// function updateWidgets() {
-//   const widgetIds = {
-//     gpsSpeed: 'OvsTaR5jiLafjR7OM7jh',
-//     gpsLastUpdate: 'XVDcXkTbC3or9w6Q6wpb'
-//   }
-
-//   env.project?.widgetsManager.widgets.forEach((w) => {
-//     if (w.$modelId === widgetIds.gpsSpeed) {
-//       w._setRaw({
-//         value: String(currentGPS.speed.toFixed(2)),
-//         fill: (currentGPS.speed / 60)
-//       })
-//     }
-
-//     if (w.$modelId === widgetIds.gpsLastUpdate) {
-//       const now = Number(new Date());
-//       const diff = Math.round((now - currentGPS.realTS) / 1000);
-//       let fill = diff / 10;
-//       // platform.log('diff: ', fill);
-
-//       w._setRaw({
-//         value: String(diff),
-//         fill: fill,
-//       });
-//     }
-//   });
-// }
-
-/**
- * Horimetros
- */
-interface IOChange {
-  method: "Event.IO.Change";
-  params: {
-    counter: number,
-    durationMs: number,
-    finalState: boolean,
-    io: string
-  }
-}
-interface IOActivity {
-  io: string;
-  state: boolean;
-  since: number;
-  totalSeconds?: number;
-}
-
-const IOActivityRegistry: {[io: string]: IOActivity} = {};
-const HourmeterCol = 'jb7Ris9sN9PWkCLRDdZx';
-
-function onPikinEvent(evt: GenericEvent<any>) {
-  if (evt.payload?.method === 'Event.IO.Change') {
-    const e = evt as GenericEvent<IOChange>;
-    const io = e.payload.params.io;
-    const state = e.payload.params.finalState;
-    const now = Number(new Date());
-    if (typeof IOActivityRegistry[io] === 'undefined') {
-      IOActivityRegistry[io] = {
-        io: io,
-        state: state,
-        since: now,
-      }
-    }
-
-    if (state !== IOActivityRegistry[io].state) {
-      IOActivityRegistry[io].totalSeconds = (now - IOActivityRegistry[io].since) / 1000;
-      // state change! send to server
-      const newEvent = new GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
-        deviceId: data.DEVICE_ID,
-        login: env.currentLogin?.key || false,
-      });
-
-      env.project?.saveEvent(newEvent);
-      
-      const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
-      if (col) {
-        const key = data.DEVICE_ID + '_' + io;
-        const oldValue = Number(col.store[key] || 0);
-        col.set(key, oldValue + IOActivityRegistry[io].totalSeconds);
-      }
-
-      platform.log("stored IO event");
-      delete IOActivityRegistry[io];
+  getData() {
+    return {
+      deviceId: data.DEVICE_ID || '',
+      userId: env.currentLogin?.key || '',
+      submitId: this.submitId,
+      taskId: this.taskId,
+      formId: this.formId,
     }
   }
+}
+
+when.onShowSubmit = (taskId, formId) => {
+  env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
+}
+
+when.onSubmit = (submit, taskId, formId) => {
+  env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
 }

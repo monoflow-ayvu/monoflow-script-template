@@ -29,6 +29,7 @@ const currentGPS = {
   speed: 0,
   speeds: [] as number[],
 }
+
 const onGPS = (evt: GPSSensorEvent) => {
   const event = new GenericEvent('custom-gps', {
     ...evt.getData(),
@@ -56,4 +57,32 @@ const onGPS = (evt: GPSSensorEvent) => {
     const diff = (now - lastGps.ts) / 1000;
     log(`omitido por diferencia de tiempo: ${diff}`);
   }
+
+  updateWidgets()
+}
+
+function updateWidgets() {
+  const widgetIds = {
+    gpsSpeed: 'OvsTaR5jiLafjR7OM7jh',
+    gpsLastUpdate: 'XVDcXkTbC3or9w6Q6wpb'
+  }
+
+  env.project?.widgetsManager.widgets.forEach((w) => {
+    if (w.$modelId === widgetIds.gpsSpeed) {
+      w._setRaw({
+        value: String(currentGPS.speed.toFixed(2)),
+        fill: (currentGPS.speed / 60)
+      })
+    }
+
+    if (w.$modelId === widgetIds.gpsLastUpdate) {
+      const now = Number(new Date());
+      const diff = Math.round((now - currentGPS.realTS) / 1000);
+      let fill = diff / 10;
+      w._setRaw({
+        value: String(diff),
+        fill: fill,
+      });
+    }
+  });
 }

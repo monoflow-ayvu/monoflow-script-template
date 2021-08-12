@@ -1,4 +1,27 @@
-import { AccelerometerSensorEvent } from '@fermuch/telematree/src/events'
+import { AccelerometerSensorEvent, BaseEvent } from '@fermuch/telematree/src/events'
+
+interface CollisionItem {
+  magnitude: number;
+  timestamp: number;
+}
+
+class CollisionEvent extends BaseEvent {
+  kind: 'collision';
+  userId: string;
+  collisionLog: CollisionItem[] = [];
+
+  constructor(collisionLog: CollisionItem[]) {
+    super();
+
+    this.collisionLog = collisionLog;
+  }
+
+  getData() {
+    return {
+      deviceId: data.DEVICE_ID || '',
+    }
+  }
+}
 
 function log(...args: unknown[]) {
   platform.log('[COLLISION]', ...args);
@@ -16,11 +39,6 @@ export default function install() {
   });
 }
 
-interface CollisionItem {
-  magnitude: number;
-  timestamp: number;
-}
-
 const MAX_COLLISION_SAMPLES = 50;
 const COLLISION_VISIBLE_TIME_RANGE_MS = 500; // ms
 // const COLLISION_MAGNITUDE_THRESHOLD = 25;
@@ -34,7 +52,6 @@ function detectCollision(evt: AccelerometerSensorEvent) {
   const now = Number(new Date());
   collisionBuffer[collisionCurrentIndex].timestamp = now;
   collisionBuffer[collisionCurrentIndex].magnitude = Math.sqrt(Math.pow(x,2) + Math.pow(y,2) + Math.pow(z, 2));
-  // log({buf: collisionBuffer[collisionCurrentIndex], index: collisionCurrentIndex});
 
   // process all events
   let numOverThreshold = 0;
@@ -64,6 +81,8 @@ function detectCollision(evt: AccelerometerSensorEvent) {
             position: 'top',
         });
     }
+    const evt = new CollisionEvent(collisionBuffer);
+    env.project?.saveEvent(evt);
     env.project?.logout();
   }
 
