@@ -8,17 +8,24 @@ interface CollisionItem {
 class CollisionEvent extends BaseEvent {
   kind = 'collision';
   userId: string;
+  magnitude: number;
+  percentOverThreshold: number;
   collisionLog: CollisionItem[] = [];
 
-  constructor(collisionLog: CollisionItem[]) {
+  constructor(magnitude: number, percentOverThreshold: number, collisionLog: CollisionItem[]) {
     super();
 
+    this.magnitude = magnitude;
     this.collisionLog = collisionLog;
+    this.percentOverThreshold = percentOverThreshold;
   }
 
   getData() {
     return {
       deviceId: data.DEVICE_ID || '',
+      magnitude: this.magnitude,
+      percentOverThreshold: this.percentOverThreshold,
+      log: this.collisionLog.sort((a, b) => a.timestamp - b.timestamp),
     }
   }
 }
@@ -44,7 +51,9 @@ const COLLISION_VISIBLE_TIME_RANGE_MS = 500; // ms
 // const COLLISION_MAGNITUDE_THRESHOLD = 25;
 const COLLISION_MAGNITUDE_THRESHOLD = 1.5;
 const COLLISION_PERCENT_OVER_THRESHOLD_FOR_SHAKE = 66;
-const collisionBuffer: CollisionItem[] = Array.from(Array(MAX_COLLISION_SAMPLES)).map(() => ({magnitude: 0, timestamp: 0}));
+const COLLISION_MIN_TIME_BETWEEN_EVENTS = 1000 * 5; // ms
+const collisionBuffer: CollisionItem[] = Array.from(Array(MAX_COLLISION_SAMPLES)).map(() => ({ magnitude: 0, timestamp: 0 }));
+let lastEventAt = 0;
 let collisionCurrentIndex = 0;
 
 function detectCollision(evt: AccelerometerSensorEvent) {
@@ -66,7 +75,11 @@ function detectCollision(evt: AccelerometerSensorEvent) {
     }
   }
 
-  if ((numOverThreshold) / total > (COLLISION_PERCENT_OVER_THRESHOLD_FOR_SHAKE / 100.0)) {
+  if (
+    ((numOverThreshold) / total > (COLLISION_PERCENT_OVER_THRESHOLD_FOR_SHAKE / 100.0))
+    && ((now - lastEventAt) >= COLLISION_MIN_TIME_BETWEEN_EVENTS)
+  ) {
+    lastEventAt = now;
     log('shake!', collisionBuffer[collisionCurrentIndex].magnitude);
     if (platform.notify && typeof platform.notify === 'function') {
         platform.notify({
@@ -81,7 +94,10 @@ function detectCollision(evt: AccelerometerSensorEvent) {
             position: 'top',
         });
     }
-    const evt = new CollisionEvent(collisionBuffer);
+
+    const overThresh = (numOverThreshold) / total
+    const currentMag = collisionBuffer[collisionCurrentIndex].magnitude
+    const evt = new CollisionEvent(currentMag, overThresh, collisionBuffer);
     env.project?.saveEvent(evt);
     env.project?.logout();
   }
