@@ -25,7 +25,23 @@ function log(...args: unknown[]) {
 }
 
 export default function install() {
+  messages.on('onLogin', onSessionStart);
+  messages.on('onLogout', onSessionEnd);
   messages.on('onEvent', onEvent);
+}
+
+let sessionStarted = 0;
+function onSessionStart() {
+  sessionStarted = Date.now();
+}
+function onSessionEnd(sessionKey: string) {
+  const totalSeconds = (Date.now() - sessionStarted) / 1000;
+  const key = sessionKey + '_session';
+  const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
+  const oldValue = Number(col.store[key] || 0);
+  col.set(key, oldValue + totalSeconds);
+  platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
+  sessionStarted = 0;
 }
 
 function onEvent(evt: BaseEvent) {

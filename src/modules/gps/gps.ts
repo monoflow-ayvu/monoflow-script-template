@@ -55,7 +55,7 @@ const onGPS = (evt: GPSSensorEvent) => {
     log('guardado evento de gps');
   } else {
     const diff = (now - lastGps.ts) / 1000;
-    log(`omitido por diferencia de tiempo: ${diff}`);
+    // log(`omitido por diferencia de tiempo: ${diff}`);
   }
 
   updateWidgets()
