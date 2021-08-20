@@ -1,9 +1,9 @@
 import _ from 'lodash';
 // import { BaseEvent } from '@fermuch/telematree'
 
-// import collisionInstaller from './modules/collision/collision';
-// import gpsInstaller from './modules/gps/gps';
-// import hourmeterInstaller from './modules/hourmeters/hourmeters';
+import collisionInstaller from './modules/collision/collision';
+import gpsInstaller from './modules/gps/gps';
+import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
 import vamosScriptInstaller from './vamos_logic';
 
@@ -17,9 +17,9 @@ when.onInit = () => {
   // restaurar bloqueo/desbloqueo
   data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
 
-  // collisionInstaller();
-  // gpsInstaller();
-  // hourmeterInstaller();
+  collisionInstaller();
+  gpsInstaller();
+  hourmeterInstaller();
 
   // custom
   platform.log('installing vamos script');

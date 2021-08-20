@@ -1,4 +1,4 @@
-import { BaseEvent, GenericEvent } from '@fermuch/telematree'
+import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
 
 interface IOChange {
   method: "Event.IO.Change";

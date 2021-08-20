@@ -1,4 +1,4 @@
-import { AccelerometerSensorEvent, BaseEvent } from '@fermuch/telematree'
+import { AccelerometerSensorEvent, BaseEvent } from '@fermuch/telematree/src/events'
 
 interface CollisionItem {
   magnitude: number;
