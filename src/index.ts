@@ -8,9 +8,6 @@ import hourmeterInstaller from './modules/hourmeters/hourmeters';
 import vamosScriptInstaller from './vamos_logic';
 
 when.onInit = () => {  
-  // bluetooth
-  data.BLE_TARGET = '40:f5:20:b6:8b:22';
-
   // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
 
