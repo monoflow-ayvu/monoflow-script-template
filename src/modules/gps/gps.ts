@@ -1,4 +1,4 @@
-import { GPSSensorEvent, GenericEvent } from '@fermuch/telematree/src/events'
+import { GPSSensorEvent, GenericEvent } from '@fermuch/telematree'
 
 function log(...args: unknown[]) {
   platform.log('[GPS]', ...args);
