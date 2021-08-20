@@ -1,12 +1,10 @@
-import { collectionHasValue, ensureCollectionExists, setCollectionValue } from "./utils/collection";
-
 export default function install() {
   // check "Frota" collection
-  ensureCollectionExists('frota', 'Frota');
+  const frotaCol = env.project?.collectionsManager.ensureExists("frota");
 
   // ensure our "Frota" collection has our object
-  if (!collectionHasValue('frota', data.DEVICE_ID)) {
-    setCollectionValue('frota', data.DEVICE_ID, {
+  if (!frotaCol.has(data.DEVICE_ID)) {
+    frotaCol.set(data.DEVICE_ID, {
       id: data.DEVICE_ID || '',
     });
   }

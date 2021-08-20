@@ -22,6 +22,7 @@ when.onInit = () => {
   // hourmeterInstaller();
 
   // custom
+  platform.log('installing vamos script');
   vamosScriptInstaller();
 
   platform.log('ended init');
