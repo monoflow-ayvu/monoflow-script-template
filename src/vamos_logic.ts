@@ -5,7 +5,6 @@
 interface FrotaCollection {
   [deviceId: string]: {
     id: string;
-    foo: number;
   };
 }
 
@@ -30,7 +29,6 @@ export default function install() {
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
   if (!frotaCol.has(deviceId)) {
     frotaCol.set(`${deviceId}.id`, deviceId);
-    // frotaCol.set(`${deviceId}.foo`, deviceId);
   }
 
   // check "BLE" collection
