@@ -10,7 +10,8 @@
     "target": "ES5",
     "allowJs": true,
     "lib": [
-      "es2016"
+      "es2016",
+      "DOM"
     ],
     "moduleResolution": "node",
     "typeRoots": [

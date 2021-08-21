@@ -12,7 +12,7 @@ when.onInit = () => {
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
 
   // restaurar bloqueo/desbloqueo
-  data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
+  // data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
 
   collisionInstaller();
   gpsInstaller();
@@ -23,6 +23,14 @@ when.onInit = () => {
   vamosScriptInstaller();
 
   platform.log('ended init');
+
+  // let lastValue = false;
+  // const int = setInterval(() => {
+  //   lastValue = !lastValue;
+  //   platform.log(`cambiando relay a: ${String(lastValue)}`);
+  //   env.setData('PIKIN_TARGET_REL1', lastValue);
+  // }, 5000)
+  // return () => clearInterval(int);
 }
 
 // class SessionEvent extends BaseEvent {
