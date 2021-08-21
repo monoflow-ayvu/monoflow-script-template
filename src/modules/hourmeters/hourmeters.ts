@@ -36,11 +36,12 @@ function onSessionStart() {
 }
 function onSessionEnd(sessionKey: string) {
   const totalSeconds = (Date.now() - sessionStarted) / 1000;
-  const key = sessionKey + '_session';
-  const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
-  const oldValue = Number(col.store[key] || 0);
-  col.set(key, oldValue + totalSeconds);
-  platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
+  // env.project?.collectionsManager.ensureExists
+  // const key = sessionKey + '_session';
+  // const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
+  // const oldValue = Number(col.store[key] || 0);
+  // col.set(key, oldValue + totalSeconds);
+  // platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
   sessionStarted = 0;
 }
 
@@ -75,12 +76,12 @@ function onPikinEvent(evt: GenericEvent<any>) {
       env.project?.saveEvent(newEvent);
       log("stored IO event");
       
-      const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
-      if (col) {
-        const key = data.DEVICE_ID + '_' + io;
-        const oldValue = Number(col.store[key] || 0);
-        col.set(key, oldValue + IOActivityRegistry[io].totalSeconds);
-      }
+      // const col = env.project?.collectionsManager.collections.find((c) => c.$modelId === HourmeterCol);
+      // if (col) {
+      //   const key = data.DEVICE_ID + '_' + io;
+      //   const oldValue = Number(col.store[key] || 0);
+      //   col.set(key, oldValue + IOActivityRegistry[io].totalSeconds);
+      // }
 
       log("updated IO collection");
       delete IOActivityRegistry[io];
