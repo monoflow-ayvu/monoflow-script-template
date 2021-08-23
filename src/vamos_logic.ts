@@ -1,5 +1,5 @@
-import { BaseEvent, BatterySensorEvent, BlurEvent } from "@fermuch/telematree/src/events";
-const SCRIPT_VER = '0.13';
+import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
+const SCRIPT_VER = '0.14';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -53,6 +53,25 @@ export default function install() {
   messages.on('onEvent', onEventHandler);
 }
 
+class CustomEventExtended extends BaseEvent {
+  kind = "extended";
+  base: BaseEvent;
+
+  constructor(base: BaseEvent) {
+    super();
+    this.base = base;
+  }
+
+  getData() {
+    return {
+      deviceId: data.DEVICE_ID || '',
+      currentLogin: env.currentLogin?.key || '',
+      event: this.base.toJSON(),
+    }
+  }
+  
+}
+
 let lastEventAt = 0;
 function onEventHandler(evt: BaseEvent): void {
   // platform.log('recibido evento: ', evt);
@@ -71,7 +90,7 @@ function onEventHandler(evt: BaseEvent): void {
     const ev = evt as BatterySensorEvent;
     frotaCol.set(`${deviceId}.batteryLevel`, ev.level);
     frotaCol.set(`${deviceId}.batteryIsLow`, ev.isLowPower);
-    env.project?.saveEvent(ev);
+    env.project?.saveEvent(new CustomEventExtended(ev));
   }
 
   if (Date.now() - lastEventAt >= (1000 * 60)) {
