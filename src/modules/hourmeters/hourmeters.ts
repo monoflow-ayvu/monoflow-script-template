@@ -17,6 +17,13 @@ interface IOActivity {
   totalSeconds?: number;
 }
 
+interface HourmetersCollection {
+  [deviceOrSessionId: string]: {
+    session: number;
+  }
+}
+
+
 const IOActivityRegistry: {[io: string]: IOActivity} = {};
 
 function log(...args: unknown[]) {
@@ -33,10 +40,13 @@ let sessionStarted = 0;
 function onSessionStart() {
   sessionStarted = Date.now();
 }
-function onSessionEnd(sessionKey: string) {
+function onSessionEnd(sessionKeyRaw: string) {
+  // NOTE: we modify sessionKey because it might be a numeric string, and
+  // firebase interprets that as an array key.
+  const sessionKey = `_${sessionKeyRaw}`
   const totalSeconds = (Date.now() - sessionStarted) / 1000;
-  const col = env.project?.collectionsManager.ensureExists('hourmeters', 'Horímetros');
-  col.bump(sessionKey + '_session', totalSeconds);
+  const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
+  col.bump(`${sessionKey}.session`, totalSeconds);
   platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
   sessionStarted = 0;
 }
