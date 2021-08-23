@@ -5,7 +5,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
-import vamosScriptInstaller from './vamos_logic';
+import vamosScriptInstaller, { FrotaCollection } from './vamos_logic';
 
 when.onInit = () => {  
   // teclado
@@ -60,11 +60,21 @@ class SessionEvent extends BaseEvent {
 when.onLogin = (l: string) => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
+  
+  const deviceId = data.DEVICE_ID || '';
+  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
+  frotaCol.set(`${deviceId}.currentLogin`, l);
+  // (platform.save as (key: string, data: string) => void)('lastSession', JSON.stringify({}))
 }
 
 when.onLogout = (l: string) => {
   data.PIKIN_TARGET_REL1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
+
+  const deviceId = data.DEVICE_ID || '';
+  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
+  frotaCol.set(`${deviceId}.currentLogin`, '');
+  frotaCol.set(`${deviceId}.lastLogin`, l);
 }
 
 class FormSubmittedEvent extends BaseEvent {
