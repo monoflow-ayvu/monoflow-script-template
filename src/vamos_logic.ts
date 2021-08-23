@@ -1,5 +1,5 @@
 import { BaseEvent, BatterySensorEvent, BlurEvent } from "@fermuch/telematree/src/events";
-const SCRIPT_VER = '0.5';
+const SCRIPT_VER = '0.8';
 
 interface FrotaCollection {
   [deviceId: string]: {
@@ -11,6 +11,7 @@ interface FrotaCollection {
     // lastEventAt: number;
     // lastEventKind: string;
     appVer: string;
+    startedCorrectly: boolean;
   };
 }
 
@@ -38,6 +39,7 @@ export default function install() {
   }
   frotaCol.set(`${deviceId}.scriptVer`, SCRIPT_VER);
   frotaCol.set(`${deviceId}.appVer`, data.APP_VERSION || 'unknown');
+  frotaCol.set(`${deviceId}.startedCorrectly`, false);
 
   // check "BLE" collection
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
@@ -56,6 +58,9 @@ export default function install() {
 
   // subscribe to events
   messages.on('onEvent', onEventHandler);
+
+  // notify we reached this place
+  frotaCol.set(`${deviceId}.startedCorrectly`, true);
 }
 
 function onEventHandler(evt: BaseEvent): void {

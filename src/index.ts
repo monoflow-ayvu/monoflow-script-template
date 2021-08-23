@@ -14,6 +14,9 @@ when.onInit = () => {
   // restaurar bloqueo/desbloqueo
   // data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
 
+  // forzar modo dark
+  data.SET_DARK_MODE = true;
+
   // collisionInstaller();
   gpsInstaller();
   hourmeterInstaller();
