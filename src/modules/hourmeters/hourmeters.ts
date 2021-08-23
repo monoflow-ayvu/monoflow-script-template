@@ -82,8 +82,11 @@ function onPikinEvent(evt: GenericEvent<any>) {
       env.project?.saveEvent(newEvent);
       log("stored IO event");
 
-      const col = env.project?.collectionsManager.ensureExists('hourmeters', 'Horímetros');
-      col.bump(data.DEVICE_ID + '_' + io, IOActivityRegistry[io].totalSeconds);
+      const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
+      col.bump(`${data.DEVICE_ID}.${io}`, IOActivityRegistry[io].totalSeconds);
+      if (env.currentLogin?.key) {
+        col.bump(`${data.DEVICE_ID}._${env.currentLogin?.key}`, IOActivityRegistry[io].totalSeconds);
+      }
 
       log("updated IO collection");
       delete IOActivityRegistry[io];
