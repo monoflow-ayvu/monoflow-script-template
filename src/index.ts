@@ -16,9 +16,11 @@ when.onInit = () => {
 
   // forzar modo dark
   data.SET_DARK_MODE = true;
+  data.ACCELEROMETER_REQUESTED = false;
+  data.GPS_REQUESTED = false;
 
   // collisionInstaller();
-  gpsInstaller();
+  // gpsInstaller();
   hourmeterInstaller();
 
   // custom

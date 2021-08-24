@@ -1,3 +1,4 @@
+import { Collection } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 const SCRIPT_VER = '0.14';
 
@@ -83,7 +84,11 @@ function onEventHandler(evt: BaseEvent): void {
   // env.project?.saveEvent(evt);
 
   const deviceId = data.DEVICE_ID || '';
-  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
+  const frotaCol = env.project?.collectionsManager.collections.find((c) => c.$modelId === 'frota') as Collection<FrotaCollection> | undefined;
+  if (!frotaCol) {
+    platform.log('error: no hay colección frota!');
+    return
+  }
   // frotaCol.set(`${deviceId}.lastEventAt`, Date.now());
   // frotaCol.set(`${deviceId}.lastEventKind`, evt.kind);
 
