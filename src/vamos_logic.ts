@@ -1,5 +1,6 @@
 import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
+import { myID } from "./utils";
 const SCRIPT_VER = '0.20';
 
 export interface FrotaCollection {
@@ -46,7 +47,6 @@ export function setIfNotEqual<T extends StoreObjectI, P extends string>(
 }
 
 export default function install() {
-  const deviceId = data.DEVICE_ID || '';
   const appVer = Number(data.APP_BUILD_VERSION || '0');
   if (appVer < 112) {
     platform.log('omitiendo ejecutar script por tener versión de app incompatible. Versión actual: ', appVer);
@@ -55,20 +55,20 @@ export default function install() {
 
   // check "Frota" collection
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  setIfNotEqual(frotaCol, `${deviceId}.id`, deviceId);
-  setIfNotEqual(frotaCol, `${deviceId}.scriptVer`, SCRIPT_VER);
-  setIfNotEqual(frotaCol, `${deviceId}.appVer`, data.APP_VERSION || 'unknown');
+  setIfNotEqual(frotaCol, `${myID()}.id`, myID());
+  setIfNotEqual(frotaCol, `${myID()}.scriptVer`, SCRIPT_VER);
+  setIfNotEqual(frotaCol, `${myID()}.appVer`, data.APP_VERSION || 'unknown');
 
   // check "BLE" collection
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-  setIfNotEqual(bleCol, `${deviceId}.id`, deviceId);
-  const foundBle = bleCol.typedStore[deviceId].target || '';
-  platform.log('ble data: ', bleCol.typedStore[deviceId]);
+  setIfNotEqual(bleCol, `${myID()}.id`, myID());
+  const foundBle = bleCol.typedStore[myID()].target || '';
+  platform.log('ble data: ', bleCol.typedStore[myID()]);
   env.setData('BLE_TARGET', foundBle);
 
   const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
   if (currentStoredBleTarget !== data.BLE_TARGET && data.BLE_TARGET) {
-    setIfNotEqual(frotaCol, `${deviceId}.bleTarget`, data.BLE_TARGET);
+    setIfNotEqual(frotaCol, `${myID()}.bleTarget`, data.BLE_TARGET);
   }
 
   // // check "metrics" collection
@@ -91,7 +91,7 @@ class CustomEventExtended extends BaseEvent {
 
   getData() {
     return {
-      deviceId: data.DEVICE_ID || '',
+      deviceId: myID(),
       currentLogin: env.currentLogin?.key || '',
       event: this.base.toJSON(),
     }
@@ -104,7 +104,6 @@ function onEventHandler(evt: BaseEvent): void {
   // platform.log('recibido evento: ', evt);
   // env.project?.saveEvent(evt);
 
-  const deviceId = data.DEVICE_ID || '';
   const frotaCol = env.project?.collectionsManager.collections.find((c) => c.$modelId === 'frota') as Collection<FrotaCollection> | undefined;
   if (!frotaCol) {
     platform.log('error: no hay colección frota!');
@@ -114,18 +113,18 @@ function onEventHandler(evt: BaseEvent): void {
   // setIfNotEqual(frotaCol, `${deviceId}.lastEventKind`, evt.kind);
 
   if (evt.kind === 'blur') {
-    setIfNotEqual(frotaCol, `${deviceId}.focused`, false);
+    setIfNotEqual(frotaCol, `${myID()}.focused`, false);
   } else if (evt.kind === 'focus') {
-    setIfNotEqual(frotaCol, `${deviceId}.focused`, true);
+    setIfNotEqual(frotaCol, `${myID()}.focused`, true);
   } else if (evt.kind === 'sensor-battery') {
     const ev = evt as BatterySensorEvent;
-    setIfNotEqual(frotaCol, `${deviceId}.batteryLevel`, ev.level);
-    setIfNotEqual(frotaCol, `${deviceId}.batteryIsLow`, ev.isLowPower);
+    setIfNotEqual(frotaCol, `${myID()}.batteryLevel`, ev.level);
+    setIfNotEqual(frotaCol, `${myID()}.batteryIsLow`, ev.isLowPower);
     env.project?.saveEvent(new CustomEventExtended(ev));
   }
 
   if (Date.now() - lastEventAt >= (1000 * 60)) {
     lastEventAt = Date.now();
-    setIfNotEqual(frotaCol, `${deviceId}.lastEventAt`, lastEventAt / 1000);
+    setIfNotEqual(frotaCol, `${myID()}.lastEventAt`, lastEventAt / 1000);
   }
 }

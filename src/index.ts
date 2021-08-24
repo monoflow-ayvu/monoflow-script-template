@@ -6,6 +6,7 @@ import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
 import vamosScriptInstaller, { FrotaCollection } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
+import { myID } from "./utils";
 
 when.onInit = () => {  
   // teclado
@@ -29,11 +30,10 @@ when.onInit = () => {
 
   platform.log('creating watcher for BLE status');
   const int = setInterval(() => {
-    const deviceId = data.DEVICE_ID || '';
     const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
     const currentStoredStatus = frotaCol.store['BLE_CONNECTED'];
     if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
-      frotaCol.set(`${deviceId}.bleConnected`, Boolean(data.BLE_CONNECTED));
+      frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
     }
   }, 5000);
 
@@ -64,7 +64,7 @@ class SessionEvent extends BaseEvent {
 
   getData() {
     return {
-      deviceId: data.DEVICE_ID || '',
+      deviceId: myID(),
       type: this.type,
       userId: this.userId,
     }
@@ -75,9 +75,8 @@ when.onLogin = (l: string) => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
   
-  const deviceId = data.DEVICE_ID || '';
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  frotaCol.set(`${deviceId}.currentLogin`, l);
+  frotaCol.set(`${myID()}.currentLogin`, l);
   // (platform.save as (key: string, data: string) => void)('lastSession', JSON.stringify({}))
 }
 
@@ -85,10 +84,9 @@ when.onLogout = (l: string) => {
   data.PIKIN_TARGET_REL1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
 
-  const deviceId = data.DEVICE_ID || '';
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  frotaCol.set(`${deviceId}.currentLogin`, '');
-  frotaCol.set(`${deviceId}.lastLogin`, l);
+  frotaCol.set(`${myID()}.currentLogin`, '');
+  frotaCol.set(`${myID()}.lastLogin`, l);
 }
 
 class FormSubmittedEvent extends BaseEvent {
@@ -109,7 +107,7 @@ class FormSubmittedEvent extends BaseEvent {
 
   getData() {
     return {
-      deviceId: data.DEVICE_ID || '',
+      deviceId: myID(),
       userId: env.currentLogin?.key || '',
       submitId: this.submitId,
       taskId: this.taskId,
@@ -127,7 +125,6 @@ when.onSubmit = (submit, taskId, formId) => {
   
   const action = submit.data?.action;
   if (typeof action !== 'undefined') {
-    const deviceId = data.DEVICE_ID || '';
     const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
 
     switch (action) {
@@ -136,8 +133,8 @@ when.onSubmit = (submit, taskId, formId) => {
           if (key === 'action' || key === 'submit') return;
           const val = (submit.data as Record<string, StoreBasicValueT>)[key];
           if (typeof val === 'undefined') return;
-          platform.log('set-profile: ', `${deviceId}.${key}`, `(${typeof val}) ${val}`);
-          profileCol.set(`${deviceId}.${key}`, val);
+          platform.log('set-profile: ', `${myID()}.${key}`, `(${typeof val}) ${val}`);
+          profileCol.set(`${myID()}.${key}`, val);
         });
         platform.log('set-profile: sent!');
         break;

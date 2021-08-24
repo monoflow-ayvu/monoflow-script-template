@@ -1,4 +1,5 @@
 import { AccelerometerSensorEvent, BaseEvent } from '@fermuch/telematree/src/events'
+import { myID } from '../../utils';
 
 interface CollisionItem {
   magnitude: number;
@@ -22,7 +23,7 @@ class CollisionEvent extends BaseEvent {
 
   getData() {
     return {
-      deviceId: data.DEVICE_ID || '',
+      deviceId: myID(),
       magnitude: this.magnitude,
       percentOverThreshold: this.percentOverThreshold,
       log: this.collisionLog.sort((a, b) => a.timestamp - b.timestamp),

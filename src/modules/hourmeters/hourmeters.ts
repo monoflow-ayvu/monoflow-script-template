@@ -1,4 +1,5 @@
 import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
+import { myID } from '../../utils';
 
 interface IOChange {
   method: "Event.IO.Change";
@@ -75,7 +76,7 @@ function onPikinEvent(evt: GenericEvent<any>) {
       IOActivityRegistry[io].totalSeconds = (now - IOActivityRegistry[io].since) / 1000;
       // state change! send to server
       const newEvent = new GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
-        deviceId: data.DEVICE_ID,
+        deviceId: myID(),
         login: env.currentLogin?.key || false,
       });
 
@@ -83,9 +84,9 @@ function onPikinEvent(evt: GenericEvent<any>) {
       log("stored IO event");
 
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-      col.bump(`${data.DEVICE_ID}.${io}`, IOActivityRegistry[io].totalSeconds);
+      col.bump(`${myID()}.${io}`, IOActivityRegistry[io].totalSeconds);
       if (env.currentLogin?.key) {
-        col.bump(`${data.DEVICE_ID}._${env.currentLogin?.key}`, IOActivityRegistry[io].totalSeconds);
+        col.bump(`${myID()}._${env.currentLogin?.key}`, IOActivityRegistry[io].totalSeconds);
       }
 
       log("updated IO collection");
