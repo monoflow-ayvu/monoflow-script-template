@@ -1,6 +1,6 @@
-import { Collection } from "@fermuch/telematree";
+import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
-const SCRIPT_VER = '0.14';
+const SCRIPT_VER = '0.16';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -13,6 +13,8 @@ export interface FrotaCollection {
     currentLogin: string;
     lastLogin: string;
     lastEventAt: number;
+    bleConnected: boolean;
+    bleTarget: string;
   };
 }
 
@@ -30,6 +32,19 @@ interface MetricsCollection {
   }
 }
 
+declare type PathValue<T, K extends string> = K extends `${infer Root}.${infer Rest}` ? Root extends keyof T ? PathValue<T[Root], Rest> : never : (K extends keyof T ? T[K] : undefined);
+declare type ValidatedPath<T, K extends string> = PathValue<T, K> extends never ? never : K;
+export function setIfNotEqual<T extends StoreObjectI, P extends string>(
+  col: Collection<T>,
+  key: ValidatedPath<T, P>,
+  val?: PathValue<T, P>
+): void {
+  const currentlyStoredValue = col.store[key];
+  if (currentlyStoredValue !== val) {
+    col.set(key, val);
+  }
+}
+
 export default function install() {
   const deviceId = data.DEVICE_ID || '';
   const appVer = Number(data.APP_BUILD_VERSION || '0');
@@ -40,20 +55,26 @@ export default function install() {
 
   // check "Frota" collection
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  frotaCol.set(`${deviceId}.id`, deviceId);
-  frotaCol.set(`${deviceId}.scriptVer`, SCRIPT_VER);
-  frotaCol.set(`${deviceId}.appVer`, data.APP_VERSION || 'unknown');
+  setIfNotEqual(frotaCol, `${deviceId}.id`, deviceId);
+  setIfNotEqual(frotaCol, `${deviceId}.scriptVer`, SCRIPT_VER);
+  setIfNotEqual(frotaCol, `${deviceId}.appVer`, data.APP_VERSION || 'unknown');
 
   // check "BLE" collection
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-  bleCol.set(`${deviceId}.id`, deviceId);
+  setIfNotEqual(bleCol, `${deviceId}.id`, deviceId);
   const foundBle = bleCol.typedStore[deviceId].target || '';
-  data.BLE_TARGET = foundBle;
+  platform.log('ble data: ', bleCol.typedStore[deviceId]);
+  env.setData('BLE_TARGET', foundBle);
 
-  // check "metrics" collection
-  const metricsCol = env.project?.collectionsManager.ensureExists<MetricsCollection>('metrics');
-  metricsCol.set(`${deviceId}.id`, deviceId);
-  metricsCol.bump(`${deviceId}.bootTimes`, 1);
+  const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
+  if (currentStoredBleTarget !== data.BLE_TARGET && data.BLE_TARGET) {
+    setIfNotEqual(frotaCol, `${deviceId}.bleTarget`, data.BLE_TARGET);
+  }
+
+  // // check "metrics" collection
+  // const metricsCol = env.project?.collectionsManager.ensureExists<MetricsCollection>('metrics');
+  // metricsCol.set(`${deviceId}.id`, deviceId);
+  // metricsCol.bump(`${deviceId}.bootTimes`, 1);
 
   // subscribe to events
   messages.on('onEvent', onEventHandler);
@@ -89,22 +110,22 @@ function onEventHandler(evt: BaseEvent): void {
     platform.log('error: no hay colección frota!');
     return
   }
-  // frotaCol.set(`${deviceId}.lastEventAt`, Date.now());
-  // frotaCol.set(`${deviceId}.lastEventKind`, evt.kind);
+  // setIfNotEqual(frotaCol, `${deviceId}.lastEventAt`, Date.now());
+  // setIfNotEqual(frotaCol, `${deviceId}.lastEventKind`, evt.kind);
 
   if (evt.kind === 'blur') {
-    frotaCol.set(`${deviceId}.focused`, false);
+    setIfNotEqual(frotaCol, `${deviceId}.focused`, false);
   } else if (evt.kind === 'focus') {
-    frotaCol.set(`${deviceId}.focused`, true);
+    setIfNotEqual(frotaCol, `${deviceId}.focused`, true);
   } else if (evt.kind === 'sensor-battery') {
     const ev = evt as BatterySensorEvent;
-    frotaCol.set(`${deviceId}.batteryLevel`, ev.level);
-    frotaCol.set(`${deviceId}.batteryIsLow`, ev.isLowPower);
+    setIfNotEqual(frotaCol, `${deviceId}.batteryLevel`, ev.level);
+    setIfNotEqual(frotaCol, `${deviceId}.batteryIsLow`, ev.isLowPower);
     env.project?.saveEvent(new CustomEventExtended(ev));
   }
 
   if (Date.now() - lastEventAt >= (1000 * 60)) {
     lastEventAt = Date.now();
-    frotaCol.set(`${deviceId}.lastEventAt`, lastEventAt / 1000);
+    setIfNotEqual(frotaCol, `${deviceId}.lastEventAt`, lastEventAt / 1000);
   }
 }

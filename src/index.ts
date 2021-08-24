@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import _, { omit } from 'lodash';
 import { BaseEvent } from "@fermuch/telematree/src/events";
 
 // import collisionInstaller from './modules/collision/collision';
@@ -6,6 +6,7 @@ import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
 import vamosScriptInstaller, { FrotaCollection } from './vamos_logic';
+import { StoreBasicValueT } from '@fermuch/telematree';
 
 when.onInit = () => {  
   // teclado
@@ -27,7 +28,17 @@ when.onInit = () => {
   platform.log('installing vamos script');
   vamosScriptInstaller();
 
-  platform.log('ended init');
+  platform.log('creating watcher for BLE status');
+  const deviceId = data.DEVICE_ID || '';
+  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
+  const int = setInterval(() => {
+    const currentStoredStatus = frotaCol.store['BLE_CONNECTED'];
+    if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
+      frotaCol.set(`${deviceId}.bleConnected`, Boolean(data.BLE_CONNECTED));
+    }
+  }, 5000);
+
+  platform.log('ended onInit()');
 
   // let lastValue = false;
   // const int = setInterval(() => {
@@ -112,4 +123,17 @@ when.onShowSubmit = (taskId, formId) => {
 
 when.onSubmit = (submit, taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
+  
+  const action = submit.data?.action;
+  const deviceId = data.DEVICE_ID || '';
+  const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
+  if (typeof action !== 'undefined') {
+    switch (action) {
+      case 'set-profile':
+        const data = omit(submit.data as Record<string, StoreBasicValueT>, ['action', 'submit']);
+        profileCol.set(deviceId, data);
+        break;
+      default: break;
+    }
+  }
 }
