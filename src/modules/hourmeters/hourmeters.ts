@@ -27,10 +27,6 @@ interface HourmetersCollection {
 
 const IOActivityRegistry: {[io: string]: IOActivity} = {};
 
-function log(...args: unknown[]) {
-  log('[HOURMETER]', ...args);
-}
-
 export default function install() {
   messages.on('onLogin', onSessionStart);
   messages.on('onLogout', onSessionEnd);
@@ -79,18 +75,16 @@ function onPikinEvent(evt: GenericEvent<any>) {
         deviceId: myID(),
         login: env.currentLogin?.key || false,
       });
-
       env.project?.saveEvent(newEvent);
-      log("stored IO event");
 
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
       col.bump(`${myID()}.${io}`, IOActivityRegistry[io].totalSeconds);
       if (env.currentLogin?.key) {
-        col.bump(`${myID()}._${env.currentLogin?.key}`, IOActivityRegistry[io].totalSeconds);
+        col.bump(`login_${env.currentLogin?.key}.${io}`, IOActivityRegistry[io].totalSeconds);
       }
 
-      log("updated IO collection");
       delete IOActivityRegistry[io];
+      platform.log('done updating IO!');
     }
   }
 }
