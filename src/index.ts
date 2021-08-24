@@ -1,4 +1,3 @@
-import omit from 'lodash/omit';
 import { BaseEvent } from "@fermuch/telematree/src/events";
 
 // import collisionInstaller from './modules/collision/collision';
@@ -29,14 +28,16 @@ when.onInit = () => {
   vamosScriptInstaller();
 
   platform.log('creating watcher for BLE status');
-  const deviceId = data.DEVICE_ID || '';
-  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
   const int = setInterval(() => {
+    const deviceId = data.DEVICE_ID || '';
+    const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
     const currentStoredStatus = frotaCol.store['BLE_CONNECTED'];
     if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
       frotaCol.set(`${deviceId}.bleConnected`, Boolean(data.BLE_CONNECTED));
     }
   }, 5000);
+
+
 
   platform.log('ended onInit()');
 
@@ -46,7 +47,7 @@ when.onInit = () => {
   //   platform.log(`cambiando relay a: ${String(lastValue)}`);
   //   env.setData('PIKIN_TARGET_REL1', lastValue);
   // }, 5000)
-  // return () => clearInterval(int);
+  return () => clearInterval(int);
 }
 
 class SessionEvent extends BaseEvent {
@@ -125,13 +126,20 @@ when.onSubmit = (submit, taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
   
   const action = submit.data?.action;
-  const deviceId = data.DEVICE_ID || '';
-  const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
   if (typeof action !== 'undefined') {
+    const deviceId = data.DEVICE_ID || '';
+    const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
+
     switch (action) {
       case 'set-profile':
-        const data = omit(submit.data as Record<string, StoreBasicValueT>, ['action', 'submit']);
-        profileCol.set(deviceId, data);
+        Object.keys(submit.data as Record<string, StoreBasicValueT>).forEach((key) => {
+          if (key === 'action' || key === 'submit') return;
+          const val = (submit.data as Record<string, StoreBasicValueT>)[key];
+          if (typeof val === 'undefined') return;
+          platform.log('set-profile: ', `${deviceId}.${key}`, `(${typeof val}) ${val}`);
+          profileCol.set(`${deviceId}.${key}`, val);
+        });
+        platform.log('set-profile: sent!');
         break;
       default: break;
     }
