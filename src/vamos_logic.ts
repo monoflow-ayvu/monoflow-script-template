@@ -31,6 +31,11 @@ interface MetricsCollection {
 
 export default function install() {
   const deviceId = data.DEVICE_ID || '';
+  const appVer = Number(data.APP_BUILD_VERSION || '0');
+  if (appVer < 112) {
+    platform.log('omitiendo ejecutar script por tener versión de app incompatible. Versión actual: ', appVer);
+    return
+  }
 
   // check "Frota" collection
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
