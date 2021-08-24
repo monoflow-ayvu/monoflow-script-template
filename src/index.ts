@@ -4,7 +4,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
-import vamosScriptInstaller, { FrotaCollection } from './vamos_logic';
+import vamosScriptInstaller, { FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { myID } from "./utils";
 
@@ -34,6 +34,11 @@ when.onInit = () => {
     const currentStoredStatus = frotaCol.store['BLE_CONNECTED'];
     if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
       frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
+    }
+
+    const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
+    if (currentStoredBleTarget && currentStoredBleTarget !== data.BLE_TARGET) {
+      env.setData('BLE_TARGET', currentStoredBleTarget);
     }
   }, 5000);
 
