@@ -4,7 +4,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller from './modules/hourmeters/hourmeters';
 
-import vamosScriptInstaller, { FrotaCollection, setIfNotEqual } from './vamos_logic';
+import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { myID } from "./utils";
 
@@ -36,9 +36,11 @@ when.onInit = () => {
       frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
     }
 
-    const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
-    if (currentStoredBleTarget && currentStoredBleTarget !== data.BLE_TARGET) {
-      env.setData('BLE_TARGET', currentStoredBleTarget);
+    const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
+    const foundBle = bleCol.typedStore[myID()].target || '';
+    if (foundBle && foundBle != data.BLE_TARGET) {
+      env.setData('BLE_TARGET', foundBle);
+      platform.log('cambiado target de BLE a: ', foundBle);
     }
   }, 5000);
 

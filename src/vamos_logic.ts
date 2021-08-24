@@ -1,7 +1,7 @@
 import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { myID } from "./utils";
-const SCRIPT_VER = '0.22';
+const SCRIPT_VER = '0.23';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -19,7 +19,7 @@ export interface FrotaCollection {
   };
 }
 
-interface BleCollection {
+export interface BleCollection {
   [deviceId: string]: {
     id: string;
     target: string;
@@ -66,10 +66,10 @@ export default function install() {
   platform.log('ble data: ', bleCol.typedStore[myID()]);
   env.setData('BLE_TARGET', foundBle);
 
-  const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
-  if (currentStoredBleTarget !== data.BLE_TARGET && data.BLE_TARGET) {
-    setIfNotEqual(frotaCol, `${myID()}.bleTarget`, data.BLE_TARGET);
-  }
+  // const currentStoredBleTarget = frotaCol.store['BLE_TARGET'];
+  // if (currentStoredBleTarget !== data.BLE_TARGET && data.BLE_TARGET) {
+  //   setIfNotEqual(frotaCol, `${myID()}.bleTarget`, data.BLE_TARGET);
+  // }
 
   // // check "metrics" collection
   // const metricsCol = env.project?.collectionsManager.ensureExists<MetricsCollection>('metrics');
