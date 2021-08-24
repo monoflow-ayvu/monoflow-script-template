@@ -1,4 +1,4 @@
-import _, { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { BaseEvent } from "@fermuch/telematree/src/events";
 
 // import collisionInstaller from './modules/collision/collision';

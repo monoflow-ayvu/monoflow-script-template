@@ -1,6 +1,6 @@
 import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
-const SCRIPT_VER = '0.16';
+const SCRIPT_VER = '0.17';
 
 export interface FrotaCollection {
   [deviceId: string]: {
