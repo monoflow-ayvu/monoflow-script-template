@@ -100,6 +100,7 @@ class CustomEventExtended extends BaseEvent {
 }
 
 let lastEventAt = 0;
+let lastBatteryAt = 0;
 function onEventHandler(evt: BaseEvent): void {
   // platform.log('recibido evento: ', evt);
   // env.project?.saveEvent(evt);
@@ -117,13 +118,17 @@ function onEventHandler(evt: BaseEvent): void {
   } else if (evt.kind === 'focus') {
     setIfNotEqual(frotaCol, `${myID()}.focused`, true);
   } else if (evt.kind === 'sensor-battery') {
-    const ev = evt as BatterySensorEvent;
-    setIfNotEqual(frotaCol, `${myID()}.batteryLevel`, ev.level);
-    setIfNotEqual(frotaCol, `${myID()}.batteryIsLow`, ev.isLowPower);
-    env.project?.saveEvent(new CustomEventExtended(ev));
+    // once every 10 minutes
+    if ((Date.now() - lastBatteryAt) >= 1000 * 60 * 10) {
+      const ev = evt as BatterySensorEvent;
+      setIfNotEqual(frotaCol, `${myID()}.batteryLevel`, ev.level);
+      setIfNotEqual(frotaCol, `${myID()}.batteryIsLow`, ev.isLowPower);
+      env.project?.saveEvent(new CustomEventExtended(ev));
+      lastBatteryAt = Date.now();
+    }
   }
 
-  if (Date.now() - lastEventAt >= (1000 * 60)) {
+  if (Date.now() - lastEventAt >= (1000 * 60 * 5)) {
     lastEventAt = Date.now();
     setIfNotEqual(frotaCol, `${myID()}.lastEventAt`, lastEventAt / 1000);
   }
