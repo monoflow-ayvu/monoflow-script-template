@@ -1,3 +1,5 @@
 export function myID(): string {
-  return String(platform.id || '') || data.DEVICE_ID || '';
+  return 'id' in platform ?
+      String(platform.id)
+    : String(data.DEVICE_ID) || '';
 }

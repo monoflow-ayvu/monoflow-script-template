@@ -39,18 +39,21 @@ export default function install() {
   }
 
   // check "Frota" collection
+  platform.log('setting frota collection data');
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
   setIfNotEqual(frotaCol, `${myID()}.scriptVer`, SCRIPT_VER);
   setIfNotEqual(frotaCol, `${myID()}.appVer`, data.APP_VERSION || 'unknown');
 
   // check "BLE" collection
+  platform.log('setting ble collection data');
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
   setIfNotEqual(bleCol, `${myID()}.id`, myID());
-  const foundBle = bleCol.typedStore[myID()].target || '';
+  const foundBle = bleCol.typedStore[myID()]?.target || '';
   platform.log('ble data: ', bleCol.typedStore[myID()]);
   env.setData('BLE_TARGET', foundBle);
 
   // subscribe to events
+  platform.log('registering for onEvent');
   messages.on('onEvent', onEventHandler);
 }
 
