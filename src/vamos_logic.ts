@@ -1,21 +1,21 @@
 import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { myID } from "./utils";
-const SCRIPT_VER = '0.23';
+const SCRIPT_VER = '0.24';
 
 export interface FrotaCollection {
   [deviceId: string]: {
-    id: string;
+    // id: string;
     scriptVer: string;
-    focused: boolean;
+    // focused: boolean;
     batteryLevel: number;
     batteryIsLow: boolean;
     appVer: string;
-    currentLogin: string;
-    lastLogin: string;
+    // currentLogin: string;
+    // lastLogin: string;
     lastEventAt: number;
     bleConnected: boolean;
-    bleTarget: string;
+    // bleTarget: string;
   };
 }
 
@@ -55,7 +55,7 @@ export default function install() {
 
   // check "Frota" collection
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  setIfNotEqual(frotaCol, `${myID()}.id`, myID());
+  // setIfNotEqual(frotaCol, `${myID()}.id`, myID());
   setIfNotEqual(frotaCol, `${myID()}.scriptVer`, SCRIPT_VER);
   setIfNotEqual(frotaCol, `${myID()}.appVer`, data.APP_VERSION || 'unknown');
 
@@ -114,15 +114,15 @@ function onEventHandler(evt: BaseEvent): void {
   // setIfNotEqual(frotaCol, `${deviceId}.lastEventKind`, evt.kind);
 
   if (evt.kind === 'blur') {
-    setIfNotEqual(frotaCol, `${myID()}.focused`, false);
+    // setIfNotEqual(frotaCol, `${myID()}.focused`, false);
   } else if (evt.kind === 'focus') {
-    setIfNotEqual(frotaCol, `${myID()}.focused`, true);
+    // setIfNotEqual(frotaCol, `${myID()}.focused`, true);
   } else if (evt.kind === 'sensor-battery') {
     // once every 10 minutes
     if ((Date.now() - lastBatteryAt) >= 1000 * 60 * 10) {
       const ev = evt as BatterySensorEvent;
       setIfNotEqual(frotaCol, `${myID()}.batteryLevel`, ev.level);
-      setIfNotEqual(frotaCol, `${myID()}.batteryIsLow`, ev.isLowPower);
+      // setIfNotEqual(frotaCol, `${myID()}.batteryIsLow`, ev.isLowPower);
       env.project?.saveEvent(new CustomEventExtended(ev));
       lastBatteryAt = Date.now();
     }
