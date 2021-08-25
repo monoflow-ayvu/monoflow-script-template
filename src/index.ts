@@ -81,19 +81,11 @@ class SessionEvent extends BaseEvent {
 when.onLogin = (l: string) => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
-  
-  // const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  // frotaCol.set(`${myID()}.currentLogin`, l);
-  // // (platform.save as (key: string, data: string) => void)('lastSession', JSON.stringify({}))
 }
 
 when.onLogout = (l: string) => {
   data.PIKIN_TARGET_REL1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
-
-  // const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  // frotaCol.set(`${myID()}.currentLogin`, '');
-  // frotaCol.set(`${myID()}.lastLogin`, l);
 }
 
 class FormSubmittedEvent extends BaseEvent {
