@@ -29,22 +29,6 @@ when.onInit = () => {
   vamosScriptInstaller();
 
   platform.log('creating watcher for BLE status');
-  const int = setInterval(() => {
-    const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-    const currentStoredStatus = frotaCol.store['BLE_CONNECTED'];
-    if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
-      frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
-    }
-
-    const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-    const foundBle = bleCol.typedStore[myID()].target || '';
-    if (foundBle && foundBle != data.BLE_TARGET) {
-      env.setData('BLE_TARGET', foundBle);
-      platform.log('cambiado target de BLE a: ', foundBle);
-    }
-  }, 5000);
-
-
 
   platform.log('ended onInit()');
 
@@ -54,7 +38,7 @@ when.onInit = () => {
   //   platform.log(`cambiando relay a: ${String(lastValue)}`);
   //   env.setData('PIKIN_TARGET_REL1', lastValue);
   // }, 5000)
-  return () => clearInterval(int);
+  // return () => clearInterval(int);
 }
 
 class SessionEvent extends BaseEvent {
@@ -139,5 +123,22 @@ when.onSubmit = (submit, taskId, formId) => {
         break;
       default: break;
     }
+  }
+}
+
+// test
+when.onPeriodic = () => {
+  const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
+  const currentStoredStatus = frotaCol.typedStore[myID()]?.bleConnected;
+  if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
+    frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
+    platform.log('(en el background) conectado a BLE?', Boolean(data.BLE_CONNECTED));
+  }
+
+  const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
+  const foundBle = bleCol.typedStore[myID()]?.target || '';
+  if (foundBle && foundBle != data.BLE_TARGET) {
+    env.setData('BLE_TARGET', foundBle);
+    platform.log('cambiado target de BLE a: ', foundBle);
   }
 }
