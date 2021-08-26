@@ -67,8 +67,8 @@ function onPikinEvent(evt: GenericEvent<any>) {
 
     if (io === 'in1' && !state) {
       platform.log('in1 off, logging out');
-      del(SESSION_KEY);
       env.project?.logout();
+      del(SESSION_KEY);
       platform.log('logged out!');
     }
 
