@@ -54,6 +54,9 @@ function onEvent(evt: BaseEvent) {
   }
 }
 
+const SESSION_KEY = '__LAST_SESSION_ID';
+type DeleteFN = (key: string) => void;
+
 function onPikinEvent(evt: GenericEvent<any>) {
   if (evt.payload?.method === 'Event.IO.Change') {
     const e = evt as GenericEvent<IOChange>;
@@ -66,6 +69,15 @@ function onPikinEvent(evt: GenericEvent<any>) {
         state: state,
         since: now,
       }
+    }
+
+    if (io === 'in1' && !state) {
+      platform.log('in1 off, logging out');
+      if ('delete' in platform) {
+        const del = platform.delete as DeleteFN;
+        del(SESSION_KEY);
+      }
+      env.project?.logout();
     }
 
     if (state !== IOActivityRegistry[io].state) {
