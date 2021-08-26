@@ -1,5 +1,5 @@
 import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
-import { myID } from '../../utils';
+import { del, getString, myID, set } from '../../utils';
 
 interface IOChange {
   method: "Event.IO.Change";
@@ -18,14 +18,50 @@ interface IOActivity {
   totalSeconds?: number;
 }
 
-interface HourmetersCollection {
+export interface HourmetersCollection {
   [deviceOrSessionId: string]: {
-    session: number;
+    [session: string]: number;
   }
 }
 
+function activityId(io: string) {
+  return `__hourmeter.${myID()}.${io}`;
+}
 
-const IOActivityRegistry: {[io: string]: IOActivity} = {};
+function getOrSetActivity(io: string, state: boolean, since: number): IOActivity {
+  const key = activityId(io);
+  const storedAct = getString(key) || '';
+  if (storedAct) {
+    try {
+      if (!storedAct) {
+        throw new Error('no data stored');
+      }
+      const storedActJs = JSON.parse(storedAct);
+
+      if (
+        !storedActJs
+        || typeof storedActJs !== 'object'
+        || !storedActJs.io
+        || !storedActJs.since
+      ) {
+        throw new Error('Invalid stored activity');
+      }
+
+      return storedActJs as IOActivity;
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  const newAct: IOActivity = {
+    io: io,
+    state: state,
+    since: since,
+  };
+
+  set(key, JSON.stringify(newAct));
+  return newAct;
+}
 
 export default function install() {
   messages.on('onLogin', onSessionStart);
@@ -55,7 +91,6 @@ function onEvent(evt: BaseEvent) {
 }
 
 const SESSION_KEY = '__LAST_SESSION_ID';
-type DeleteFN = (key: string) => void;
 
 function onPikinEvent(evt: GenericEvent<any>) {
   if (evt.payload?.method === 'Event.IO.Change') {
@@ -63,40 +98,31 @@ function onPikinEvent(evt: GenericEvent<any>) {
     const io = e.payload.params.io;
     const state = e.payload.params.finalState;
     const now = Number(new Date());
-    if (typeof IOActivityRegistry[io] === 'undefined') {
-      IOActivityRegistry[io] = {
-        io: io,
-        state: state,
-        since: now,
-      }
-    }
 
-    if (io === 'in1' && !state) {
+    if (io === 'in1' && !state && env.currentLogin?.key) {
       platform.log('in1 off, logging out');
-      if ('delete' in platform) {
-        const del = platform.delete as DeleteFN;
-        del(SESSION_KEY);
-      }
+      del(SESSION_KEY);
       env.project?.logout();
     }
 
-    if (state !== IOActivityRegistry[io].state) {
-      IOActivityRegistry[io].totalSeconds = (now - IOActivityRegistry[io].since) / 1000;
+    const lastActivity = getOrSetActivity(io, state, now);
+    if (state !== lastActivity.state) {
+      lastActivity.totalSeconds = (now - lastActivity.since) / 1000;
       // state change! send to server
-      const newEvent = new GenericEvent<IOActivity>("io-activity", IOActivityRegistry[io], {
+      const newEvent = new GenericEvent<IOActivity>("io-activity", lastActivity, {
         deviceId: myID(),
         login: env.currentLogin?.key || false,
       });
       env.project?.saveEvent(newEvent);
 
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-      col.bump(`${myID()}.${io}`, IOActivityRegistry[io].totalSeconds);
+      col.bump(`${myID()}.${io}`, lastActivity.totalSeconds);
       if (env.currentLogin?.key) {
-        col.bump(`login_${env.currentLogin?.key}.${io}`, IOActivityRegistry[io].totalSeconds);
+        col.bump(`login_${env.currentLogin?.key}.${io}`, lastActivity.totalSeconds || 0);
       }
 
-      delete IOActivityRegistry[io];
-      platform.log('done updating IO!');
+      del(activityId(io));
+      platform.log(`done updating IO "${io}" added: ${lastActivity.totalSeconds} seconds!`);
     }
   }
 }

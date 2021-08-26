@@ -2,7 +2,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 
 // import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
-import hourmeterInstaller from './modules/hourmeters/hourmeters';
+import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/hourmeters';
 
 import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
@@ -115,9 +115,14 @@ when.onSubmit = (submit, taskId, formId) => {
         Object.keys(submit.data as Record<string, StoreBasicValueT>).forEach((key) => {
           if (key === 'action' || key === 'submit') return;
           const val = (submit.data as Record<string, StoreBasicValueT>)[key];
-          if (typeof val === 'undefined') return;
+          if (!val) return;
           platform.log('set-profile: ', `${myID()}.${key}`, `(${typeof val}) ${val}`);
           profileCol.set(`${myID()}.${key}`, val);
+
+          if (key === 'hourmeter') {
+            const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
+            col.set(`${myID()}.in1`, Number(val) * 3600);
+          }
         });
         platform.log('set-profile: sent!');
         break;
