@@ -99,10 +99,11 @@ function onPikinEvent(evt: GenericEvent<any>) {
     const state = e.payload.params.finalState;
     const now = Number(new Date());
 
-    if (io === 'in1' && !state && env.currentLogin?.key) {
+    if (io === 'in1' && !state) {
       platform.log('in1 off, logging out');
       del(SESSION_KEY);
       env.project?.logout();
+      platform.log('logged out!');
     }
 
     const lastActivity = getOrSetActivity(io, state, now);
