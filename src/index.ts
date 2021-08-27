@@ -21,7 +21,7 @@ when.onInit = () => {
   data.GPS_REQUESTED = false;
 
   // collisionInstaller();
-  // gpsInstaller();
+  gpsInstaller();
   hourmeterInstaller();
 
   // custom
@@ -31,14 +31,6 @@ when.onInit = () => {
   platform.log('creating watcher for BLE status');
 
   platform.log('ended onInit()');
-
-  // let lastValue = false;
-  // const int = setInterval(() => {
-  //   lastValue = !lastValue;
-  //   platform.log(`cambiando relay a: ${String(lastValue)}`);
-  //   env.setData('PIKIN_TARGET_REL1', lastValue);
-  // }, 5000)
-  // return () => clearInterval(int);
 }
 
 class SessionEvent extends BaseEvent {

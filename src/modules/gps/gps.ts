@@ -13,7 +13,7 @@ export default function install() {
   data.GPS_MAXIMUM_AGE = 1000 * 120;
   data.GPS_HIGH_ACCURACY = true;
   data.GPS_DISTANCE_FILTER = 0;
-  data.GPS_USE_SIGNIFICANT_CHANGES = false;
+  data.GPS_USE_SIGNIFICANT_CHANGES = true;
 
   messages.on('onEvent', (evt) => {
     if (evt.kind === 'sensor-gps') {
