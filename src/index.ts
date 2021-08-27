@@ -6,7 +6,7 @@ import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/h
 
 import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
-import { myID } from "./utils";
+import { getString, myID, set } from "./utils";
 
 when.onInit = () => {  
   // teclado
@@ -62,9 +62,17 @@ class SessionEvent extends BaseEvent {
   }
 }
 
-when.onLogin = (l: string) => {
+const LAST_LOGIN_KEY = 'LAST_LOGIN';
+when.onLogin = (l: string): any => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
+
+  if (getString(LAST_LOGIN_KEY) !== l) {
+    return
+  }
+
+  set(LAST_LOGIN_KEY, l);
+  return '32f094b2-fe35-483f-a45a-c137afee5424';
 }
 
 when.onLogout = (l: string) => {
