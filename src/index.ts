@@ -63,6 +63,7 @@ class SessionEvent extends BaseEvent {
 }
 
 const LAST_LOGIN_KEY = 'LAST_LOGIN';
+const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
 when.onLogin = (l: string): any => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
@@ -71,8 +72,7 @@ when.onLogin = (l: string): any => {
     return
   }
 
-  set(LAST_LOGIN_KEY, l);
-  return '32f094b2-fe35-483f-a45a-c137afee5424';
+  return CHECKLIST_FORM_ID;
 }
 
 when.onLogout = (l: string) => {
@@ -113,6 +113,10 @@ when.onShowSubmit = (taskId, formId) => {
 
 when.onSubmit = (submit, taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
+
+  if (formId === CHECKLIST_FORM_ID && env.currentLogin?.key) {
+    set(LAST_LOGIN_KEY, env.currentLogin.key);
+  }
   
   const action = submit.data?.action;
   if (typeof action !== 'undefined') {
