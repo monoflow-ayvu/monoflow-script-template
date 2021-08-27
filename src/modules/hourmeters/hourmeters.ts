@@ -70,6 +70,8 @@ function onPikinEvent(evt: GenericEvent<any>) {
       env.project?.logout();
       del(SESSION_KEY);
       platform.log('logged out!');
+    } else if (io === 'in1') {
+      platform.log('no deslogueando porque el usuario no está logueado');
     }
 
     platform.log(`${io}: ${state} (dur: ${durSecs})`)
