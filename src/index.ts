@@ -6,7 +6,7 @@ import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/h
 
 import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
-import { getString, myID, set } from "./utils";
+import { currentLogin, getString, myID, set } from "./utils";
 
 when.onInit = () => {  
   // teclado
@@ -60,7 +60,10 @@ when.onLogin = (l: string): any => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
 
-  if (getString(LAST_LOGIN_KEY) !== l) {
+  const lastLogin = getString(LAST_LOGIN_KEY);
+  platform.log('last login: ', lastLogin);
+  if (lastLogin === l) {
+    platform.log('omitiendo checklist por ser el mismo login');
     return
   }
 
@@ -91,7 +94,7 @@ class FormSubmittedEvent extends BaseEvent {
   getData() {
     return {
       deviceId: myID(),
-      userId: env.currentLogin?.key || '',
+      userId: currentLogin(),
       submitId: this.submitId,
       taskId: this.taskId,
       formId: this.formId,
@@ -106,8 +109,8 @@ when.onShowSubmit = (taskId, formId) => {
 when.onSubmit = (submit, taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
 
-  if (formId === CHECKLIST_FORM_ID && env.currentLogin?.key) {
-    set(LAST_LOGIN_KEY, env.currentLogin.key);
+  if (formId === CHECKLIST_FORM_ID) {
+    set(LAST_LOGIN_KEY, currentLogin());
   }
   
   const action = submit.data?.action;

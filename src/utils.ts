@@ -4,6 +4,10 @@ export function myID(): string {
     : String(data.DEVICE_ID) || '';
 }
 
+export function currentLogin(): string {
+  return env.project.currentLogin?.maybeCurrent?.key || '';
+}
+
 export function set(key: string, val: string | number | boolean): void {
   if ('set' in platform) {
     return (platform.set as (key: string, val: string | number | boolean) => void)(key, val);

@@ -1,5 +1,5 @@
 import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
-import { del, getNumber, getString, myID, set } from '../../utils';
+import { currentLogin, del, getNumber, getString, myID, set } from '../../utils';
 
 interface IOChange {
   method: "Event.IO.Change";
@@ -91,15 +91,15 @@ function onPikinEvent(evt: GenericEvent<any>) {
       platform.log('storing hourmeter');
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
       col.bump(`${myID()}.${io}`, totalTimeSeconds);
-      if (env.currentLogin?.key) {
-        col.bump(`login_${env.currentLogin?.key}.${io}`, totalTimeSeconds);
+      if (currentLogin()) {
+        col.bump(`login_${currentLogin()}.${io}`, totalTimeSeconds);
       }
       platform.log('deleting old counter');
       del(activityId(io));
 
       // const newEvent = new GenericEvent<IOActivity>("io-activity", lastActivity, {
       //   deviceId: myID(),
-      //   login: env.currentLogin?.key || false,
+      //   login: currentLogin() || false,
       // });
       // env.project?.saveEvent(newEvent);
     }

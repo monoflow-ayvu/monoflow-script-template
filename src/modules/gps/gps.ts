@@ -1,5 +1,5 @@
 import { GPSSensorEvent, GenericEvent } from '@fermuch/telematree/src/events'
-import { myID } from '../../utils';
+import { currentLogin, myID } from '../../utils';
 
 function log(...args: unknown[]) {
   platform.log('[GPS]', ...args);
@@ -37,7 +37,7 @@ const onGPS = (evt: GPSSensorEvent) => {
     speeds: currentGPS.speeds || [],
   }, {
       deviceId: myID(),
-      login: env.currentLogin?.key || false,
+      login: currentLogin() || false,
   });
 
   const lastGps = currentGPS;

@@ -1,6 +1,6 @@
 import { Collection, StoreObjectI } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
-import { myID } from "./utils";
+import { currentLogin, myID } from "./utils";
 const SCRIPT_VER = '0.29';
 
 export interface FrotaCollection {
@@ -69,7 +69,7 @@ class CustomEventExtended extends BaseEvent {
   getData() {
     return {
       deviceId: myID(),
-      currentLogin: env.currentLogin?.key || '',
+      currentLogin: currentLogin(),
       event: this.base.toJSON(),
     }
   }
