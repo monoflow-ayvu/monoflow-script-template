@@ -1,7 +1,8 @@
-import { Collection, StoreObjectI } from "@fermuch/telematree";
+import { Collection, StoreObjectI, Submission } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
-import { currentLogin, myID } from "./utils";
-const SCRIPT_VER = '0.31';
+import { HourmetersCollection } from "./modules/hourmeters";
+import { currentLogin, getNumber, myID, set } from "./utils";
+const SCRIPT_VER = '0.32';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -12,6 +13,8 @@ export interface FrotaCollection {
     bleConnected: boolean;
     currentLogin: string;
     loginDate: number;
+    mttr: number;
+    mtbf: number;
   };
 }
 
@@ -57,6 +60,9 @@ export default function install() {
   // subscribe to events
   platform.log('registering for onEvent');
   messages.on('onEvent', onEventHandler);
+
+  platform.log('registering watcher for submits (MTTR/MTBF)')
+  messages.on('onSubmit', onSubmit);
 }
 
 class CustomEventExtended extends BaseEvent {
@@ -100,5 +106,44 @@ function onEventHandler(evt: BaseEvent): void {
   if (Date.now() - lastEventAt >= (1000 * 60 * 5)) {
     lastEventAt = Date.now();
     setIfNotEqual(frotaCol, `${myID()}.lastEventAt`, lastEventAt / 1000);
+  }
+}
+
+
+const CHAMADO_FORM_ID = '3eef6324-5791-478a-8311-372704147ba4'
+function onSubmit(subm: Submission, taskId: string, formId: string) {
+  if (formId === CHAMADO_FORM_ID) {
+    onChamadoSubmit(subm, taskId, formId);
+  }
+}
+
+function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  if (!frotaCol) {
+    platform.log('error: no hay colección frota!');
+    return
+  }
+
+  const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
+
+  const lastHourmeter = getNumber('mtbf') || 0;
+  const currentHourmeter = col.typedStore[myID()]?.io || 0;
+  set('mtbf', currentHourmeter);
+  if (lastHourmeter === 0) {
+    platform.log('omitiendo mtbf por no tener dato previo')
+    return
+  }
+
+  const lastStoredMTBF = frotaCol.typedStore[myID()]?.mtbf || 0;
+  const newMTBF = (currentHourmeter - lastHourmeter);
+  platform.log('new mtbf calculated value:', newMTBF);
+  
+  if (lastStoredMTBF === 0) {
+    platform.log('guardando mtbf (primerizo):', newMTBF);
+    frotaCol.set(`${myID()}.mtbf`, newMTBF);
+  } else {
+    const mtbf = (newMTBF + lastStoredMTBF) / 2;
+    platform.log('guardando mtbf:', mtbf);
+    frotaCol.set(`${myID()}.mtbf`, mtbf);
   }
 }
