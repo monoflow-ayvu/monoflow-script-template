@@ -11,6 +11,7 @@ export interface FrotaCollection {
     lastEventAt: number;
     bleConnected: boolean;
     currentLogin: string;
+    loginDate: number;
   };
 }
 

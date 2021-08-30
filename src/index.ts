@@ -31,6 +31,7 @@ when.onInit = () => {
   platform.log('setting current login');
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
   frotaCol.set(`${myID()}.currentLogin`, currentLogin());
+  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
 
   platform.log('ended onInit()');
 }
@@ -81,6 +82,7 @@ when.onLogout = (l: string) => {
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
   frotaCol.set(`${myID()}.currentLogin`, '');
+  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
 }
 
 class FormSubmittedEvent extends BaseEvent {
