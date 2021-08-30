@@ -2,7 +2,7 @@ import { Collection, StoreObjectI, Submission } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { HourmetersCollection } from "./modules/hourmeters";
 import { currentLogin, getNumber, myID, set } from "./utils";
-const SCRIPT_VER = '0.32';
+const SCRIPT_VER = '0.33';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -111,13 +111,26 @@ function onEventHandler(evt: BaseEvent): void {
 
 
 const CHAMADO_FORM_ID = '3eef6324-5791-478a-8311-372704147ba4'
+const CONSERTO_FORM_ID = '9b71c55d-80d1-49aa-856b-d69782595d99'
 function onSubmit(subm: Submission, taskId: string, formId: string) {
   if (formId === CHAMADO_FORM_ID) {
     onChamadoSubmit(subm, taskId, formId);
+  } else if (formId === CONSERTO_FORM_ID) {
+    onConsertoSubmit(subm, taskId, formId);
   }
 }
 
 function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
+  // crear nueva tarea para el mecánico
+  env.project?.tasksManager.create({
+    assignedTo: '5353456',
+    name: 'Chamado Manutencao',
+    done: false,
+    formId: CONSERTO_FORM_ID,
+    show: false,
+  })
+
+  // calcular MTBF
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
   if (!frotaCol) {
     platform.log('error: no hay colección frota!');
@@ -146,4 +159,24 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
     platform.log('guardando mtbf:', mtbf);
     frotaCol.set(`${myID()}.mtbf`, mtbf);
   }
+}
+
+function onConsertoSubmit(subm: Submission, taskId: string, formId: string) {
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  if (!frotaCol) {
+    platform.log('error: no hay colección frota!');
+    return
+  }
+  const now = Date.now();
+  const doneAt = env.project.currentTask?.maybeCurrent?.createdAt;
+  if (!doneAt) {
+    platform.log('error: no se encontró fecha de finalización de tarea');
+    return
+  }
+
+  const totalHours = (now - doneAt) / 1000 / 60 / 60;
+  const lastMTTR = frotaCol.typedStore[myID()]?.mttr || 0;
+  const newMTTR = lastMTTR > 0 ? (totalHours + lastMTTR) / 2 : totalHours;
+  platform.log('new MTTR: ', newMTTR);
+  frotaCol.set(`${myID()}.mttr`, newMTTR);
 }
