@@ -28,7 +28,9 @@ when.onInit = () => {
   platform.log('installing vamos script');
   vamosScriptInstaller();
 
-  platform.log('creating watcher for BLE status');
+  platform.log('setting current login');
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  frotaCol.set(`${myID()}.currentLogin`, currentLogin());
 
   platform.log('ended onInit()');
 }
@@ -60,6 +62,9 @@ when.onLogin = (l: string): any => {
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
 
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  frotaCol.set(`${myID()}.currentLogin`, l);
+
   const lastLogin = getString(LAST_LOGIN_KEY);
   platform.log('last login: ', lastLogin);
   if (lastLogin === l) {
@@ -73,6 +78,9 @@ when.onLogin = (l: string): any => {
 when.onLogout = (l: string) => {
   data.PIKIN_TARGET_REL1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
+
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  frotaCol.set(`${myID()}.currentLogin`, '');
 }
 
 class FormSubmittedEvent extends BaseEvent {
