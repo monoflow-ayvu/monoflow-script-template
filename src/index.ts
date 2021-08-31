@@ -148,6 +148,7 @@ when.onShowSubmit = (taskId, formId) => {
 
 when.onSubmit = (submit, taskId, formId) => {
   const formDuration = (Date.now() - formStartedAt) / 1000;
+  formStartedAt = undefined;
 
   if (formId === CHECKLIST_FORM_ID) {
     // cancelar bloqueo de ignición
