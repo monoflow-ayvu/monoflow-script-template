@@ -69,6 +69,7 @@ const LAST_LOGIN_KEY = 'LAST_LOGIN';
 const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
 when.onLogin = (l: string): any => {
   data.PIKIN_TARGET_REL1 = false;
+  env.setData('LOGIN', l);
   env.project?.saveEvent(new SessionEvent('start', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
@@ -85,6 +86,7 @@ when.onLogin = (l: string): any => {
 }
 
 when.onLogout = (l: string) => {
+  env.setData('LOGIN', '');
   data.PIKIN_TARGET_REL1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
 
@@ -125,12 +127,23 @@ when.onShowSubmit = (taskId, formId) => {
 }
 
 when.onSubmit = (submit, taskId, formId) => {
-  env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
-
   if (formId === CHECKLIST_FORM_ID) {
     set(LAST_LOGIN_KEY, currentLogin());
   }
+
+  submit._setRaw({
+    metadata: {
+      ...(submit.metadata || {}),
+      deviceId: myID(),
+      userId: currentLogin(),
+    }
+  })
+  env.project.submissionsManager.save(submit);
+
+  // send event
+  env.project?.saveEvent(new FormSubmittedEvent('end', submit.$modelId, formId, taskId));
   
+  // update col
   const action = submit.data?.action;
   if (typeof action !== 'undefined') {
     const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
