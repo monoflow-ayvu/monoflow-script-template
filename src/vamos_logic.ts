@@ -2,7 +2,7 @@ import { Collection, StoreObjectI, Submission } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { HourmetersCollection } from "./modules/hourmeters";
 import { currentLogin, getNumber, myID, set } from "./utils";
-const SCRIPT_VER = '0.33';
+const SCRIPT_VER = '0.36';
 
 export interface FrotaCollection {
   [deviceId: string]: {
@@ -122,12 +122,16 @@ function onSubmit(subm: Submission, taskId: string, formId: string) {
 
 function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
   // crear nueva tarea para el mecánico
+  const deviceName = env.project?.usersManager.users.find((u) => u.$modelId === myID())?.prettyName || myID();
+  const loginId = env.project?.currentLogin?.maybeCurrent?.prettyName || env.project?.currentLogin?.maybeCurrent?.prettyName || 'sem-nome';
   env.project?.tasksManager.create({
-    assignedTo: '5353456',
-    name: 'Chamado Manutencao',
+    name: `Manutenção: "${deviceName}" | "${loginId}"`,
+    description: `Manutenção para: "${deviceName}", solicitada por: "${loginId}"`,
     done: false,
     formId: CONSERTO_FORM_ID,
+    // sólo se va a mostrar a mecánicos, basado en el tag
     show: false,
+    tags: ['manutencao', 'mecanico'],
   })
 
   // calcular MTBF

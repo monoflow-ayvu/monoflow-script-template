@@ -7,10 +7,7 @@ import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/h
 import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
-
-const mechanics = [
-  '5353456',
-];
+import { onInitMecanico } from "./mecanico";
 
 when.onInit = () => {  
   // teclado
@@ -37,7 +34,14 @@ when.onInit = () => {
   frotaCol.set(`${myID()}.currentLogin`, currentLogin());
   frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
 
+  platform.log('añadiendo watcher para tareas de mecánico')
+  const mecanicoDestroyer = onInitMecanico();
+
   platform.log('ended onInit()');
+  return () => {
+    platform.log('limpiando datos de mecanico (si existen)')
+    mecanicoDestroyer();
+  }
 }
 
 class SessionEvent extends BaseEvent {
@@ -63,15 +67,7 @@ class SessionEvent extends BaseEvent {
 
 const LAST_LOGIN_KEY = 'LAST_LOGIN';
 const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
-const CONSERTO_PAGE_ID = '8363cd14-b6be-427d-bb67-547ee6b4b17d';
 when.onLogin = (l: string): any => {
-  if (mechanics.includes(l)) {
-    platform.log('usuario es mecanico')
-    env.project?.pagesManager.pages.find((p) => p.$modelId === CONSERTO_PAGE_ID)?._setRaw({show: true});
-  } else {
-    env.project?.pagesManager.pages.find((p) => p.$modelId === CONSERTO_PAGE_ID)?._setRaw({show: false});
-  }
-
   data.PIKIN_TARGET_REL1 = false;
   env.project?.saveEvent(new SessionEvent('start', l));
 
