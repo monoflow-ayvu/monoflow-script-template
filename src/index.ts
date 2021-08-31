@@ -9,6 +9,8 @@ import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
 import { onInitMecanico } from "./mecanico";
 
+let submitTimer;
+
 when.onInit = () => {  
   // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
@@ -41,6 +43,10 @@ when.onInit = () => {
   return () => {
     platform.log('limpiando datos de mecanico (si existen)')
     mecanicoDestroyer();
+
+    if (submitTimer) {
+      clearTimeout(submitTimer);
+    }
   }
 }
 
@@ -121,8 +127,6 @@ class FormSubmittedEvent extends BaseEvent {
     }
   }
 }
-
-let submitTimer;
 
 when.onShowSubmit = (taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
