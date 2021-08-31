@@ -5,7 +5,13 @@ export function myID(): string {
 }
 
 export function currentLogin(): string {
-  return env.project.currentLogin?.maybeCurrent?.key || '';
+  return (
+    env.project.currentLogin?.maybeCurrent?.key
+    || env.project.currentLogin?.maybeCurrent?.$modelId
+    || env.currentLogin?.key
+    || env.currentLogin?.$modelId
+    || ''
+  );
 }
 
 export function set(key: string, val: string | number | boolean): void {

@@ -2,7 +2,7 @@ import { Collection, StoreObjectI, Submission } from "@fermuch/telematree";
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { HourmetersCollection } from "./modules/hourmeters";
 import { currentLogin, getNumber, myID, set } from "./utils";
-const SCRIPT_VER = '0.38';
+const SCRIPT_VER = '0.41';
 
 export interface FrotaCollection {
   [deviceId: string]: {

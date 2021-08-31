@@ -68,7 +68,6 @@ class SessionEvent extends BaseEvent {
 const LAST_LOGIN_KEY = 'LAST_LOGIN';
 const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
 when.onLogin = (l: string): any => {
-  data.PIKIN_TARGET_REL1 = false;
   env.setData('LOGIN', l);
   env.project?.saveEvent(new SessionEvent('start', l));
 
@@ -79,6 +78,7 @@ when.onLogin = (l: string): any => {
   platform.log('last login: ', lastLogin);
   if (lastLogin === l) {
     platform.log('omitiendo checklist por ser el mismo login');
+    env.setData('PIKIN_TARGET_REL1', false);
     return
   }
 
@@ -122,12 +122,31 @@ class FormSubmittedEvent extends BaseEvent {
   }
 }
 
+let submitTimer;
+
 when.onShowSubmit = (taskId, formId) => {
   env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
+  if (formId === CHECKLIST_FORM_ID) {
+    // desbloquear para que pueda completar checklist
+    env.setData('PIKIN_TARGET_REL1', false);
+    // si pasa este tiempo, bloquear la máquina
+    // (esto es cancelado en onSubmit al completarse el submit)
+    submitTimer = setTimeout(
+      () => env.setData('PIKIN_TARGET_REL1', true),
+      // 5 min
+      1000 * 60 * 5,
+    );
+  }
 }
 
 when.onSubmit = (submit, taskId, formId) => {
   if (formId === CHECKLIST_FORM_ID) {
+    // cancelar bloqueo de ignición
+    if (submitTimer) {
+      clearInterval(submitTimer);
+    }
+    // liberar máquina
+    env.setData('PIKIN_TARGET_REL1', false);
     set(LAST_LOGIN_KEY, currentLogin());
   }
 
