@@ -128,7 +128,10 @@ class FormSubmittedEvent extends BaseEvent {
   }
 }
 
+let formStartedAt: number | undefined;
+
 when.onShowSubmit = (taskId, formId) => {
+  formStartedAt = Date.now()
   env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
   if (formId === CHECKLIST_FORM_ID) {
     // desbloquear para que pueda completar checklist
@@ -144,6 +147,8 @@ when.onShowSubmit = (taskId, formId) => {
 }
 
 when.onSubmit = (submit, taskId, formId) => {
+  const formDuration = (Date.now() - formStartedAt) / 1000;
+
   if (formId === CHECKLIST_FORM_ID) {
     // cancelar bloqueo de ignición
     if (submitTimer) {
@@ -158,7 +163,9 @@ when.onSubmit = (submit, taskId, formId) => {
     metadata: {
       ...(submit.metadata || {}),
       deviceId: myID(),
-      userId: currentLogin(),
+      loginId: currentLogin(),
+      duration: formDuration,
+      isChecklist: formId === CHECKLIST_FORM_ID,
     }
   })
   env.project.submissionsManager.save(submit);
