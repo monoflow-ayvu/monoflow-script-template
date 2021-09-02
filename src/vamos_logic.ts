@@ -2,7 +2,7 @@ import { Collection, StoreBasicValueT, StoreObjectI, Submission } from "@fermuch
 import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
 import { HourmetersCollection } from "./modules/hourmeters";
 import { currentLogin, getNumber, myID, set } from "./utils";
-const SCRIPT_VER = '0.42';
+const SCRIPT_VER = '1.0';
 
 export interface FrotaCollection {
   scriptVer: string;
@@ -42,8 +42,8 @@ export default function install() {
   platform.log('setting ble collection data');
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
   bleCol.set(myID(), 'id', myID());
-  const foundBle = bleCol.typedStore[myID()]?.target || '';
-  platform.log('ble data: ', bleCol.typedStore[myID()]);
+  const foundBle = bleCol.get(myID()).data.target || '';
+  platform.log('ble data: ', bleCol.get(myID()).data);
   env.setData('BLE_TARGET', foundBle);
 
   // subscribe to events
@@ -133,14 +133,14 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
   const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
 
   const lastHourmeter = getNumber('mtbf') || 0;
-  const currentHourmeter = col.typedStore[myID()]?.io || 0;
+  const currentHourmeter = col.get(myID()).data.io || 0;
   set('mtbf', currentHourmeter);
   if (lastHourmeter === 0) {
     platform.log('omitiendo mtbf por no tener dato previo')
     return
   }
 
-  const lastStoredMTBF = frotaCol.typedStore[myID()]?.mtbf || 0;
+  const lastStoredMTBF = frotaCol.get(myID()).data.mtbf || 0;
   const newMTBF = (currentHourmeter - lastHourmeter);
   platform.log('new mtbf calculated value:', newMTBF);
   
@@ -168,7 +168,7 @@ function onConsertoSubmit(subm: Submission, taskId: string, formId: string) {
   }
 
   const totalHours = (now - doneAt) / 1000 / 60 / 60;
-  const lastMTTR = frotaCol.typedStore[myID()]?.mttr || 0;
+  const lastMTTR = frotaCol.get(myID()).data.mttr || 0;
   const newMTTR = lastMTTR > 0 ? (totalHours + lastMTTR) / 2 : totalHours;
   platform.log('new MTTR: ', newMTTR);
   frotaCol.set(myID(), 'mttr', newMTTR);

@@ -873,10 +873,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/telematree@^6.5.0":
-  version "6.5.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-6.5.0.tgz#3a1416acb6d1a71ef497ba008742f67765178459"
-  integrity sha512-PsI/9NbmzuNSWKjFeWJi/Sf1P0NObQBFfDBmDeH2y/B5B8CL9bQN0Zvzu5XbZ7NAjW4qaraKtO/9mQw2JCsIsg==
+"@fermuch/telematree@^6.6.0":
+  version "6.6.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-6.6.0.tgz#263cdfa107fb38a27b0898971113da91670402df"
+  integrity sha512-MTxvRLehWlEMpiJM3LKnFEK0iijTz/ja2JLvIft4tqmFie5fjtHFhFHpIEYyemoFuMgaKSTLnZIRG/R3ucR4FA==
   dependencies:
     "@stablelib/snappy" "^1.0.1"
     eval5 "^1.4.6"
