@@ -873,10 +873,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/telematree@^6.1.0":
-  version "6.1.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-6.1.0.tgz#2e96cbdebe8ea8754d8dd2a5eb6003a1fc7f69a2"
-  integrity sha512-ysjufRWtLry05JcQwF5uQKu+OB173OOX7il93vkuHdYUK/1G0YTBJBBRqr0fRltY0i5ajyCTsO3nQiGzyRsH+g==
+"@fermuch/telematree@^5.9.0":
+  version "5.9.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-5.9.0.tgz#efc5a27063b0195a1cf7ce18e0c5f3d5fe3dfbfe"
+  integrity sha512-sWrD7R62Cg1dFsufPsteeolxe7f/M3p+yCjzSPH+oM279nANIM7bkINHGilw9v5jRU96FhJD3EpDqbBUyy7Xbg==
   dependencies:
     "@stablelib/snappy" "^1.0.1"
     eval5 "^1.4.6"
@@ -2351,10 +2351,10 @@ mkdirp-classic@^0.5.2, mkdirp-classic@^0.5.3:
   resolved "https://registry.yarnpkg.com/mkdirp-classic/-/mkdirp-classic-0.5.3.tgz#fa10c9115cc6d8865be221ba47ee9bed78601113"
   integrity sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==
 
-mobx-keystone@^0.61.0:
-  version "0.61.0"
-  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.61.0.tgz#6d1a7d3261f52b7e48b25499d91183f87e04d8e4"
-  integrity sha512-btBi2zA3bfh1DcnIS8tmfRbWxPGAdiQN5doIKO2YjrTl9MRIKyCAdIlQgNY+nAtHS4S0j3HhIBILKz+31qDT5Q==
+mobx-keystone@^0.60.7:
+  version "0.60.7"
+  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.60.7.tgz#569b07343d646046b6f9fe0f10971f59024cb3fa"
+  integrity sha512-qn4Wp7dWwvpBSN/AuIGrA7AFN3ZdVkvi4/H72heJFtOvqhG0aIz0J9VlqWaZrGWEcrq1gy67R7hgXppg2ajElA==
   dependencies:
     fast-deep-equal "^3.1.3"
     nanoid "^3.1.25"

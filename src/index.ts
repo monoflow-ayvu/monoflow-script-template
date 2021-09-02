@@ -1,17 +1,17 @@
-import { BaseEvent } from "@fermuch/telematree";
+import { BaseEvent } from "@fermuch/telematree/src/events";
 
 // import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/hourmeters';
 
-import vamosScriptInstaller, { BleCollection, FrotaCollection } from './vamos_logic';
+import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
-// import { onInitMecanico } from "./mecanico";
+import { onInitMecanico } from "./mecanico";
 
 let submitTimer;
 
-when.onInit = () => {
+when.onInit = () => {  
   // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
 
@@ -23,21 +23,6 @@ when.onInit = () => {
   data.ACCELEROMETER_REQUESTED = false;
   data.GPS_REQUESTED = false;
 
-  const appVer = Number(data.APP_BUILD_VERSION || '0');
-  if (appVer < 119) {
-    platform.log('omitiendo ejecutar script por tener versión de app incompatible. Versión actual: ', appVer);
-    return
-  }
-
-  platform.log('setting current login');
-  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.watch(myID());
-  frotaCol.set(myID(), 'currentLogin', currentLogin());
-  frotaCol.set(myID(), 'loginDate', Date.now() / 1000);
-
-  const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-  bleCol.watch(myID());
-
   // collisionInstaller();
   gpsInstaller();
   hourmeterInstaller();
@@ -46,13 +31,18 @@ when.onInit = () => {
   platform.log('installing vamos script');
   vamosScriptInstaller();
 
-  // platform.log('añadiendo watcher para tareas de mecánico')
-  // const mecanicoDestroyer = onInitMecanico();
+  platform.log('setting current login');
+  const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
+  frotaCol.set(`${myID()}.currentLogin`, currentLogin());
+  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
+
+  platform.log('añadiendo watcher para tareas de mecánico')
+  const mecanicoDestroyer = onInitMecanico();
 
   platform.log('ended onInit()');
   return () => {
     platform.log('limpiando datos de mecanico (si existen)')
-    // mecanicoDestroyer();
+    mecanicoDestroyer();
 
     if (submitTimer) {
       clearTimeout(submitTimer);
@@ -88,7 +78,7 @@ when.onLogin = (l: string): any => {
   env.project?.saveEvent(new SessionEvent('start', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.set('myID()', 'currentLogin', l);
+  frotaCol.set(`${myID()}.currentLogin`, l);
 
   const lastLogin = getString(LAST_LOGIN_KEY);
   platform.log('last login: ', lastLogin);
@@ -107,8 +97,8 @@ when.onLogout = (l: string) => {
   env.project?.saveEvent(new SessionEvent('end', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.set(myID(), 'currentLogin', '');
-  frotaCol.set(myID(), 'loginDate', Date.now() / 1000);
+  frotaCol.set(`${myID()}.currentLogin`, '');
+  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
 }
 
 class FormSubmittedEvent extends BaseEvent {
@@ -187,7 +177,7 @@ when.onSubmit = (submit, taskId, formId) => {
   // update col
   const action = submit.data?.action;
   if (typeof action !== 'undefined') {
-    const profileCol = env.project?.collectionsManager.ensureExists<Record<string, StoreBasicValueT>>("profile");
+    const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
 
     switch (action) {
       case 'set-profile':
@@ -196,11 +186,11 @@ when.onSubmit = (submit, taskId, formId) => {
           const val = (submit.data as Record<string, StoreBasicValueT>)[key];
           if (!val) return;
           platform.log('set-profile: ', `${myID()}.${key}`, `(${typeof val}) ${val}`);
-          profileCol.set(myID(), 'key', val);
+          profileCol.set(`${myID()}.${key}`, val);
 
           if (key === 'hourmeter') {
             const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-            col.set(myID(), 'in1', Number(val) * 3600);
+            col.set(`${myID()}.in1`, Number(val) * 3600);
           }
         });
         platform.log('set-profile: sent!');
@@ -213,16 +203,14 @@ when.onSubmit = (submit, taskId, formId) => {
 // test
 when.onPeriodic = () => {
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  const myDoc = frotaCol.get(myID());
-
-  const currentStoredStatus = myDoc.data?.bleConnected || false;
+  const currentStoredStatus = frotaCol.typedStore[myID()]?.bleConnected;
   if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
-    frotaCol.set(myID(), 'bleConnected', Boolean(data.BLE_CONNECTED));
+    frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
     platform.log('(en el background) conectado a BLE?', Boolean(data.BLE_CONNECTED));
   }
 
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-  const foundBle = bleCol.get(myID())?.data?.target || '';
+  const foundBle = bleCol.typedStore[myID()]?.target || '';
   if (foundBle && foundBle != data.BLE_TARGET) {
     env.setData('BLE_TARGET', foundBle);
     platform.log('cambiado target de BLE a: ', foundBle);

@@ -1,5 +1,5 @@
-import { BaseEvent, GenericEvent } from '@fermuch/telematree'
-import { currentLogin, del, getNumber, myID, set } from '../../utils';
+import { BaseEvent, GenericEvent } from '@fermuch/telematree/src/events'
+import { currentLogin, del, getNumber, getString, myID, set } from '../../utils';
 
 interface IOChange {
   method: "Event.IO.Change";
@@ -12,7 +12,9 @@ interface IOChange {
 }
 
 export interface HourmetersCollection {
-  [session: string]: number;
+  [deviceOrSessionId: string]: {
+    [session: string]: number;
+  }
 }
 
 interface IOActivity {
@@ -42,7 +44,7 @@ function onSessionEnd(sessionKeyRaw: string) {
   const sessionKey = `_${sessionKeyRaw}`
   const totalSeconds = (Date.now() - sessionStarted) / 1000;
   const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-  col.bump(sessionKey, 'session', totalSeconds);
+  col.bump(`${sessionKey}.session`, totalSeconds);
   platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
   sessionStarted = 0;
 }
@@ -88,9 +90,9 @@ function onPikinEvent(evt: GenericEvent<any>) {
 
       platform.log('storing hourmeter');
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-      col.bump(myID(), io, totalTimeSeconds);
+      col.bump(`${myID()}.${io}`, totalTimeSeconds);
       if (currentLogin()) {
-        col.bump(`login_${currentLogin()}`, io, totalTimeSeconds);
+        col.bump(`login_${currentLogin()}.${io}`, totalTimeSeconds);
       }
       platform.log('deleting old counter');
       del(activityId(io));
