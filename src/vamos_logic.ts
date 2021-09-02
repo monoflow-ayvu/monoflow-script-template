@@ -1,39 +1,27 @@
-import { Collection, StoreObjectI, Submission } from "@fermuch/telematree";
-import { BaseEvent, BatterySensorEvent } from "@fermuch/telematree/src/events";
+import { StoreBasicValueT, Submission, BaseEvent, BatterySensorEvent, Tag, tagRef } from "@fermuch/telematree";
 import { HourmetersCollection } from "./modules/hourmeters";
 import { currentLogin, getNumber, myID, set } from "./utils";
-const SCRIPT_VER = '0.42';
+const SCRIPT_VER = '1.0';
 
 export interface FrotaCollection {
-  [deviceId: string]: {
-    scriptVer: string;
-    batteryLevel: number;
-    appVer: string;
-    lastEventAt: number;
-    bleConnected: boolean;
-    currentLogin: string;
-    loginDate: number;
-    mttr: number;
-    mtbf: number;
-  };
+  scriptVer: string;
+  batteryLevel: number;
+  appVer: string;
+  lastEventAt: number;
+  bleConnected: boolean;
+  currentLogin: string;
+  loginDate: number;
+  mttr: number;
+  mtbf: number;
+
+  [key: string]: StoreBasicValueT;
 }
 
 export interface BleCollection {
-  [deviceId: string]: {
-    id: string;
-    target: string;
-  }
-}
+  id: string;
+  target: string;
 
-declare type PathValue<T, K extends string> = K extends `${infer Root}.${infer Rest}` ? Root extends keyof T ? PathValue<T[Root], Rest> : never : (K extends keyof T ? T[K] : undefined);
-declare type ValidatedPath<T, K extends string> = PathValue<T, K> extends never ? never : K;
-export function setIfNotEqual<T extends StoreObjectI, P extends string>(
-  col: Collection<T>,
-  key: ValidatedPath<T, P>,
-  val?: PathValue<T, P>
-): void {
-  // DEPRECATED: col.set now does this automatically
-  col.set(key, val);
+  [key: string]: StoreBasicValueT;
 }
 
 export default function install() {
@@ -46,15 +34,15 @@ export default function install() {
   // check "Frota" collection
   platform.log('setting frota collection data');
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
-  setIfNotEqual(frotaCol, `${myID()}.scriptVer`, SCRIPT_VER);
-  setIfNotEqual(frotaCol, `${myID()}.appVer`, data.APP_VERSION || 'unknown');
+  frotaCol.set(myID(), 'scriptVer', SCRIPT_VER);
+  frotaCol.set(myID(), 'appVer', data.APP_VERSION || 'unknown');
 
   // check "BLE" collection
   platform.log('setting ble collection data');
   const bleCol = env.project?.collectionsManager.ensureExists<BleCollection>("ble");
-  setIfNotEqual(bleCol, `${myID()}.id`, myID());
-  const foundBle = bleCol.typedStore[myID()]?.target || '';
-  platform.log('ble data: ', bleCol.typedStore[myID()]);
+  bleCol.set(myID(), 'id', myID());
+  const foundBle = bleCol.get(myID()).data.target || '';
+  platform.log('ble data: ', bleCol.get(myID()).data);
   env.setData('BLE_TARGET', foundBle);
 
   // subscribe to events
@@ -97,7 +85,7 @@ function onEventHandler(evt: BaseEvent): void {
     // once every 10 minutes
     if ((Date.now() - lastBatteryAt) >= 1000 * 60 * 10) {
       const ev = evt as BatterySensorEvent;
-      setIfNotEqual(frotaCol, `${myID()}.batteryLevel`, ev.level);
+      frotaCol.set(myID(), 'batteryLevel', ev.level);
       env.project?.saveEvent(new CustomEventExtended(ev));
       lastBatteryAt = Date.now();
     }
@@ -105,7 +93,7 @@ function onEventHandler(evt: BaseEvent): void {
 
   if (Date.now() - lastEventAt >= (1000 * 60 * 5)) {
     lastEventAt = Date.now();
-    setIfNotEqual(frotaCol, `${myID()}.lastEventAt`, lastEventAt / 1000);
+    frotaCol.set(myID(), 'lastEventAt', lastEventAt / 1000);
   }
 }
 
@@ -121,6 +109,14 @@ function onSubmit(subm: Submission, taskId: string, formId: string) {
 }
 
 function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
+  if (!env.project?.tags.find((t) => t.$modelId === 'manutencao')) {
+    env.project?.addTag(new Tag({$modelId: 'manutencao', name: 'Manutenção'}))
+  }
+
+  if (!env.project?.tags.find((t) => t.$modelId === 'mecanico')) {
+    env.project?.addTag(new Tag({$modelId: 'mecanico', name: 'Mecánico'}))
+  }
+
   // crear nueva tarea para el mecánico
   const deviceName = env.project?.usersManager.users.find((u) => u.$modelId === myID())?.prettyName || myID();
   const loginId = env.project?.currentLogin?.maybeCurrent?.prettyName || env.project?.currentLogin?.maybeCurrent?.prettyName || 'sem-nome';
@@ -131,7 +127,7 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
     formId: CONSERTO_FORM_ID,
     // sólo se va a mostrar a mecánicos, basado en el tag
     show: false,
-    tags: ['manutencao', 'mecanico'],
+    tags: [tagRef('manutencao'), tagRef('mecanico')],
   })
 
   // calcular MTBF
@@ -144,24 +140,24 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
   const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
 
   const lastHourmeter = getNumber('mtbf') || 0;
-  const currentHourmeter = col.typedStore[myID()]?.io || 0;
+  const currentHourmeter = col.get(myID()).data.io || 0;
   set('mtbf', currentHourmeter);
   if (lastHourmeter === 0) {
     platform.log('omitiendo mtbf por no tener dato previo')
     return
   }
 
-  const lastStoredMTBF = frotaCol.typedStore[myID()]?.mtbf || 0;
+  const lastStoredMTBF = frotaCol.get(myID()).data.mtbf || 0;
   const newMTBF = (currentHourmeter - lastHourmeter);
   platform.log('new mtbf calculated value:', newMTBF);
   
   if (lastStoredMTBF === 0) {
     platform.log('guardando mtbf (primerizo):', newMTBF);
-    frotaCol.set(`${myID()}.mtbf`, newMTBF);
+    frotaCol.set(myID(), 'mtbf', newMTBF);
   } else {
     const mtbf = (newMTBF + lastStoredMTBF) / 2;
     platform.log('guardando mtbf:', mtbf);
-    frotaCol.set(`${myID()}.mtbf`, mtbf);
+    frotaCol.set(myID(), 'mtbf', mtbf);
   }
 }
 
@@ -179,8 +175,8 @@ function onConsertoSubmit(subm: Submission, taskId: string, formId: string) {
   }
 
   const totalHours = (now - doneAt) / 1000 / 60 / 60;
-  const lastMTTR = frotaCol.typedStore[myID()]?.mttr || 0;
+  const lastMTTR = frotaCol.get(myID()).data.mttr || 0;
   const newMTTR = lastMTTR > 0 ? (totalHours + lastMTTR) / 2 : totalHours;
   platform.log('new MTTR: ', newMTTR);
-  frotaCol.set(`${myID()}.mttr`, newMTTR);
+  frotaCol.set(myID(), 'mttr', newMTTR);
 }
