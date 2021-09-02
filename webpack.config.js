@@ -2,7 +2,6 @@ const path = require('path');
 const fs = require('fs');
 const CompressionPlugin = require("compression-webpack-plugin");
 const BrotliPlugin = require('brotli-webpack-plugin');
-const StatoscopeWebpackPlugin = require('@statoscope/webpack-plugin').default;
 
 const entryFile = path.resolve(__dirname, 'src/index.ts');
 const distDir = path.resolve(__dirname, 'dist');
@@ -61,10 +60,6 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
     fallback: { "stream": false, "http": false, "url": false, "https": false, "zlib": false }
   },
-  externals:{
-    "mobx": "mobx",
-    "eval5": "eval5"
-  },
   output: {
     filename: 'bundle.js',
     path: distDir,
@@ -80,7 +75,6 @@ module.exports = {
       // test: /\.(js|css|html|svg)$/,
       // threshold: 10240,
       // minRatio: 0.8
-    }),
-    new StatoscopeWebpackPlugin(),
+    })
   ]
 };
