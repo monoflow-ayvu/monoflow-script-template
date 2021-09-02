@@ -63,7 +63,11 @@ module.exports = {
   },
   externals:{
     "mobx": "mobx",
-    "eval5": "eval5"
+    "eval5": "eval5",
+    "cross-fetch": "cross-fetch",
+    "node-fetch": "node-fetch",
+    "pure-uuid": "pure-uuid",
+    "mobx-keystone": "mobx-keystone"
   },
   output: {
     filename: 'bundle.js',
