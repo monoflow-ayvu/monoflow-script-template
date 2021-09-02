@@ -23,6 +23,12 @@ when.onInit = () => {
   data.ACCELEROMETER_REQUESTED = false;
   data.GPS_REQUESTED = false;
 
+  const appVer = Number(data.APP_BUILD_VERSION || '0');
+  if (appVer < 119) {
+    platform.log('omitiendo ejecutar script por tener versión de app incompatible. Versión actual: ', appVer);
+    return
+  }
+
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
   frotaCol?.watch(myID());
   const bleCol = env.project?.collectionsManager.get<BleCollection>('ble');
