@@ -95,6 +95,13 @@ when.onLogin = (l: string): any => {
     return
   }
 
+  const login = env.project?.logins.find((ll) => ll.key === l);
+  if (login && (login.tags || []).includes('mecanico')) {
+    platform.log('omitiendo checklist por mecánico');
+    env.setData('PIKIN_TARGET_REL1', false);
+    return
+  }
+
   return CHECKLIST_FORM_ID;
 }
 
