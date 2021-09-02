@@ -4,7 +4,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/hourmeters';
 
-import vamosScriptInstaller, { BleCollection, FrotaCollection, setIfNotEqual } from './vamos_logic';
+import vamosScriptInstaller, { BleCollection, FrotaCollection } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
 import { onInitMecanico } from "./mecanico";
@@ -33,8 +33,8 @@ when.onInit = () => {
 
   platform.log('setting current login');
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.set(`${myID()}.currentLogin`, currentLogin());
-  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
+  frotaCol.set(myID(), 'currentLogin', currentLogin());
+  frotaCol.set(myID(), 'loginDate', Date.now() / 1000);
 
   platform.log('añadiendo watcher para tareas de mecánico')
   const mecanicoDestroyer = onInitMecanico();
@@ -78,7 +78,7 @@ when.onLogin = (l: string): any => {
   env.project?.saveEvent(new SessionEvent('start', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.set(`${myID()}.currentLogin`, l);
+  frotaCol.set(myID(), 'currentLogin', l);
 
   const lastLogin = getString(LAST_LOGIN_KEY);
   platform.log('last login: ', lastLogin);
@@ -97,8 +97,8 @@ when.onLogout = (l: string) => {
   env.project?.saveEvent(new SessionEvent('end', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
-  frotaCol.set(`${myID()}.currentLogin`, '');
-  frotaCol.set(`${myID()}.loginDate`, Date.now() / 1000);
+  frotaCol.set(myID(), 'currentLogin', '');
+  frotaCol.set(myID(), 'loginDate', Date.now() / 1000);
 }
 
 class FormSubmittedEvent extends BaseEvent {
@@ -177,7 +177,7 @@ when.onSubmit = (submit, taskId, formId) => {
   // update col
   const action = submit.data?.action;
   if (typeof action !== 'undefined') {
-    const profileCol = env.project?.collectionsManager.ensureExists<{[deviceId: string]: Record<string, StoreBasicValueT>}>("profile");
+    const profileCol = env.project?.collectionsManager.ensureExists<Record<string, StoreBasicValueT>>("profile");
 
     switch (action) {
       case 'set-profile':
@@ -186,11 +186,11 @@ when.onSubmit = (submit, taskId, formId) => {
           const val = (submit.data as Record<string, StoreBasicValueT>)[key];
           if (!val) return;
           platform.log('set-profile: ', `${myID()}.${key}`, `(${typeof val}) ${val}`);
-          profileCol.set(`${myID()}.${key}`, val);
+          profileCol.set(myID(), key, val);
 
           if (key === 'hourmeter') {
             const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-            col.set(`${myID()}.in1`, Number(val) * 3600);
+            col.set(myID(), 'in1', Number(val) * 3600);
           }
         });
         platform.log('set-profile: sent!');
@@ -205,7 +205,7 @@ when.onPeriodic = () => {
   const frotaCol = env.project?.collectionsManager.ensureExists<FrotaCollection>("frota");
   const currentStoredStatus = frotaCol.typedStore[myID()]?.bleConnected;
   if (currentStoredStatus !== data.BLE_CONNECTED && typeof data.BLE_CONNECTED !== 'undefined') {
-    frotaCol.set(`${myID()}.bleConnected`, Boolean(data.BLE_CONNECTED));
+    frotaCol.set(myID(), 'bleConnected', Boolean(data.BLE_CONNECTED));
     platform.log('(en el background) conectado a BLE?', Boolean(data.BLE_CONNECTED));
   }
 

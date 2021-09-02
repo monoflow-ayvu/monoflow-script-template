@@ -12,9 +12,7 @@ interface IOChange {
 }
 
 export interface HourmetersCollection {
-  [deviceOrSessionId: string]: {
-    [session: string]: number;
-  }
+  [session: string]: number;
 }
 
 interface IOActivity {
@@ -44,7 +42,7 @@ function onSessionEnd(sessionKeyRaw: string) {
   const sessionKey = `_${sessionKeyRaw}`
   const totalSeconds = (Date.now() - sessionStarted) / 1000;
   const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-  col.bump(`${sessionKey}.session`, totalSeconds);
+  col.bump(sessionKey, 'session', totalSeconds);
   platform.log('stored session for ', sessionKey, ' total seconds: ', totalSeconds);
   sessionStarted = 0;
 }
@@ -90,9 +88,9 @@ function onPikinEvent(evt: GenericEvent<any>) {
 
       platform.log('storing hourmeter');
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
-      col.bump(`${myID()}.${io}`, totalTimeSeconds);
+      col.bump(myID(), io, totalTimeSeconds);
       if (currentLogin()) {
-        col.bump(`login_${currentLogin()}.${io}`, totalTimeSeconds);
+        col.bump(`login_${currentLogin()}`, io, totalTimeSeconds);
       }
       platform.log('deleting old counter');
       del(activityId(io));
