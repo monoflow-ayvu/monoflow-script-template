@@ -118,9 +118,9 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
     description: `Manutenção para: "${deviceName}", solicitada por: "${loginId}"`,
     done: false,
     formId: CONSERTO_FORM_ID,
+    show: true,
     // sólo se va a mostrar a mecánicos, basado en el tag
-    show: false,
-    tags: ['manutencao', 'mecanico'],
+    tags: ['mecanico', 'manutencao'],
   })
 
   // calcular MTBF

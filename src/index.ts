@@ -7,7 +7,6 @@ import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/h
 import vamosScriptInstaller, { BleCollection, FrotaCollection } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
-// import { onInitMecanico } from "./mecanico";
 
 let submitTimer;
 
@@ -47,12 +46,10 @@ when.onInit = () => {
   // frotaCol.set(myID(), 'loginDate', Date.now() / 1000);
 
   platform.log('añadiendo watcher para tareas de mecánico')
-  // const mecanicoDestroyer = onInitMecanico();
 
   platform.log('ended onInit()');
   return () => {
     platform.log('limpiando datos de mecanico (si existen)')
-    // mecanicoDestroyer();
 
     if (submitTimer) {
       clearTimeout(submitTimer);
