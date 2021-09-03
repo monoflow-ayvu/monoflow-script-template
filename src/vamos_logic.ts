@@ -113,14 +113,26 @@ function onChamadoSubmit(subm: Submission, taskId: string, formId: string) {
   // crear nueva tarea para el mecánico
   const deviceName = env.project?.usersManager.users.find((u) => u.$modelId === myID())?.prettyName || myID();
   const loginId = env.project?.currentLogin?.maybeCurrent?.prettyName || env.project?.currentLogin?.maybeCurrent?.prettyName || 'sem-nome';
+  const statusAnswer = subm.data?.status || '';
+  const problemAnswer = subm.data?.problema || '';
+  const descAnswer = subm.data?.descricao || '';
   env.project?.tasksManager.create({
     name: `Manutenção: "${deviceName}" | "${loginId}"`,
-    description: `Manutenção para: "${deviceName}", solicitada por: "${loginId}"`,
+    description: `Manutenção para: "${deviceName}", solicitada por: "${loginId}"\n\n\nEstado: ${statusAnswer}\n\nProblema: ${problemAnswer}\n\nDescrição: ${descAnswer}`,
     done: false,
     formId: CONSERTO_FORM_ID,
     show: true,
     // sólo se va a mostrar a mecánicos, basado en el tag
     tags: ['mecanico', 'manutencao'],
+    metadata: {
+      deviceId: myID() || '',
+      deviceName: deviceName || '',
+      loginId: env.project?.currentLogin?.maybeCurrent?.key || '',
+      loginName: loginId || '',
+      status: statusAnswer || '',
+      problem: problemAnswer || '',
+      desc: descAnswer || '',
+    }
   })
 
   // calcular MTBF
