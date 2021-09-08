@@ -1,5 +1,5 @@
 import { AccelerometerSensorEvent, BaseEvent } from '@fermuch/telematree/src/events'
-import { myID } from '../../utils';
+import { myID, currentLogin } from '../../utils';
 
 interface CollisionItem {
   magnitude: number;
@@ -24,6 +24,7 @@ class CollisionEvent extends BaseEvent {
   getData() {
     return {
       deviceId: myID(),
+      userId: currentLogin(),
       magnitude: this.magnitude,
       percentOverThreshold: this.percentOverThreshold,
       log: this.collisionLog.sort((a, b) => a.timestamp - b.timestamp),
@@ -100,7 +101,7 @@ function detectCollision(evt: AccelerometerSensorEvent) {
     const currentMag = collisionBuffer[collisionCurrentIndex].magnitude
     const evt = new CollisionEvent(currentMag, overThresh, collisionBuffer);
     env.project?.saveEvent(evt);
-    env.project?.logout();
+    // env.project?.logout();
   }
 
   // next read needs to use next position

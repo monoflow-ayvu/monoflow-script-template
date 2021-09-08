@@ -1,6 +1,6 @@
 import { BaseEvent } from "@fermuch/telematree/src/events";
 
-// import collisionInstaller from './modules/collision/collision';
+import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/hourmeters';
 
@@ -33,7 +33,7 @@ when.onInit = () => {
   const bleCol = env.project?.collectionsManager.get<BleCollection>('ble');
   bleCol?.watch(myID());
 
-  // collisionInstaller();
+  collisionInstaller();
   gpsInstaller();
   hourmeterInstaller();
 
