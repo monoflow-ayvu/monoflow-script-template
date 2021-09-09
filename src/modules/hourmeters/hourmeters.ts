@@ -85,12 +85,15 @@ function onPikinEvent(evt: GenericEvent<any>) {
       // store the activity on the db and reset it
       const totalTimeSeconds = (Date.now() - startedAtMs) / 1000;
       platform.log('totalTimeSeconds', totalTimeSeconds);
+      const date = new Date().toJSON().split('T')[0];
 
       platform.log('storing hourmeter');
       const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
       col.bump(myID(), io, totalTimeSeconds);
+      col.bump(myID(), `${date}_${io}`, totalTimeSeconds);
       if (currentLogin()) {
         col.bump(`login_${currentLogin()}`, io, totalTimeSeconds);
+        col.bump(`login_${currentLogin()}`, `${date}_${io}`, totalTimeSeconds);
       }
       platform.log('deleting old counter');
       del(activityId(io));
