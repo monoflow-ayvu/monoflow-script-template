@@ -19,8 +19,8 @@ when.onInit = () => {
 
   // forzar modo dark
   data.SET_DARK_MODE = true;
-  data.ACCELEROMETER_REQUESTED = false;
-  data.GPS_REQUESTED = false;
+  data.ACCELEROMETER_REQUESTED = true;
+  data.GPS_REQUESTED = true;
 
   const appVer = Number(data.APP_BUILD_VERSION || '0');
   if (appVer < 119) {

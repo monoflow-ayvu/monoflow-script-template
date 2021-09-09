@@ -83,19 +83,19 @@ function detectCollision(evt: AccelerometerSensorEvent) {
   ) {
     lastEventAt = now;
     log('shake!', collisionBuffer[collisionCurrentIndex].magnitude);
-    if (platform.notify && typeof platform.notify === 'function') {
-        platform.notify({
-            animated: true,
-            autoHide: false,
-            hideOnPress: true,
-            floating: true,
-            hideStatusBar: false,
-            message: 'Sesión Cerrada',
-            description: 'La sesión se cerró por haberse ocasionado una colisión',
-            type: 'none',
-            position: 'top',
-        });
-    }
+    // if (platform.notify && typeof platform.notify === 'function') {
+    //     platform.notify({
+    //         animated: true,
+    //         autoHide: false,
+    //         hideOnPress: true,
+    //         floating: true,
+    //         hideStatusBar: false,
+    //         message: 'Sesión Cerrada',
+    //         description: 'La sesión se cerró por haberse ocasionado una colisión',
+    //         type: 'none',
+    //         position: 'top',
+    //     });
+    // }
 
     const overThresh = (numOverThreshold) / total
     const currentMag = collisionBuffer[collisionCurrentIndex].magnitude
