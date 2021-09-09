@@ -51,7 +51,7 @@ export default function install() {
 const MAX_COLLISION_SAMPLES = 50;
 const COLLISION_VISIBLE_TIME_RANGE_MS = 500; // ms
 // const COLLISION_MAGNITUDE_THRESHOLD = 25;
-const COLLISION_MAGNITUDE_THRESHOLD = 1.5;
+const COLLISION_MAGNITUDE_THRESHOLD = 5.0;
 const COLLISION_PERCENT_OVER_THRESHOLD_FOR_SHAKE = 66;
 const COLLISION_MIN_TIME_BETWEEN_EVENTS = 1000 * 5; // ms
 const collisionBuffer: CollisionItem[] = Array.from(Array(MAX_COLLISION_SAMPLES)).map(() => ({ magnitude: 0, timestamp: 0 }));
