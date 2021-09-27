@@ -34,11 +34,11 @@ when.onInit = () => {
   const bleCol = env.project?.collectionsManager.get<BleCollection>('ble');
   bleCol?.watch(myID());
 
-  if (appVer >= 125) {
-    data.ACCELEROMETER_REQUESTED = true;
-    data.accelerometer_requested = true;
-    collisionInstaller();
-  }
+  // if (appVer >= 125) {
+  //   data.ACCELEROMETER_REQUESTED = true;
+  //   data.accelerometer_requested = true;
+  //   collisionInstaller();
+  // }
 
   // collisionInstaller();
   gpsInstaller();
