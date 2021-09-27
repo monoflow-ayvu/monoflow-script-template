@@ -9,7 +9,7 @@ function log(...args: unknown[]) {
 
 let col: Collection<HourmetersCollection> | undefined = undefined;
 
-export function install() {
+export default function install() {
   log('installing...');
   col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
   messages.on('onSubmit', onSubmit);

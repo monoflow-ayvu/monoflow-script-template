@@ -3,6 +3,7 @@ import { BaseEvent } from "@fermuch/telematree/src/events";
 import collisionInstaller from './modules/collision/collision';
 import gpsInstaller from './modules/gps/gps';
 import hourmeterInstaller, { HourmetersCollection } from './modules/hourmeters/hourmeters';
+import checklistWatcherInstall from './modules/checklist_watcher';
 
 import vamosScriptInstaller, { BleCollection, FrotaCollection } from './vamos_logic';
 import { StoreBasicValueT } from '@fermuch/telematree';
@@ -34,15 +35,16 @@ when.onInit = () => {
   const bleCol = env.project?.collectionsManager.get<BleCollection>('ble');
   bleCol?.watch(myID());
 
-  // if (appVer >= 125) {
-  //   data.ACCELEROMETER_REQUESTED = true;
-  //   data.accelerometer_requested = true;
-  //   collisionInstaller();
-  // }
+  if (appVer >= 126) {
+    data.ACCELEROMETER_REQUESTED = true;
+    data.accelerometer_requested = true;
+    collisionInstaller();
+  }
 
   // collisionInstaller();
   gpsInstaller();
   hourmeterInstaller();
+  checklistWatcherInstall();
 
   // custom
   platform.log('installing vamos script');
