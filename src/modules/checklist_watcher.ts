@@ -27,11 +27,12 @@ function onSubmit(submit: Submission, taskId?: string, formId?: string) {
     return;
   }
 
-  const hourmeter = Number(hourmeterString);
+  // convert from hour to seconds
+  const hourmeter = Number(hourmeterString) * 3600;
   if (hourmeter <= 0) {
     log('invalid hourmeter:', hourmeter);
     return;
   }
-  col.bump(myID(), 'checklist', hourmeter);
-  col.bump(myID(), `${date}_checklist`, hourmeter);
+  col?.bump(myID(), 'checklist', hourmeter);
+  col?.bump(myID(), `${date}_checklist`, hourmeter);
 }
