@@ -22,7 +22,7 @@ interface IOActivity {
   totalSeconds?: number;
 }
 
-function activityId(io: string) {
+export function activityId(io: string) {
   return `__hourmeter.${myID()}.${io}`;
 }
 

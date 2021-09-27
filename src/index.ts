@@ -86,7 +86,7 @@ class SessionEvent extends BaseEvent {
 }
 
 const LAST_LOGIN_KEY = 'LAST_LOGIN';
-const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
+export const CHECKLIST_FORM_ID = '32f094b2-fe35-483f-a45a-c137afee5424';
 when.onLogin = (l: string): any => {
   env.setData('LOGIN', l);
   env.project?.saveEvent(new SessionEvent('start', l));
