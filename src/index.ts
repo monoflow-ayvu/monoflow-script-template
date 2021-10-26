@@ -101,6 +101,7 @@ when.onLogin = (l: string): any => {
   if (lastLogin === l) {
     platform.log('omitiendo checklist por ser el mismo login');
     env.setData('PIKIN_TARGET_REL1', false);
+    env.setData('MONOFLOW_RELAY_1', false);
     return
   }
 
@@ -108,6 +109,7 @@ when.onLogin = (l: string): any => {
   if (login && (login.tags || []).includes('mecanico')) {
     platform.log('omitiendo checklist por mecánico');
     env.setData('PIKIN_TARGET_REL1', false);
+    env.setData('MONOFLOW_RELAY_1', false);
     return
   }
 
@@ -117,6 +119,7 @@ when.onLogin = (l: string): any => {
 when.onLogout = (l: string) => {
   env.setData('LOGIN', '');
   data.PIKIN_TARGET_REL1 = true;
+  data.MONOFLOW_RELAY_1 = true;
   env.project?.saveEvent(new SessionEvent('end', l));
 
   const frotaCol = env.project?.collectionsManager.get<FrotaCollection>('frota');
@@ -159,10 +162,14 @@ when.onShowSubmit = (taskId, formId) => {
   if (formId === CHECKLIST_FORM_ID) {
     // desbloquear para que pueda completar checklist
     env.setData('PIKIN_TARGET_REL1', false);
+    env.setData('MONOFLOW_RELAY_1', false);
     // si pasa este tiempo, bloquear la máquina
     // (esto es cancelado en onSubmit al completarse el submit)
     submitTimer = setTimeout(
-      () => env.setData('PIKIN_TARGET_REL1', true),
+      () => {
+        env.setData('PIKIN_TARGET_REL1', true);
+        env.setData('MONOFLOW_RELAY_1', true);
+      },
       // 5 min
       1000 * 60 * 5,
     );
@@ -180,6 +187,7 @@ when.onSubmit = (submit, taskId, formId) => {
     }
     // liberar máquina
     env.setData('PIKIN_TARGET_REL1', false);
+    env.setData('MONOFLOW_RELAY_1', false);
     set(LAST_LOGIN_KEY, currentLogin());
   }
 
