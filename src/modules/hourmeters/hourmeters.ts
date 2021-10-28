@@ -51,9 +51,52 @@ function onEvent(evt: BaseEvent) {
   if (evt.kind === 'generic' && (evt as GenericEvent<any>).type === 'pikin-event') {
     onPikinEvent(evt as GenericEvent<any>);
   }
+
+  if (evt.kind === 'generic' && (evt as GenericEvent<any>).type === 'monoflow-io') {
+    onMonoflowEvent(evt as GenericEvent<any>);
+  }
 }
 
 const SESSION_KEY = '__LAST_SESSION_ID';
+
+function onMonoflowEvent(evt: GenericEvent<{rule?: number, status?: boolean}>) {
+  const userLoggedIn = env.project?.currentLogin?.maybeCurrent !== undefined;
+  if (evt.payload?.rule === 1 && evt.payload?.status === false && userLoggedIn) {
+    platform.log('monoflow off, logging out');
+    env.project?.logout();
+    del(SESSION_KEY);
+    platform.log('logged out!');
+  }
+
+  const state = evt.payload?.status;
+  const io = `mflow_rule${evt.payload?.rule}`;
+  if (state) {
+    if (!getNumber(activityId(io))) {
+      set(activityId(io), Date.now());
+    }
+  } else {
+    const startedAtMs = getNumber(activityId(io));
+    if (!startedAtMs) return;
+
+    // store the activity on the db and reset it
+    const totalTimeSeconds = (Date.now() - startedAtMs) / 1000;
+    platform.log('totalTimeSeconds', totalTimeSeconds);
+    const date = new Date().toJSON().split('T')[0];
+
+    platform.log(`${io}: ${state} (dur: ${totalTimeSeconds})`);
+
+    platform.log('storing hourmeter');
+    const col = env.project?.collectionsManager.ensureExists<HourmetersCollection>('hourmeters', 'Horímetros');
+    col.bump(myID(), io, totalTimeSeconds);
+    col.bump(myID(), `${date}_${io}`, totalTimeSeconds);
+    if (currentLogin()) {
+      col.bump(`login_${currentLogin()}`, io, totalTimeSeconds);
+      col.bump(`login_${currentLogin()}`, `${date}_${io}`, totalTimeSeconds);
+    }
+    platform.log('deleting old counter');
+    del(activityId(io));
+  }
+}
 
 function onPikinEvent(evt: GenericEvent<any>) {
   if (evt.payload?.method === 'Event.IO.Change') {

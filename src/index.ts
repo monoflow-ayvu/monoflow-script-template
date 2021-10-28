@@ -9,7 +9,34 @@ import vamosScriptInstaller, { BleCollection, FrotaCollection } from './vamos_lo
 import { StoreBasicValueT } from '@fermuch/telematree';
 import { currentLogin, getString, myID, set } from "./utils";
 
+interface IOConfig {
+  enable: boolean;
+  low: number;
+  high: number;
+  target: string;
+  save: boolean;
+  trigger: boolean;
+  reverse: boolean;
+  action: number;
+}
+
 let submitTimer;
+const ioConfigs: {
+  [n: number]: IOConfig;
+} = {
+  // needs to be 1 instead of 0 for a bug where the rule number is added
+  // to the counter instead of a second.
+  1 : {
+    enable: true,
+    low: 0,
+    high: 40,
+    target: 'in1',
+    save: true,
+    trigger: false,
+    reverse: false,
+    action: 0,
+  }
+};
 
 when.onInit = () => {  
   // teclado
@@ -23,6 +50,7 @@ when.onInit = () => {
   data.ACCELEROMETER_REQUESTED = false;
   data.accelerometer_requested = false;
   data.GPS_REQUESTED = true;
+  data.MONOFLOW_RULES = ioConfigs;
 
   const appVer = Number(data.APP_BUILD_VERSION || '0');
   if (appVer < 119) {
