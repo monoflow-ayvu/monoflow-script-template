@@ -43,7 +43,12 @@ when.onInit = () => {
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
 
   // restaurar bloqueo/desbloqueo
-  // data.PIKIN_TARGET_REL1 = env.isLoggedIn ? false : true;
+  data.PIKIN_TARGET_REL1 = !!currentLogin() ? false : true;
+  data.MONOFLOW_RELAY_1 = !!currentLogin() ? false : true;
+
+  // outputs no usados, resetearlos
+  env.setData('MONOFLOW_RELAY_2', false);
+  env.setData('MONOFLOW_BUZ_1', false);
 
   // forzar modo dark
   data.SET_DARK_MODE = true;
@@ -84,6 +89,18 @@ when.onInit = () => {
 
   platform.log('añadiendo watcher para tareas de mecánico')
 
+  // let testInt;
+  // if (myID() === '59c22492535219ba') {
+  //   let state = false;
+  //   testInt = setInterval(() => {
+  //     state = !state;
+  //     platform.log('PRUEBA DE RELAY, NUEVO ESTADO: ', state);
+  //     env.setData('MONOFLOW_RELAY_1', state);
+  //     env.setData('MONOFLOW_RELAY_2', state);
+  //     env.setData('MONOFLOW_BUZ_1', state);
+  //   }, 3000);
+  // }
+
   platform.log('ended onInit()');
   return () => {
     platform.log('limpiando datos de mecanico (si existen)')
@@ -91,6 +108,10 @@ when.onInit = () => {
     if (submitTimer) {
       clearTimeout(submitTimer);
     }
+
+    // if (testInt) {
+    //   clearInterval(testInt);
+    // }
   }
 }
 

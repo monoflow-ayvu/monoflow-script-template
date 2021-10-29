@@ -8,6 +8,9 @@
     "watch": "webpack --mode production --watch",
     "build-copy": "yarn build && (cat dist/bundle.js | pbcopy) && du -sh dist/*.js"
   },
+  "browserslist": [
+    "ie 6"
+  ],
   "devDependencies": {
     "@babel/core": "^7.15.0",
     "@babel/plugin-transform-arrow-functions": "^7.14.5",
