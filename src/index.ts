@@ -24,7 +24,7 @@ let submitTimer;
 const ioConfigs: {
   [n: number]: IOConfig;
 } = {
-  // needs to be 1 instead of 0 for a bug where the rule number is added
+  // needs to be index 1 instead of 0 for a bug where the rule number is added
   // to the counter instead of a second.
   1 : {
     enable: true,
@@ -55,6 +55,11 @@ when.onInit = () => {
   data.ACCELEROMETER_REQUESTED = false;
   data.accelerometer_requested = false;
   data.GPS_REQUESTED = true;
+
+  // EPD10676 uses in3 instead of in1
+  if (myID() === 'b49477e769a2d89e') {
+    ioConfigs[1].target = 'in3';
+  }
   data.MONOFLOW_RULES = ioConfigs;
 
   const appVer = Number(data.APP_BUILD_VERSION || '0');
