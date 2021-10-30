@@ -54,12 +54,24 @@ when.onInit = () => {
   data.SET_DARK_MODE = true;
   data.ACCELEROMETER_REQUESTED = false;
   data.accelerometer_requested = false;
-  data.GPS_REQUESTED = true;
+  // data.GPS_REQUESTED = true;
 
   // EPD10676 uses in3 instead of in1
   if (myID() === 'b49477e769a2d89e') {
     ioConfigs[1].target = 'in3';
   }
+  // if (myID() === '59c22492535219ba') {
+  //   ioConfigs[2] = {
+  //     enable: true,
+  //     low: 0,
+  //     high: 40,
+  //     target: 'in1',
+  //     save: false,
+  //     trigger: true,
+  //     reverse: false,
+  //     action: 2,
+  //   };
+  // }
   data.MONOFLOW_RULES = ioConfigs;
 
   const appVer = Number(data.APP_BUILD_VERSION || '0');
@@ -80,7 +92,7 @@ when.onInit = () => {
   }
 
   // collisionInstaller();
-  gpsInstaller();
+  // gpsInstaller();
   hourmeterInstaller();
   checklistWatcherInstall();
 
@@ -212,7 +224,8 @@ let formStartedAt: number | undefined;
 
 when.onShowSubmit = (taskId, formId) => {
   formStartedAt = Date.now()
-  env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
+  platform.log('onShowSubmit', formId, taskId);
+
   if (formId === CHECKLIST_FORM_ID) {
     // desbloquear para que pueda completar checklist
     env.setData('PIKIN_TARGET_REL1', false);
@@ -228,11 +241,15 @@ when.onShowSubmit = (taskId, formId) => {
       1000 * 60 * 5,
     );
   }
+
+  env.project?.saveEvent(new FormSubmittedEvent('start', '', formId, taskId));
 }
 
 when.onSubmit = (submit, taskId, formId) => {
   const formDuration = (Date.now() - formStartedAt) / 1000;
   formStartedAt = undefined;
+  
+  platform.log('onSubmit', formId, taskId);
 
   if (formId === CHECKLIST_FORM_ID) {
     // cancelar bloqueo de ignición
