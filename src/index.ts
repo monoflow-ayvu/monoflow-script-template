@@ -38,6 +38,20 @@ const ioConfigs: {
   }
 };
 
+const an0Ids = [
+  '59c22492535219ba',
+  'b49477e769a2d89e',
+  '7926a0de31247cc5',
+  '2472c7704c74e4aa',
+  '0c91a5481e8c4717',
+  '2676b37daff9ad23',
+  '243e2b5480047b41',
+  '645936acb4d9335b',
+  'f61f0ab12b4c9803',
+  'fb6f7eccbab1e13c',
+  '1607d31ed4e89e94',
+];
+
 when.onInit = () => {  
   // teclado
   data.LOGIN_KEYBOARD_TYPE = 'numeric';
@@ -56,22 +70,11 @@ when.onInit = () => {
   data.accelerometer_requested = false;
   // data.GPS_REQUESTED = true;
 
-  // EPD10676 uses in3 instead of in1
-  if (myID() === 'b49477e769a2d89e') {
-    ioConfigs[1].target = 'in3';
+  // set to an0 to new machines
+  if (an0Ids.includes(myID())) {
+    ioConfigs[1].low = 10.0;
+    ioConfigs[1].target = 'an0';
   }
-  // if (myID() === '59c22492535219ba') {
-  //   ioConfigs[2] = {
-  //     enable: true,
-  //     low: 0,
-  //     high: 40,
-  //     target: 'in1',
-  //     save: false,
-  //     trigger: true,
-  //     reverse: false,
-  //     action: 2,
-  //   };
-  // }
   data.MONOFLOW_RULES = ioConfigs;
 
   const appVer = Number(data.APP_BUILD_VERSION || '0');
