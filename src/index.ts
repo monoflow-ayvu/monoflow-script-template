@@ -24,6 +24,16 @@ let submitTimer;
 const ioConfigs: {
   [n: number]: IOConfig;
 } = {
+  0 : {
+    enable: false,
+    low: 0,
+    high: 1,
+    target: 'in1',
+    save: false,
+    trigger: false,
+    reverse: false,
+    action: 0
+  },
   // needs to be index 1 instead of 0 for a bug where the rule number is added
   // to the counter instead of a second.
   1 : {
