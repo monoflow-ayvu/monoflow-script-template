@@ -7,10 +7,11 @@
     "sourceMap": true,
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "ES5",
+    "target": "ES3",
     "allowJs": true,
     "lib": [
-      "es2016"
+      "es2016",
+      "DOM"
     ],
     "moduleResolution": "node",
     "typeRoots": [

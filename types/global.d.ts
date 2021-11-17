@@ -1,7 +1,7 @@
 import TypedEmitter from "typed-emitter"
-import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/src/tree/dynamic_data';
-import events from '@fermuch/telematree/src/events';
-import telematree from '@fermuch/telematree/src/library';
+import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/dist/tree/dynamic_data';
+import events from '@fermuch/telematree/dist/events';
+import telematree from '@fermuch/telematree/dist/library';
 
 
 // ** UUID **
