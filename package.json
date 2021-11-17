@@ -15,7 +15,8 @@
   "size-limit": [
     {
       "path": "dist/bundle.js",
-      "limit": "100 kb"
+      "limit": "100 kb",
+      "gzip": false
     }
   ],
   "devDependencies": {
