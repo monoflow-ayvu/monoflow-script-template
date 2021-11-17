@@ -36,7 +36,7 @@
     "typed-emitter": "1.3.1",
     "typescript": "4.3.5",
     "webpack": "5.51.1",
-    "webpack-cli": "4.8.0"
+    "webpack-cli": "4.9.1"
   },
   "dependencies": {
     "@fermuch/telematree": "6.8.0",
