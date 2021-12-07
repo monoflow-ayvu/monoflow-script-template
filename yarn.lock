@@ -1031,13 +1031,14 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/telematree@6.12.0":
-  version "6.12.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-6.12.0.tgz#b97ba6dae88158aa55c5c2b572e1c1c0eff0a542"
-  integrity sha512-eESoeoJVck3+H1hG+MEtv9k3EM4jv6yplVEnPJYdb0BY7TSQduQf4xl+Y4dx3+nRyozcbH4+DUmbqp5czQj4Mw==
+"@fermuch/telematree@7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-7.2.0.tgz#772560a82fffd369fe88b789e7b49258b0197c69"
+  integrity sha512-SWfw7pzNKas4PmvDkm5VO6sfPK5S9s82DCwTaIu2KfwA1311kCBu8ohZM4b/CS+gTHPauCbsxM12Y1lQQyjN0w==
   dependencies:
     "@stablelib/snappy" "^1.0.1"
     eval5 "^1.4.6"
+    fflate "^0.7.1"
     pure-uuid "^1.6.2"
     typed-emitter "^1.3.1"
 
@@ -2542,6 +2543,11 @@ fd-slicer@~1.1.0:
   integrity sha1-JcfInLH5B3+IkbvmHY85Dq4lbx4=
   dependencies:
     pend "~1.2.0"
+
+fflate@^0.7.1:
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/fflate/-/fflate-0.7.1.tgz#56e87e87c3f2fe01b025fbb1c4ea835990c02fa2"
+  integrity sha512-VYM2Xy1gSA5MerKzCnmmuV2XljkpKwgJBKezW+495TTnTCh1x5HcYa1aH8wRU/MfTGhW4ziXqgwprgQUVl3Ohw==
 
 fill-range@^7.0.1:
   version "7.0.1"
