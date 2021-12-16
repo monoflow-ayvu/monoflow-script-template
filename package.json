@@ -29,7 +29,7 @@
     "@types/uuid": "8.3.3",
     "babel-loader": "8.2.3",
     "brotli-webpack-plugin": "1.1.0",
-    "compression-webpack-plugin": "9.0.1",
+    "compression-webpack-plugin": "9.2.0",
     "mobx-keystone": "0.64.0",
     "size-limit": "7.0.4",
     "ts-loader": "9.2.6",
