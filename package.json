@@ -39,7 +39,7 @@
     "webpack-cli": "4.9.1"
   },
   "dependencies": {
-    "@fermuch/telematree": "7.2.0",
+    "@fermuch/telematree": "7.24.0",
     "cross-fetch": "3.1.4",
     "firebase": "8.10.0",
     "lodash": "4.17.21",
