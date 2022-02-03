@@ -23,7 +23,7 @@
     "@babel/core": "7.16.0",
     "@babel/plugin-transform-arrow-functions": "7.16.0",
     "@babel/preset-env": "7.16.4",
-    "@size-limit/preset-big-lib": "7.0.4",
+    "@size-limit/preset-big-lib": "7.0.8",
     "@types/firebase": "3.2.1",
     "@types/lodash": "4.14.177",
     "@types/uuid": "8.3.3",
