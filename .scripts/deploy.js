@@ -152,4 +152,7 @@ async function createScriptIfNotExists(scripts) {
 })().catch(e => {
   ui.log.write(`❌ ${e.message}`);
   process.exit(1);
+}).then(() => {
+  ui.log.write('\n\n✅ Done.');
+  process.exit(0);
 });
