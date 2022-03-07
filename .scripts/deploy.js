@@ -65,8 +65,6 @@ commander
   .parse(process.argv);
 const options = commander.opts();
 
-const ui = new inquirer.ui.BottomBar();
-
 function graphqlScriptsToList(scripts) {
   return scripts.map(script => ({
     id: script.id,
@@ -91,7 +89,7 @@ function isVersionValid(id, version, scripts) {
 }
 
 async function getAllScripts() {
-  await ui.updateBottomBar('⚡ Fetching scripts ...');
+  ui.log.write('⚡ Fetching scripts ...');
   return (await graphQLClient.request(getScripts)).scripts || [];
 }
 
@@ -110,6 +108,14 @@ async function createScriptIfNotExists(scripts) {
   return scripts;
 }
 
+const ui = {
+  log: {
+    write(...args) {
+      console.log(...args);
+    }
+  }
+};
+
 (async function () {
   ui.log.write(`⚡ Deploying ${package.name}@${package.version} ...\n\n`);
   if (!options.force) {
@@ -122,17 +128,17 @@ async function createScriptIfNotExists(scripts) {
 
   let scripts = await getAllScripts();
 
-  await ui.updateBottomBar('⚡ Checking if script exists ...');
+  ui.log.write('⚡ Checking if script exists ...');
   scripts = await createScriptIfNotExists(scripts);
   
-  await ui.updateBottomBar('⚡ Validating versions ...');
+  ui.log.write('⚡ Validating versions ...');
   const isValid = isVersionValid(package.name, package.version, scripts);
   if (!isValid) {
     ui.log.write('❌ Invalid version.');
     process.exit(1);
   }
 
-  await ui.updateBottomBar('⚡ Getting script ...');
+  ui.log.write('⚡ Getting script ...');
   const bundlePath = path.resolve(__dirname, '../dist/bundle.js');
   const doesExist = await exists(bundlePath);
   if (!doesExist) {
@@ -141,7 +147,7 @@ async function createScriptIfNotExists(scripts) {
   }
   const code = await readFile(bundlePath, 'utf8');
   
-  await ui.updateBottomBar('⚡ Uploading script ...');
+  ui.log.write('⚡ Uploading script ...');
   const uploadRes = await graphQLClient.request(uploadScript, {
     id: package.name,
     ver: package.version,
@@ -149,8 +155,8 @@ async function createScriptIfNotExists(scripts) {
   });
   
   ui.log.write('✅ Script uploaded.');
-  await ui.updateBottomBar('⚡ Done.');
   ui.log.write('\n\n✅ Done.');
+  return true;
 })().catch(e => {
   ui.log.write(`❌ ${e.message}`);
   process.exit(1);
