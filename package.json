@@ -9,7 +9,7 @@
     "watch": "webpack --mode production --watch",
     "build-copy": "yarn build && (cat dist/bundle.js | pbcopy) && du -sh dist/*.js",
     "size": "npm run build && size-limit",
-    "deploy": "yarn build && node .scripts/deploy.js"
+    "deploy": "node .scripts/deploy.js"
   },
   "browserslist": [
     "ie 6"
