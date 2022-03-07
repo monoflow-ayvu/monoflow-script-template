@@ -155,3 +155,9 @@ async function createScriptIfNotExists(scripts) {
   ui.log.write(`❌ ${e.message}`);
   process.exit(1);
 });
+
+
+process.on('SIGTERM', async () => {
+  ui.log.write(`❌ SIGTERM received!`);
+  process.exit(0);
+});
