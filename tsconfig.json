@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "esModuleInterop": true,
     "experimentalDecorators": true,
     "skipLibCheck": true,
     "sourceMap": true,
@@ -9,6 +8,8 @@
     "module": "commonjs",
     "target": "ES3",
     "allowJs": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "lib": [
       "es2016",
       "DOM"

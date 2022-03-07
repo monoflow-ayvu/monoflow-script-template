@@ -1,5 +1,6 @@
 import TypedEmitter from "typed-emitter"
 import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/dist/tree/dynamic_data';
+import { ScriptWithInstance } from '@fermuch/telematree/dist/tree/dynamic_data/script_with_instance';
 import events from '@fermuch/telematree/dist/events';
 import telematree from '@fermuch/telematree/dist/library';
 
@@ -31,6 +32,10 @@ declare global {
   const messages: TypedEmitter<EventArgs>;
   const uuid: v4;
   const when: FNArgs;
+
+  const script: ScriptWithInstance | undefined;
+  const settings: undefined | (() => unknown),
+  const getSettings: undefined | (() => unknown),
 }
 
 interface globalThis extends ScriptGlobal { }
