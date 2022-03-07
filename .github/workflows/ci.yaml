@@ -25,4 +25,4 @@ jobs:
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
         with:
-          cmd: deploy
+          cmd: deploy-force
