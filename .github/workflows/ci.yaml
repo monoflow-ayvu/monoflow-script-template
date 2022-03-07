@@ -21,8 +21,9 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
-      - uses: borales/actions-yarn@v2.3.0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: node .scripts/deploy.js --force
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
-        with:
-          cmd: deploy-force
