@@ -4,6 +4,6 @@ messages.on('onInit', function() {
   platform.log(typeof settings?.());
   platform.log(settings?.());
 
-  const {name} = getSettings?.() as {name?: string} || {name: ''};
-  platform.log(`Hello, ${name}!`);
+  const {nome} = getSettings?.() as {nome?: string} || {nome: ''};
+  platform.log(`Hello, ${nome}!`);
 });
