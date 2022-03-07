@@ -148,7 +148,8 @@ async function createScriptIfNotExists(scripts) {
     code,
   });
   
-  ui.log.write('✅ Script uploaded.' + JSON.stringify(uploadRes, null, 2));
+  ui.log.write('✅ Script uploaded.');
+  await ui.updateBottomBar('⚡ Done.');
   ui.log.write('\n\n✅ Done.');
 })().catch(e => {
   ui.log.write(`❌ ${e.message}`);
