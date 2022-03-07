@@ -1,6 +1,6 @@
 {
   "name": "monoflow-script-env",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Script padrão de todos os scripts. Template para criar um script.",
   "settingsSchema": {
     "display": "form",
