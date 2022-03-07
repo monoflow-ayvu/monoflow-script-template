@@ -1,6 +1,6 @@
 {
   "name": "monoflow-script-env",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "description": "Script padrão de todos os scripts. Template para criar um script.",
   "license": "EULA",
   "private": true,
