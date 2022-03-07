@@ -10,6 +10,7 @@
     "build-copy": "yarn build && (cat dist/bundle.js | pbcopy) && du -sh dist/*.js",
     "size": "npm run build && size-limit",
     "deploy": "node .scripts/deploy.js",
+    "deploy-force": "node .scripts/deploy.js --force",
     "minor": "npm run build && bump minor --commit --tag --push --all",
     "release": "npm run build && bump major --commit --tag --push --all"
   },
