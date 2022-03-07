@@ -10,8 +10,8 @@ const readFile = util.promisify(fs.readFile);
 const exists = util.promisify(fs.exists);
 
 const DEPLOY_TOKEN = process.env.DEPLOY_TOKEN;
-// const endpoint = 'https://monoql.fly.dev/graphql';
-const endpoint = 'http://localhost:3211/graphql';
+const endpoint = 'https://monoql.fly.dev/graphql';
+// const endpoint = 'http://localhost:3211/graphql';
 const graphQLClient = new GraphQLClient(endpoint, {
   headers: DEPLOY_TOKEN ? {
     authorization: `Bearer ${DEPLOY_TOKEN}`,
