@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - master
-env:
-  DEPLOY_TOKEN: {{ $secrets.DEPLOY_TOKEN }}
+
 jobs:
   build:
     name: Test
@@ -18,5 +17,7 @@ jobs:
         with:
           cmd: build
       - uses: borales/actions-yarn@v2.3.0
+        env:
+          DEPLOY_TOKEN: {{ $secrets.DEPLOY_TOKEN }}
         with:
           cmd: deploy
