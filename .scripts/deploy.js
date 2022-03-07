@@ -150,14 +150,7 @@ async function createScriptIfNotExists(scripts) {
   
   ui.log.write('✅ Script uploaded.' + JSON.stringify(uploadRes, null, 2));
   ui.log.write('\n\n✅ Done.');
-  process.exit();
 })().catch(e => {
   ui.log.write(`❌ ${e.message}`);
   process.exit(1);
-});
-
-
-process.on('SIGTERM', async () => {
-  ui.log.write(`❌ SIGTERM received!`);
-  process.exit(0);
 });
