@@ -9,7 +9,9 @@
     "watch": "webpack --mode production --watch",
     "build-copy": "yarn build && (cat dist/bundle.js | pbcopy) && du -sh dist/*.js",
     "size": "npm run build && size-limit",
-    "deploy": "node .scripts/deploy.js"
+    "deploy": "node .scripts/deploy.js",
+    "minor": "npm run build && bump minor --commit --tag --push --all && npm publish",
+    "release": "npm run build && bump major --commit --tag --push --all && npm publish"
   },
   "browserslist": [
     "ie 6"
@@ -25,6 +27,7 @@
     "@babel/core": "7.17.5",
     "@babel/plugin-transform-arrow-functions": "7.16.7",
     "@babel/preset-env": "7.16.11",
+    "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@size-limit/preset-big-lib": "7.0.8",
     "@types/commander": "^2.12.2",
     "@types/firebase": "3.2.1",
