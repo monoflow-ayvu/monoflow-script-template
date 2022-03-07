@@ -98,7 +98,7 @@ async function getAllScripts() {
 async function createScriptIfNotExists(scripts) {
   const list = graphqlScriptsToList(scripts);
   const script = list.find((s) => s.id === package.name);
-  if (!script || script.description !== package.description) {
+  if (!script) {
     ui.log.write(`⚡ Creating/updating script ${package.name} ...`);
     await graphQLClient.request(createScript, {
       name: package.name,
