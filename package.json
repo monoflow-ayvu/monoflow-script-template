@@ -1,7 +1,30 @@
 {
   "name": "monoflow-script-env",
-  "version": "1.10.0",
+  "version": "1.10.3",
   "description": "Script padrão de todos os scripts. Template para criar um script.",
+  "settingsSchema": {
+    "display": "form",
+    "components": [
+      {
+        "label": "Nome",
+        "description": "Nome para saludar",
+        "tableView": true,
+        "key": "nome",
+        "type": "textfield",
+        "input": true,
+        "defaultValue": "User"
+      },
+      {
+        "type": "button",
+        "label": "Submit",
+        "key": "submit",
+        "disableOnInvalid": true,
+        "block": true,
+        "input": true,
+        "tableView": false
+      }
+    ]
+  },
   "license": "EULA",
   "private": true,
   "scripts": {

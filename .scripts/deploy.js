@@ -43,8 +43,8 @@ mutation uploadScript($id:ID!, $ver:ID!, $code:String!) {
 }`
 
 const createScript = gql`
-mutation createScript($name:String!, $desc:String!) {
-  createScript(settingsSchema:"{}", description:$desc, name:$name) {
+mutation createScript($name:String!, $desc:String, $settingsSchema:String, $ver:String) {
+  updateScript(description:$desc, name:$name, settingsSchema:$settingsSchema, version:$ver) {
     id
   }
 }`
@@ -88,24 +88,17 @@ function isVersionValid(id, version, scripts) {
   return false
 }
 
-async function getAllScripts() {
+async function createScriptIfNotExists() {
+  ui.log.write(`⚡ Creating/updating script ${package.name} ...`);
+  await graphQLClient.request(createScript, {
+    name: package.name,
+    desc: package.description,
+    settingsSchema: JSON.stringify(package.settingsSchema || {}),
+    version: package.version,
+  });
+  
   ui.log.write('⚡ Fetching scripts ...');
   return (await graphQLClient.request(getScripts)).scripts || [];
-}
-
-async function createScriptIfNotExists(scripts) {
-  const list = graphqlScriptsToList(scripts);
-  const script = list.find((s) => s.id === package.name);
-  if (!script) {
-    ui.log.write(`⚡ Creating/updating script ${package.name} ...`);
-    await graphQLClient.request(createScript, {
-      name: package.name,
-      desc: package.description,
-    });
-    return getAllScripts();
-  }
-
-  return scripts;
 }
 
 const ui = {
@@ -126,10 +119,8 @@ const ui = {
     }
   }
 
-  let scripts = await getAllScripts();
-
   ui.log.write('⚡ Checking if script exists ...');
-  scripts = await createScriptIfNotExists(scripts);
+  const scripts = await createScriptIfNotExists();
   
   ui.log.write('⚡ Validating versions ...');
   const isValid = isVersionValid(package.name, package.version, scripts);
