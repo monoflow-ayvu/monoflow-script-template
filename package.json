@@ -1,6 +1,6 @@
 {
   "name": "monoflow-script-env",
-  "version": "1.0.4",
+  "version": "1.1.0",
   "description": "Script padrão de todos os scripts. Template para criar um script.",
   "license": "EULA",
   "private": true,
@@ -10,8 +10,8 @@
     "build-copy": "yarn build && (cat dist/bundle.js | pbcopy) && du -sh dist/*.js",
     "size": "npm run build && size-limit",
     "deploy": "node .scripts/deploy.js",
-    "minor": "npm run build && bump minor --commit --tag --push --all && npm publish",
-    "release": "npm run build && bump major --commit --tag --push --all && npm publish"
+    "minor": "npm run build && bump minor --commit --tag --push --all",
+    "release": "npm run build && bump major --commit --tag --push --all"
   },
   "browserslist": [
     "ie 6"
