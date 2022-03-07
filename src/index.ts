@@ -1,6 +1,3 @@
-when.onInit = () => {  
-  // keyboard
-  data.LOGIN_KEYBOARD_TYPE = 'numeric';
-
+messages.on('onInit', function() {
   platform.log('script started! (I am the script)');
-}
+});
