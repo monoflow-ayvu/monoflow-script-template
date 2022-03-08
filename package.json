@@ -1,25 +1,93 @@
 {
-  "name": "monoflow-script-env",
-  "version": "1.14.0",
-  "description": "Script padrão de todos os scripts. Template para criar um script.",
+  "name": "checklist",
+  "version": "0.0.1",
+  "description": "Comprobador de checklist. Pode controlar checklist, retorno ao trabalho e mais.",
   "settingsSchema": {
     "display": "form",
     "components": [
       {
-        "label": "Nome",
-        "description": "Nome para saludar",
+        "label": "ID Formulario Checklist",
         "tableView": true,
-        "key": "nome",
+        "validate": {
+          "required": true,
+          "custom": "valid = /^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$/.test(input) ? true : 'ID inválido';"
+        },
+        "key": "checklistId",
         "type": "textfield",
+        "input": true
+      },
+      {
+        "label": "Horas até mostrar checklist novamente",
+        "tooltip": "Se o usuário sai do sistema e logo volta, quantas horas deveriam ser consideradas para mostrar checklist novamente?",
+        "mask": false,
+        "tableView": false,
+        "delimiter": false,
+        "requireDecimal": false,
+        "inputFormat": "plain",
+        "truncateMultipleSpaces": false,
+        "validate": {
+          "required": true,
+          "min": 0
+        },
+        "key": "checklistHours",
+        "type": "number",
+        "input": true
+      },
+      {
+        "label": "Habilitar retorno?",
+        "tableView": false,
+        "key": "enableReturn",
+        "type": "checkbox",
         "input": true,
-        "defaultValue": "User"
+        "defaultValue": false
+      },
+      {
+        "label": "Retorno",
+        "key": "retorno",
+        "conditional": {
+          "show": true,
+          "when": "enableReturn",
+          "eq": "true"
+        },
+        "type": "well",
+        "input": false,
+        "tableView": false,
+        "components": [
+          {
+            "label": "ID Formulario Retorno",
+            "tableView": true,
+            "validate": {
+              "required": true,
+              "custom": "valid = /^[0-9a-fA-F]{8}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{4}\\b-[0-9a-fA-F]{12}$/.test(input) ? true : 'ID inválido';"
+            },
+            "key": "returnId",
+            "type": "textfield",
+            "input": true
+          },
+          {
+            "label": "Horas límite para mostrar retorno",
+            "tooltip": "Após esse tempo, vai se mostrar o formulario de checklist ao usuário.",
+            "mask": false,
+            "tableView": false,
+            "delimiter": false,
+            "requireDecimal": false,
+            "inputFormat": "plain",
+            "truncateMultipleSpaces": false,
+            "validate": {
+              "required": true,
+              "min": 0
+            },
+            "key": "returnHours",
+            "type": "number",
+            "input": true
+          }
+        ]
       },
       {
         "type": "button",
         "label": "Submit",
         "key": "submit",
         "disableOnInvalid": true,
-        "block": true,
         "input": true,
         "tableView": false
       }
