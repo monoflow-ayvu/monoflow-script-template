@@ -131,7 +131,7 @@
     "compression-webpack-plugin": "9.2.0",
     "graphql": "^16.3.0",
     "graphql-request": "^4.0.0",
-    "inquirer": "^8.2.0",
+    "inquirer": "8.2.1",
     "mobx-keystone": "0.67.0",
     "semver": "^7.3.5",
     "size-limit": "7.0.8",
