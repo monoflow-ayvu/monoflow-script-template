@@ -1099,10 +1099,19 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/telematree@9.8.0":
-  version "9.8.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-9.8.0.tgz#331e31a423bd771fcd9cdb200e26cca502b8d81c"
-  integrity sha512-2XufTLitJcxpIdHU75ul9QGZrShH3mKpQ5Nl0r0ufDDV5lbb0o/1E7IlmvBBvIV42ks+Q7uIq3wMQJZnim5Nkw==
+"@fermuch/monoutils@^0.0.23":
+  version "0.0.23"
+  resolved "https://registry.yarnpkg.com/@fermuch/monoutils/-/monoutils-0.0.23.tgz#71a00f2e1df19fd17d1286c20959f67d1afe7a77"
+  integrity sha512-h7gZ1uRm6v5j6Kw62XMZxB8z8JLssBm7W7V/TkL2ahNEc0MyOiEFLUj5OczeglmJcFBjBEPOSUeQUxj9sKmtmA==
+  dependencies:
+    "@fermuch/telematree" "^9.16.0"
+    lodash "^4.17.21"
+    typed-emitter "^2.1.0"
+
+"@fermuch/telematree@^9.16.0":
+  version "9.16.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-9.16.0.tgz#c751aab5beff4a124024d86afe6c0ee6e2530037"
+  integrity sha512-kXqUAZp0ISshfWwnF/v5+ojyW+9hXZZfw7CjFtRbyVGZ/clUgwV2M8jUGGux5ZdZ+CDD0Z1Lejs6u68pqPxjTQ==
   dependencies:
     "@stablelib/snappy" "^1.0.1"
     eta "^1.12.3"
@@ -3506,10 +3515,10 @@ graceful-fs@^4.2.9:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.9.tgz#041b05df45755e587a24942279b9d113146e1c96"
   integrity sha512-NtNxqUcXgpW2iMrfqSfR73Glt39K+BLwWsPs94yR63v45T0Wbej7eRmL5cWfwEgqXnmjQp3zaJTshdRW/qC2ZQ==
 
-graphql-request@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-4.0.0.tgz#5e4361d33df1a95ccd7ad23a8ebb6bbca9d5622f"
-  integrity sha512-cdqQLCXlBGkaLdkLYRl4LtkwaZU6TfpE7/tnUQFl3wXfUPWN74Ov+Q61VuIh+AltS789YfGB6whghmCmeXLvTw==
+graphql-request@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/graphql-request/-/graphql-request-4.1.0.tgz#98d0d8d4458fd81674d8566d0b5781bd2823c26e"
+  integrity sha512-CBFcO6LP7cg+aBMc+x9C1dZEQsKTBZKR2J+HzuB0cR/6aaU4K4/tRXTQu8CDMp5195ZU+DTNKZZOSK1WRbTeAg==
   dependencies:
     cross-fetch "^3.0.6"
     extract-files "^9.0.0"
@@ -3682,10 +3691,10 @@ inquirer@^7.3.3:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inquirer@^8.2.0:
-  version "8.2.0"
-  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.0.tgz#f44f008dd344bbfc4b30031f45d984e034a3ac3a"
-  integrity sha512-0crLweprevJ02tTuA6ThpoAERAGyVILC4sS74uib58Xf/zSr1/ZWtmm7D5CI+bSQEaA04f0K7idaHpQbSWgiVQ==
+inquirer@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.yarnpkg.com/inquirer/-/inquirer-8.2.1.tgz#e00022e3e8930a92662f760f020686530a84671d"
+  integrity sha512-pxhBaw9cyTFMjwKtkjePWDhvwzvrNGAw7En4hottzlPvz80GZaMZthdDU35aA6/f5FRZf3uhE057q8w1DE3V2g==
   dependencies:
     ansi-escapes "^4.2.1"
     chalk "^4.1.1"
@@ -3697,7 +3706,7 @@ inquirer@^8.2.0:
     mute-stream "0.0.8"
     ora "^5.4.1"
     run-async "^2.4.0"
-    rxjs "^7.2.0"
+    rxjs "^7.5.5"
     string-width "^4.1.0"
     strip-ansi "^6.0.0"
     through "^2.3.6"
@@ -4801,10 +4810,17 @@ rxjs@^6.6.0:
   dependencies:
     tslib "^1.9.0"
 
-rxjs@^7.2.0, rxjs@^7.5.2:
+rxjs@^7.5.2:
   version "7.5.4"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.4.tgz#3d6bd407e6b7ce9a123e76b1e770dc5761aa368d"
   integrity sha512-h5M3Hk78r6wAheJF0a5YahB1yRQKCsZ4MsGdZ5O9ETbVtjPcScGfrMmoOq7EBsCRzd4BDkvDJ7ogP8Sz5tTFiQ==
+  dependencies:
+    tslib "^2.1.0"
+
+rxjs@^7.5.5:
+  version "7.5.5"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-7.5.5.tgz#2ebad89af0f560f460ad5cc4213219e1f7dd4e9f"
+  integrity sha512-sy+H0pQofO95VDmFLzyaw9xNJU4KTRSwQIGM6+iG3SypAtCiLDzpeG8sJrNCWn2Up9km+KhkvTdbkrdy+yzZdw==
   dependencies:
     tslib "^2.1.0"
 
