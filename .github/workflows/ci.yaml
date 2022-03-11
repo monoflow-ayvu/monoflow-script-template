@@ -21,7 +21,7 @@ jobs:
       - uses: borales/actions-yarn@v2.3.0
         with:
           cmd: build
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: '14'
       - run: node .scripts/deploy.js --force
