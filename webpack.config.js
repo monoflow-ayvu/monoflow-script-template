@@ -19,7 +19,7 @@ var babelOptions = {
   presets: [
     ['@babel/env', {
       targets: {
-        // 'android 4.4'
+        android: '4.4',
         ie: 6,
       },
       bugfixes: true,
