@@ -1,4 +1,4 @@
-import MonoUtils from "@fermuch/monoutils";
+import * as MonoUtils from "@fermuch/monoutils";
 
 // based on settingsSchema @ package.json
 type Config = Record<string, unknown> & {
