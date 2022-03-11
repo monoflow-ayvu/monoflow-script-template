@@ -64,6 +64,7 @@ module.exports = {
     filename: 'bundle.js',
     path: distDir,
     chunkFormat: 'commonjs',
+    globalObject: `typeof self !== 'undefined' ? self : this`,
     environment: {
       // The environment supports arrow functions ('() => { ... }').
       arrowFunction: false,
