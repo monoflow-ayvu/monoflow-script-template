@@ -43,7 +43,7 @@ mutation uploadScript($id:ID!, $ver:ID!, $code:String!) {
 }`
 
 const createScript = gql`
-mutation createScript($name:String!, $desc:String, $settingsSchema:String, $ver:String) {
+mutation createScript($name:String!, $desc:String, $settingsSchema:String, $ver: String!) {
   updateScript(description:$desc, name:$name, settingsSchema:$settingsSchema, version:$ver) {
     id
   }
@@ -94,7 +94,7 @@ async function createScriptIfNotExists() {
     name: package.name,
     desc: package.description,
     settingsSchema: JSON.stringify(package.settingsSchema || {}),
-    version: package.version,
+    ver: package.version,
   });
   
   ui.log.write('⚡ Fetching scripts ...');
