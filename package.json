@@ -9,7 +9,7 @@
         "label": "Nome",
         "description": "Nome para saludar",
         "tableView": true,
-        "key": "nome",
+        "key": "name",
         "type": "textfield",
         "input": true,
         "defaultValue": "User"
@@ -35,7 +35,9 @@
     "deploy": "node .scripts/deploy.js",
     "deploy-force": "node .scripts/deploy.js --force",
     "minor": "npm run build && bump minor --commit --tag --push --all",
-    "release": "npm run build && bump major --commit --tag --push --all"
+    "release": "npm run build && bump major --commit --tag --push --all",
+    "test": "jest --silent",
+    "coverage": "yarn test -- --coverage"
   },
   "browserslist": [
     "ie 6"
@@ -51,10 +53,12 @@
     "@babel/core": "7.17.7",
     "@babel/plugin-transform-arrow-functions": "7.16.7",
     "@babel/preset-env": "7.16.11",
+    "@babel/preset-typescript": "^7.16.7",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@size-limit/preset-big-lib": "7.0.8",
     "@types/commander": "^2.12.2",
     "@types/firebase": "3.2.1",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "4.14.180",
     "@types/uuid": "8.3.4",
     "babel-loader": "8.2.3",
@@ -64,11 +68,12 @@
     "graphql": "^16.3.0",
     "graphql-request": "^4.1.0",
     "inquirer": "^8.2.1",
+    "jest": "^27.5.1",
     "mobx-keystone": "0.67.1",
     "semver": "^7.3.5",
     "size-limit": "7.0.8",
     "ts-loader": "9.2.8",
-    "typed-emitter": "2.1.0",
+    "typed-emitter": "^2.1.0",
     "typescript": "4.6.2",
     "webpack": "5.70.0",
     "webpack-cli": "4.9.2"
@@ -80,5 +85,22 @@
     "firebase": "9.6.8",
     "lodash": "4.17.21",
     "mobx": "6.4.2"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "web.js",
+      "js",
+      "web.ts",
+      "ts",
+      "web.tsx",
+      "tsx",
+      "json",
+      "web.jsx",
+      "jsx",
+      "node"
+    ],
+    "setupFilesAfterEnv": [
+      "<rootDir>/private/jest/setup.ts"
+    ]
   }
 }

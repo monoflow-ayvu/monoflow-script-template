@@ -12,22 +12,23 @@ jobs:
   build:
     name: Deploy
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+        os: [ubuntu-latest]
     steps:
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: 3.x
-          architecture: x64
       - uses: actions/checkout@v3
-      - uses: borales/actions-yarn@v2.3.0
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v1
         with:
-          cmd: install
-      - uses: borales/actions-yarn@v2.3.0
-        with:
-          cmd: build
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-      - run: node .scripts/deploy.js --force
+          node-version: ${{ matrix.node_version }}
+      - name: yarn install, build, and test
+        run: |
+          yarn install
+          yarn build
+          yarn test
+        env:
+          CI: true
+      - run: yarn build && node .scripts/deploy.js --force
         env:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}

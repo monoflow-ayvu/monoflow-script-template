@@ -1,21 +1,31 @@
-import TypedEmitter from "typed-emitter"
-import { KnowPlatformTools, DataProperty, DynamicData, FN_PROPS, FNArgs, EventArgs } from '@fermuch/telematree/dist/tree/dynamic_data';
-import { ScriptWithInstance } from '@fermuch/telematree/dist/tree/dynamic_data/script_with_instance';
-import events from '@fermuch/telematree/dist/events';
-import telematree from '@fermuch/telematree/dist/library';
-
+import TypedEmitter from "typed-emitter";
+import {
+  KnowPlatformTools as KnownPlatformTools,
+  DataProperty,
+  DynamicData,
+  FN_PROPS,
+  FNArgs,
+  EventArgs,
+} from "@fermuch/telematree/dist/tree/dynamic_data";
+import { BaseEvent } from "@fermuch/telematree/dist/events/base_event";
+import { ScriptWithInstance } from "@fermuch/telematree/dist/tree/dynamic_data/script_with_instance";
+import telematree from "@fermuch/telematree/dist/library";
 
 // ** UUID **
 type V4Options = RandomOptions | RngOptions;
 type v4String = (options?: V4Options) => string;
-type v4Buffer = <T extends OutputBuffer>(options: V4Options | null | undefined, buffer: T, offset?: number) => T;
+type v4Buffer = <T extends OutputBuffer>(
+  options: V4Options | null | undefined,
+  buffer: T,
+  offset?: number
+) => T;
 type v4 = v4Buffer & v4String;
 
 interface ScriptGlobal {
-  platform: KnowPlatformTools;
+  platform: KnownPlatformTools;
   telematree: telematree;
   data: DataProperty;
-  env: DynamicData['env'];
+  env: DynamicData["env"];
   messages: TypedEmitter<EventArgs>;
   uuid: v4;
   when: FNArgs;
@@ -23,19 +33,35 @@ interface ScriptGlobal {
 
 // ** Globals **
 declare global {
-  const global: ScriptGlobal;
+  var global: ScriptGlobal;
 
-  const platform: KnowPlatformTools;
-  const telematree: telematree;
-  const data: DataProperty;
-  const env: DynamicData['env'];
-  const messages: TypedEmitter<EventArgs>;
-  const uuid: v4;
-  const when: FNArgs;
+  var platform: KnownPlatformTools;
+  var telematree: telematree;
+  var data: DataProperty;
+  var env: DynamicData["env"];
+  var messages: TypedEmitter<EventArgs>;
+  var emitEventGlobally: (event: BaseEvent) => void;
+  var uuid: v4;
+  var when: FNArgs;
 
-  const script: ScriptWithInstance | undefined;
-  const settings: undefined | (() => unknown),
-  const getSettings: undefined | (() => unknown),
+  var script: ScriptWithInstance | undefined;
+  var settings: undefined | (() => unknown);
+  var getSettings: undefined | (() => unknown);
 }
 
-interface globalThis extends ScriptGlobal { }
+declare var global: ScriptGlobal;
+
+declare var platform: KnownPlatformTools;
+declare var telematree: telematree;
+declare var data: DataProperty;
+declare var env: DynamicData["env"];
+declare var messages: TypedEmitter<EventArgs>;
+declare var emitEventGlobally: (event: BaseEvent) => void;
+declare var uuid: v4;
+declare var when: FNArgs;
+
+declare var script: ScriptWithInstance | undefined;
+declare var settings: undefined | (() => unknown);
+declare var getSettings: undefined | (() => unknown);
+
+interface globalThis extends ScriptGlobal {}

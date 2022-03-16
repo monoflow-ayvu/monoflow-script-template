@@ -8,10 +8,6 @@ type Config = Record<string, unknown> & {
 const conf = new MonoUtils.config.Config<Config>();
 
 messages.on('onInit', function() {
-  platform.log('script started! (I am the script)');
-  platform.log('settings:');
-  platform.log(conf.store);
-
-  const name = conf.get('nome', 'default name');
+  const name = conf.get('name', 'default name');
   platform.log(`Hello, ${name}!`);
 });
