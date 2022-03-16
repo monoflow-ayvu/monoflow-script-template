@@ -1,16 +1,12 @@
-name: CI Deploy
+name: CI Test
 on:
   push:
-    # ignore new branches
-    branches:
-      - "!*"
-    # accept all tags starting with v
     tags:
-      - "v*"
+      - "!v*"
 
 jobs:
   build:
-    name: Deploy
+    name: Test
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -29,6 +25,3 @@ jobs:
           yarn test
         env:
           CI: true
-      - run: yarn build && node .scripts/deploy.js --force
-        env:
-          DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
