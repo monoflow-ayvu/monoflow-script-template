@@ -25,7 +25,7 @@
       }
     ]
   },
-  "license": "EULA",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "build": "webpack --mode production",
