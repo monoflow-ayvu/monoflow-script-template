@@ -36,8 +36,7 @@
     "deploy-force": "node .scripts/deploy.js --force",
     "minor": "npm run build && bump minor --commit --tag --push --all",
     "release": "npm run build && bump major --commit --tag --push --all",
-    "test": "jest --silent",
-    "coverage": "yarn test -- --coverage"
+    "test": "jest --silent"
   },
   "browserslist": [
     "ie 6"
