@@ -27,7 +27,7 @@ jobs:
           CI: true
       - name: Merge PR
         if: success()
-        uses: "actions/github-script@v2"
+        uses: actions/github-script@v6
         with:
           # github-token: "${{ secrets.GH_KEY }}"
           script: |
