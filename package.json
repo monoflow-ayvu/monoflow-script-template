@@ -58,7 +58,7 @@
     "@types/commander": "^2.12.2",
     "@types/firebase": "3.2.1",
     "@types/jest": "^27.4.1",
-    "@types/lodash": "4.14.181",
+    "@types/lodash": "4.14.182",
     "@types/uuid": "8.3.4",
     "babel-loader": "8.2.4",
     "brotli-webpack-plugin": "1.1.0",
