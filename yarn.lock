@@ -1261,10 +1261,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.3.tgz#90420f9f9c6d3987f176a19a7d8e764271a2f55d"
   integrity sha512-Fxt+AfXgjMoin2maPIYzFZnQjAXjAL0PHscM5pRTtatFqB+vZxAM9tLp2Optnuw3QOQC40jTNeGYFOMvyf7v9g==
 
-"@fermuch/monoutils@0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@fermuch/monoutils/-/monoutils-0.1.2.tgz#468e68a0fc636632b7ae2dcd70c85d1ffa1c67de"
-  integrity sha512-8ziUVHHY7WDLdvGkQonXdIq2H1pYs7pIB/yd2jUUWyL+kdceeO1BX/XaBS2x+rPFwIV19/UjeegiIgzcvP4ngQ==
+"@fermuch/monoutils@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@fermuch/monoutils/-/monoutils-0.1.4.tgz#21b56fe3686cc50de73708405f4477df3d012691"
+  integrity sha512-hqpRyO1QZW3j0qDwW4oerjkaMhIQoaqJwSIsKN+VNzIT5YRCBKniCSgQMml143509ylBkVw8o4VAePy+kA908g==
   dependencies:
     "@fermuch/telematree" "^9.20.0"
     typed-emitter "^2.1.0"
