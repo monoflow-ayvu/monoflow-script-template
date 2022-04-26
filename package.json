@@ -68,7 +68,7 @@
     "graphql-request": "4.2.0",
     "inquirer": "8.2.3",
     "jest": "28.0.1",
-    "mobx-keystone": "0.67.3",
+    "mobx-keystone": "0.67.5",
     "semver": "7.3.7",
     "size-limit": "7.0.8",
     "ts-loader": "9.2.9",
