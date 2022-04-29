@@ -49,9 +49,9 @@
     }
   ],
   "devDependencies": {
-    "@babel/core": "7.17.9",
+    "@babel/core": "7.17.10",
     "@babel/plugin-transform-arrow-functions": "7.16.7",
-    "@babel/preset-env": "7.16.11",
+    "@babel/preset-env": "7.17.10",
     "@babel/preset-typescript": "^7.16.7",
     "@jsdevtools/version-bump-prompt": "^6.1.0",
     "@size-limit/preset-big-lib": "7.0.8",
