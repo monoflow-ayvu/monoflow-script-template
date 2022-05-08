@@ -5571,13 +5571,13 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mobx-keystone@0.68.3:
-  version "0.68.3"
-  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.68.3.tgz#a6424be1ae5e73bef277c761fdbeb77cd15c33d7"
-  integrity sha512-cggLNxBYezXD5xKDdHWxIMii5+lj04qFkX/WrDCWohntGmahBFSU795ojPoHHgFvg4VOe452qHRQGGNQqR5GGg==
+mobx-keystone@0.68.4:
+  version "0.68.4"
+  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.68.4.tgz#0dd1fbb6a0fb92c1e625a5db2b096e7020e40f71"
+  integrity sha512-VTL2D751EOvguiOLsPp+OKLw5EpdDlubMTfsuFojWGB/Ug2Ee8wSoDhdlEJaZPFuwmTsl1fapuZXW9OvfSUmpg==
   dependencies:
     fast-deep-equal "^3.1.3"
-    nanoid "^3.3.3"
+    nanoid "^3.3.4"
     ts-toolbelt "^9.6.0"
     tslib "^2.4.0"
 
@@ -5623,10 +5623,10 @@ nanoid@^3.2.0, nanoid@^3.3.1:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.1.tgz#6347a18cac88af88f58af0b3594b723d5e99bb35"
   integrity sha512-n6Vs/3KGyxPQd6uO0eH4Bv0ojGSUvuLlIHtC3Y0kEO23YRge8H9x1GCzLn28YX0H66pMkxuaeESFq4tKISKwdw==
 
-nanoid@^3.3.3:
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.3.tgz#fd8e8b7aa761fe807dba2d1b98fb7241bb724a25"
-  integrity sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==
+nanoid@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
+  integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
 nanospinner@^1.0.0:
   version "1.0.0"
