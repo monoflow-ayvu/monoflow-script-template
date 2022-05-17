@@ -63,7 +63,7 @@
     "babel-loader": "8.2.5",
     "brotli-webpack-plugin": "1.1.0",
     "commander": "9.2.0",
-    "compression-webpack-plugin": "9.2.0",
+    "compression-webpack-plugin": "10.0.0",
     "graphql": "16.5.0",
     "graphql-request": "4.2.0",
     "inquirer": "8.2.4",
