@@ -5704,10 +5704,10 @@ mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mobx-keystone@0.69.0:
-  version "0.69.0"
-  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.69.0.tgz#e5dd6b9cadf41f19f24511247d0a383360d4b779"
-  integrity sha512-hu8+BUwwK9S5ZnCRhk5A5LLsBw40NlpLMKKQN5wNsAzyeznUoTnE6okpTU00JtkU53e2bKDVQvsl/PJ3CfmgKA==
+mobx-keystone@0.69.1:
+  version "0.69.1"
+  resolved "https://registry.yarnpkg.com/mobx-keystone/-/mobx-keystone-0.69.1.tgz#92beb59a7f991606edcc807fbdeb700b1a9df1a1"
+  integrity sha512-wxWFAdUqssGvLSoq6jUVmxWHJj/Y50SHlzblFqYKZsvL+pLY6TRi9mTHdM5tbbESf9oS24YpDMUeiZMvXLn75g==
   dependencies:
     fast-deep-equal "^3.1.3"
     nanoid "^3.3.4"
