@@ -57,7 +57,7 @@
     "@size-limit/preset-big-lib": "7.0.8",
     "@types/commander": "^2.12.2",
     "@types/firebase": "3.2.1",
-    "@types/jest": "28.1.5",
+    "@types/jest": "28.1.6",
     "@types/lodash": "4.14.182",
     "@types/uuid": "8.3.4",
     "babel-loader": "8.2.5",
