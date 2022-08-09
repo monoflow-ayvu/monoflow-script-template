@@ -1446,10 +1446,10 @@
     "@fermuch/telematree" "^9.20.0"
     typed-emitter "^2.1.0"
 
-"@fermuch/telematree@9.21.0":
-  version "9.21.0"
-  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-9.21.0.tgz#5b27da653e48001a39138d15d47348c1ab69a13e"
-  integrity sha512-tTehwavHfqvc8d8XemAVeDsaJypz/ljG3sN5Tvp4bweKE0wPOU/rR543RiFVtsx194do0c0ywFTnYj9awCGyEQ==
+"@fermuch/telematree@9.23.0":
+  version "9.23.0"
+  resolved "https://registry.yarnpkg.com/@fermuch/telematree/-/telematree-9.23.0.tgz#1c0d761d66a0a613190dfc591678a92e331e570f"
+  integrity sha512-lsKuzVtnsutsgUvCG/LHTnq29MFvT5nkKDYZ1Tr50Q5SmxTZN4NrsvIzoiGbOovPg6u64xGsdqsmRFFPOZNdMA==
   dependencies:
     "@stablelib/snappy" "^1.0.1"
     eta "^1.12.3"
