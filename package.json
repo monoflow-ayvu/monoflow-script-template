@@ -63,7 +63,7 @@
     "brotli-webpack-plugin": "1.1.0",
     "commander": "9.4.0",
     "compression-webpack-plugin": "10.0.0",
-    "graphql": "16.5.0",
+    "graphql": "16.6.0",
     "graphql-request": "4.3.0",
     "inquirer": "9.1.0",
     "jest": "28.1.3",
