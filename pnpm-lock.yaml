@@ -21,7 +21,7 @@ specifiers:
   firebase: 9.9.4
   graphql: 16.6.0
   graphql-request: 4.3.0
-  inquirer: 9.1.0
+  inquirer: 9.1.1
   jest: 29.0.1
   lodash: 4.17.21
   mobx: 6.6.1
@@ -59,7 +59,7 @@ devDependencies:
   compression-webpack-plugin: 10.0.0_webpack@5.74.0
   graphql: 16.6.0
   graphql-request: 4.3.0_graphql@16.6.0
-  inquirer: 9.1.0
+  inquirer: 9.1.1
   jest: 29.0.1_@types+node@18.7.4
   mobx-keystone: 0.69.9_mobx@6.6.1
   semver: 7.3.7
@@ -3887,9 +3887,9 @@ packages:
       escape-string-regexp: 1.0.5
     dev: true
 
-  /figures/4.0.1:
-    resolution: {integrity: sha512-rElJwkA/xS04Vfg+CaZodpso7VqBknOYbzi6I76hI4X80RUjkSxO2oAyPmGbuXUppywjqndOrQDl817hDnI++w==}
-    engines: {node: '>=12'}
+  /figures/5.0.0:
+    resolution: {integrity: sha512-ej8ksPF4x6e5wvK9yevct0UCXh8TTFlWGVLlgjZuoBH1HwjIfKE/IdL5mq89sFA7zELi1VhKpmtDnrs7zWyeyg==}
+    engines: {node: '>=14'}
     dependencies:
       escape-string-regexp: 5.0.0
       is-unicode-supported: 1.2.0
@@ -4338,8 +4338,8 @@ packages:
       through: 2.3.8
     dev: true
 
-  /inquirer/9.1.0:
-    resolution: {integrity: sha512-eukdjrBljg9t55ZnvJjvGi1OyYEzVBFsO/8o5d2MV3mc28u3x4X2kS4eJ/+9U10KiREfPkEBSeCrU/S2G/uRtw==}
+  /inquirer/9.1.1:
+    resolution: {integrity: sha512-hfS9EJ1pVkGNbYKqzdGwMj0Dqosd36Qvxd5pFy4657QT23gmtFTSqoYBisZR75DReeSMWPNa8J0Lf6TQCz8PvA==}
     engines: {node: '>=12.0.0'}
     dependencies:
       ansi-escapes: 5.0.0
@@ -4347,7 +4347,7 @@ packages:
       cli-cursor: 4.0.0
       cli-width: 4.0.0
       external-editor: 3.1.0
-      figures: 4.0.1
+      figures: 5.0.0
       lodash: 4.17.21
       mute-stream: 0.0.8
       ora: 6.1.2
