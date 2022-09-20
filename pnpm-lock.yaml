@@ -28,7 +28,7 @@ specifiers:
   mobx-keystone: 0.69.9
   semver: 7.3.7
   size-limit: 8.1.0
-  ts-loader: 9.3.1
+  ts-loader: 9.4.1
   typed-emitter: 2.1.0
   typescript: 4.8.3
   webpack: 5.74.0
@@ -64,7 +64,7 @@ devDependencies:
   mobx-keystone: 0.69.9_mobx@6.6.2
   semver: 7.3.7
   size-limit: 8.1.0
-  ts-loader: 9.3.1_kb3egcnme7w23lfa5xodfjfhge
+  ts-loader: 9.4.1_kb3egcnme7w23lfa5xodfjfhge
   typed-emitter: 2.1.0
   typescript: 4.8.3
   webpack: 5.74.0_webpack-cli@4.10.0
@@ -6353,8 +6353,8 @@ packages:
   /tr46/0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  /ts-loader/9.3.1_kb3egcnme7w23lfa5xodfjfhge:
-    resolution: {integrity: sha512-OkyShkcZTsTwyS3Kt7a4rsT/t2qvEVQuKCTg4LJmpj9fhFR7ukGdZwV6Qq3tRUkqcXtfGpPR7+hFKHCG/0d3Lw==}
+  /ts-loader/9.4.1_kb3egcnme7w23lfa5xodfjfhge:
+    resolution: {integrity: sha512-384TYAqGs70rn9F0VBnh6BPTfhga7yFNdC5gXbQpDrBj9/KsT4iRkGqKXhziofHOlE2j6YEaiTYVGKKvPhGWvw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       typescript: '*'
