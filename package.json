@@ -61,7 +61,7 @@
     "@types/uuid": "8.3.4",
     "babel-loader": "8.2.5",
     "brotli-webpack-plugin": "1.1.0",
-    "commander": "9.4.0",
+    "commander": "9.4.1",
     "compression-webpack-plugin": "10.0.0",
     "graphql": "16.6.0",
     "graphql-request": "5.0.0",
