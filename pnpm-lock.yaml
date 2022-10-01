@@ -25,7 +25,7 @@ specifiers:
   jest: 29.1.2
   lodash: 4.17.21
   mobx: 6.6.2
-  mobx-keystone: 1.0.0
+  mobx-keystone: 1.1.0
   semver: 7.3.7
   size-limit: 8.1.0
   ts-loader: 9.4.1
@@ -35,8 +35,8 @@ specifiers:
   webpack-cli: 4.10.0
 
 dependencies:
-  '@fermuch/monoutils': 0.2.0_qmllviiovh6myefszuicnmxbee
-  '@fermuch/telematree': 11.10.0_qmllviiovh6myefszuicnmxbee
+  '@fermuch/monoutils': 0.2.0_3wsqpobnwdgpmm2ptjozteowom
+  '@fermuch/telematree': 11.10.0_3wsqpobnwdgpmm2ptjozteowom
   cross-fetch: 3.1.5
   firebase: 9.10.0
   lodash: 4.17.21
@@ -61,7 +61,7 @@ devDependencies:
   graphql-request: 5.0.0_graphql@16.6.0
   inquirer: 9.1.2
   jest: 29.1.2_@types+node@18.7.4
-  mobx-keystone: 1.0.0_mobx@6.6.2
+  mobx-keystone: 1.1.0_mobx@6.6.2
   semver: 7.3.7
   size-limit: 8.1.0
   ts-loader: 9.4.1_qqxisngxjbp7lstdk7boexbu3e
@@ -1304,10 +1304,10 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@fermuch/monoutils/0.2.0_qmllviiovh6myefszuicnmxbee:
+  /@fermuch/monoutils/0.2.0_3wsqpobnwdgpmm2ptjozteowom:
     resolution: {integrity: sha512-bbeNmaCiIJRdQYP8IsAQJ2qMFZTnLxyCidtSOO+0RgbaGqYXL1xoKlXMiX3FzNWrgBkftfZuD+o013ORahHNBA==}
     dependencies:
-      '@fermuch/telematree': 9.23.0_qmllviiovh6myefszuicnmxbee
+      '@fermuch/telematree': 9.23.0_3wsqpobnwdgpmm2ptjozteowom
       typed-emitter: 2.1.0
     transitivePeerDependencies:
       - cross-fetch
@@ -1316,7 +1316,7 @@ packages:
       - mobx-keystone
     dev: false
 
-  /@fermuch/telematree/11.10.0_qmllviiovh6myefszuicnmxbee:
+  /@fermuch/telematree/11.10.0_3wsqpobnwdgpmm2ptjozteowom:
     resolution: {integrity: sha512-rtYJKLAanNo5kxsYR8+OBHxBD7fmR0AjvdBS2f/SBDfnAGvkUWL0Trmu69UQZoPwi9F+QRgtin0dYxI/eSGKBA==}
     peerDependencies:
       cross-fetch: ^3.1.5
@@ -1331,14 +1331,14 @@ packages:
       formiojs: 4.14.8
       imurmurhash: 0.1.4
       mobx: 6.6.2
-      mobx-keystone: 1.0.0_mobx@6.6.2
+      mobx-keystone: 1.1.0_mobx@6.6.2
       pure-uuid: 1.6.2
       typed-emitter: 2.1.0
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /@fermuch/telematree/9.23.0_qmllviiovh6myefszuicnmxbee:
+  /@fermuch/telematree/9.23.0_3wsqpobnwdgpmm2ptjozteowom:
     resolution: {integrity: sha512-lsKuzVtnsutsgUvCG/LHTnq29MFvT5nkKDYZ1Tr50Q5SmxTZN4NrsvIzoiGbOovPg6u64xGsdqsmRFFPOZNdMA==}
     peerDependencies:
       cross-fetch: ^3.1.5
@@ -1354,7 +1354,7 @@ packages:
       imurmurhash: 0.1.4
       lodash: 4.17.21
       mobx: 6.6.2
-      mobx-keystone: 1.0.0_mobx@6.6.2
+      mobx-keystone: 1.1.0_mobx@6.6.2
       pure-uuid: 1.6.2
       typed-emitter: 2.1.0
     transitivePeerDependencies:
@@ -5312,8 +5312,8 @@ packages:
     hasBin: true
     dev: true
 
-  /mobx-keystone/1.0.0_mobx@6.6.2:
-    resolution: {integrity: sha512-qtLBANjvmfzSHg9SX8Wf8qpxb4Z8Tdze2OQ0GXCqM2X7Qcrnl3cRqBKoyrUQ8mMJKE2fh8Qj6VH/oUrmsfuJPA==}
+  /mobx-keystone/1.1.0_mobx@6.6.2:
+    resolution: {integrity: sha512-2TSAjoDWoGqVNYF7hhGACOz2YkVEAHBaqVOmdxMpU2Y8fCI6uShKPECzdupa1LXe3WxoFsAMsBpyBZL67zV4xA==}
     peerDependencies:
       mobx: ^6.0.0 || ^5.0.0 || ^4.0.0
     dependencies:
