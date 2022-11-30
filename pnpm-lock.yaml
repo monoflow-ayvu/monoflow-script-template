@@ -10,7 +10,7 @@ specifiers:
   '@jsdevtools/version-bump-prompt': 6.1.0
   '@size-limit/preset-big-lib': 8.1.0
   '@types/jest': 29.2.3
-  '@types/lodash': 4.14.190
+  '@types/lodash': 4.14.191
   '@types/node': 18.11.9
   '@types/uuid': 9.0.0
   babel-loader: 9.1.0
@@ -50,7 +50,7 @@ devDependencies:
   '@jsdevtools/version-bump-prompt': 6.1.0
   '@size-limit/preset-big-lib': 8.1.0_mqa2djyxmu3bhn2emzkmmjftsu
   '@types/jest': 29.2.3
-  '@types/lodash': 4.14.190
+  '@types/lodash': 4.14.191
   '@types/node': 18.11.9
   '@types/uuid': 9.0.0
   babel-loader: 9.1.0_ztqwsvkb6z73luspkai6ilstpu
@@ -2456,8 +2456,8 @@ packages:
     resolution: {integrity: sha512-wOuvG1SN4Us4rez+tylwwwCV1psiNVOkJeM3AUWUNWg/jDQY2+HE/444y5gc+jBmRqASOm2Oeh5c1axHobwRKQ==}
     dev: true
 
-  /@types/lodash/4.14.190:
-    resolution: {integrity: sha512-5iJ3FBJBvQHQ8sFhEhJfjUP+G+LalhavTkYyrAYqz5MEJG+erSv0k9KJLb6q7++17Lafk1scaTIFXcMJlwK8Mw==}
+  /@types/lodash/4.14.191:
+    resolution: {integrity: sha512-BdZ5BCCvho3EIXw6wUCXHe7rS53AIDPLE+JzwgT+OsJk53oBfbSmZZ7CX4VaRoN78N+TJpFi9QPlfIVNmJYWxQ==}
     dev: true
 
   /@types/long/4.0.2:
