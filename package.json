@@ -74,7 +74,7 @@
     "typed-emitter": "2.1.0",
     "typescript": "4.9.3",
     "webpack": "5.75.0",
-    "webpack-cli": "5.0.0"
+    "webpack-cli": "5.0.1"
   },
   "dependencies": {
     "@fermuch/monoutils": "0.2.0",
