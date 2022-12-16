@@ -20,7 +20,7 @@ specifiers:
   cross-fetch: 3.1.5
   firebase: 9.15.0
   graphql: 16.6.0
-  graphql-request: 5.0.0
+  graphql-request: 5.1.0
   inquirer: 9.1.4
   jest: 29.3.1
   lodash: 4.17.21
@@ -58,7 +58,7 @@ devDependencies:
   commander: 9.4.1
   compression-webpack-plugin: 10.0.0_webpack@5.75.0
   graphql: 16.6.0
-  graphql-request: 5.0.0_graphql@16.6.0
+  graphql-request: 5.1.0_graphql@16.6.0
   inquirer: 9.1.4
   jest: 29.3.1_@types+node@18.11.15
   mobx-keystone: 1.2.0_mobx@6.7.0
@@ -4133,8 +4133,8 @@ packages:
     resolution: {integrity: sha512-9ByhssR2fPVsNZj478qUUbKfmL0+t5BDVyjShtyZZLiK7ZDAArFFfopyOTj0M05wE2tJPisA4iTnnXl2YoPvOA==}
     dev: true
 
-  /graphql-request/5.0.0_graphql@16.6.0:
-    resolution: {integrity: sha512-SpVEnIo2J5k2+Zf76cUkdvIRaq5FMZvGQYnA4lUWYbc99m+fHh4CZYRRO/Ff4tCLQ613fzCm3SiDT64ubW5Gyw==}
+  /graphql-request/5.1.0_graphql@16.6.0:
+    resolution: {integrity: sha512-0OeRVYigVwIiXhNmqnPDt+JhMzsjinxHE7TVy3Lm6jUzav0guVcL0lfSbi6jVTRAxcbwgyr6yrZioSHxf9gHzw==}
     peerDependencies:
       graphql: 14 - 16
     dependencies:
