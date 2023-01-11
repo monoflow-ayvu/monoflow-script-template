@@ -8,7 +8,7 @@ specifiers:
   '@fermuch/monoutils': 0.2.0
   '@fermuch/telematree': 11.10.0
   '@jsdevtools/version-bump-prompt': 6.1.0
-  '@size-limit/preset-big-lib': 8.1.0
+  '@size-limit/preset-big-lib': 8.1.1
   '@types/jest': 29.2.5
   '@types/lodash': 4.14.191
   '@types/node': 18.11.18
@@ -48,7 +48,7 @@ devDependencies:
   '@babel/preset-env': 7.20.2_@babel+core@7.20.12
   '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
   '@jsdevtools/version-bump-prompt': 6.1.0
-  '@size-limit/preset-big-lib': 8.1.0_d4de4wbfu5nd3xa32qzp6mnvgu
+  '@size-limit/preset-big-lib': 8.1.1_d4de4wbfu5nd3xa32qzp6mnvgu
   '@types/jest': 29.2.5
   '@types/lodash': 4.14.191
   '@types/node': 18.11.18
@@ -2309,24 +2309,24 @@ packages:
       - supports-color
     dev: true
 
-  /@size-limit/file/8.1.0_size-limit@8.1.0:
-    resolution: {integrity: sha512-Ur+NgJSRHBnbQBrD8X2doxXYdBcVJsMxe2KfWrUmnZ6wYz09YKhQ1iYLqNztjf2yf/JEp00zp1vyhmimUQfUHQ==}
+  /@size-limit/file/8.1.1_size-limit@8.1.0:
+    resolution: {integrity: sha512-4VW3r5TuKXGyycrWdhKhYaBSpWQq2sxuz0UOMoKYiTGcYBM6Sqpk4342RbnoIjVDmj7kyD4PS4eBstUnvF3TSA==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
-      size-limit: 8.1.0
+      size-limit: 8.1.1
     dependencies:
-      semver: 7.3.7
+      semver: 7.3.8
       size-limit: 8.1.0
     dev: true
 
-  /@size-limit/preset-big-lib/8.1.0_d4de4wbfu5nd3xa32qzp6mnvgu:
-    resolution: {integrity: sha512-onkwmJt+gXzoRXOkcmvAX2mGyAoS6vXltqZsQHKpqYENJDghi5o4XuIZhYoEdsAYeP/vrM7u9jGGB7a0PGXR+Q==}
+  /@size-limit/preset-big-lib/8.1.1_d4de4wbfu5nd3xa32qzp6mnvgu:
+    resolution: {integrity: sha512-hKv8Rm8UF2iqNzQ+lhEPfjRaaxJAoWm3DSwcpSFpRgoafQLRY+v22ZvyFv2GbSQ5/5w+qkuc6cxCjis31/RLEQ==}
     peerDependencies:
-      size-limit: 8.1.0
+      size-limit: 8.1.1
     dependencies:
-      '@size-limit/file': 8.1.0_size-limit@8.1.0
-      '@size-limit/time': 8.1.0_size-limit@8.1.0
-      '@size-limit/webpack': 8.1.0_d4de4wbfu5nd3xa32qzp6mnvgu
+      '@size-limit/file': 8.1.1_size-limit@8.1.0
+      '@size-limit/time': 8.1.1_size-limit@8.1.0
+      '@size-limit/webpack': 8.1.1_d4de4wbfu5nd3xa32qzp6mnvgu
       size-limit: 8.1.0
     transitivePeerDependencies:
       - '@swc/core'
@@ -2339,11 +2339,11 @@ packages:
       - webpack-cli
     dev: true
 
-  /@size-limit/time/8.1.0_size-limit@8.1.0:
-    resolution: {integrity: sha512-rOfIqpq8RSjKUnByJcWr2qw8XBTo3DAL16lmzjILvzQBkKi1kgDHU4QVa9K/BehYqH+Lx3rA3pVFMrQ5aJsOkg==}
+  /@size-limit/time/8.1.1_size-limit@8.1.0:
+    resolution: {integrity: sha512-h1KUqoofcRLwmLIWHMeFHyoqQ0yhy9iq364tKe8T+dTsdwEjqZHjgCDTmkdzNsnJzjy9m6/ak9/CJ7aryjFQfQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
-      size-limit: 8.1.0
+      size-limit: 8.1.1
     dependencies:
       estimo: 2.3.6
       react: 17.0.2
@@ -2355,13 +2355,12 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@size-limit/webpack/8.1.0_d4de4wbfu5nd3xa32qzp6mnvgu:
-    resolution: {integrity: sha512-TLego57hQbR0dmYZzIa9KZecebGMJoxZaqJTx9v3NDllxt6kJTljVXWghEvsGLpdKQfZTqraZ6nRm38+lG3sNw==}
+  /@size-limit/webpack/8.1.1_d4de4wbfu5nd3xa32qzp6mnvgu:
+    resolution: {integrity: sha512-dBwL68be6G3h2XTl+NrRH5PVBtA6Ocvd54W/mjpD9JX/ZYtKbKExYYgAlvqNmI1WFs29FV5AT4MIfCsCn2nTTQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
-      size-limit: 8.1.0
+      size-limit: 8.1.1
     dependencies:
-      escape-string-regexp: 4.0.0
       nanoid: 3.3.4
       size-limit: 8.1.0
       webpack: 5.75.0_webpack-cli@5.0.1
@@ -3643,11 +3642,6 @@ packages:
   /escape-string-regexp/2.0.0:
     resolution: {integrity: sha512-UpzcLCXolUWcNu5HtVMHYdXJjArjsF9C0aNnquZYY4uW/Vu0miy5YoWvbV345HauVvcAUnpRuhMMcqTcGOY2+w==}
     engines: {node: '>=8'}
-    dev: true
-
-  /escape-string-regexp/4.0.0:
-    resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
-    engines: {node: '>=10'}
     dev: true
 
   /escape-string-regexp/5.0.0:
@@ -5942,14 +5936,6 @@ packages:
   /semver/6.3.0:
     resolution: {integrity: sha512-b39TBaTSfV6yBrapU89p5fKekE2m/NwnDocOVruQFS1/veMgdzuPcnOM34M6CwxW8jH/lxEa5rBoDeUwu5HHTw==}
     hasBin: true
-    dev: true
-
-  /semver/7.3.7:
-    resolution: {integrity: sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dependencies:
-      lru-cache: 6.0.0
     dev: true
 
   /semver/7.3.8:
