@@ -27,7 +27,7 @@ specifiers:
   mobx: 6.7.0
   mobx-keystone: 1.2.0
   semver: 7.3.8
-  size-limit: 8.1.1
+  size-limit: 8.1.2
   ts-loader: 9.4.2
   typed-emitter: 2.1.0
   typescript: 4.9.4
@@ -48,7 +48,7 @@ devDependencies:
   '@babel/preset-env': 7.20.2_@babel+core@7.20.12
   '@babel/preset-typescript': 7.18.6_@babel+core@7.20.12
   '@jsdevtools/version-bump-prompt': 6.1.0
-  '@size-limit/preset-big-lib': 8.1.2_acokbxyqwktm4fvnaothyvcnte
+  '@size-limit/preset-big-lib': 8.1.2_vz6ovteq6jkaja37afn4f732fy
   '@types/jest': 29.2.5
   '@types/lodash': 4.14.191
   '@types/node': 18.11.18
@@ -63,7 +63,7 @@ devDependencies:
   jest: 29.3.1_@types+node@18.11.18
   mobx-keystone: 1.2.0_mobx@6.7.0
   semver: 7.3.8
-  size-limit: 8.1.1
+  size-limit: 8.1.2
   ts-loader: 9.4.2_3fkjkrd3audxnith3e7fo4fnxi
   typed-emitter: 2.1.0
   typescript: 4.9.4
@@ -2309,25 +2309,25 @@ packages:
       - supports-color
     dev: true
 
-  /@size-limit/file/8.1.2_size-limit@8.1.1:
+  /@size-limit/file/8.1.2_size-limit@8.1.2:
     resolution: {integrity: sha512-cjtGk1GejrmT+ik3LjXpRe+zrS/U15h+Py3L8sYN0XGat0+Y6pPbli1VuRRRcdXZNegpiW+UcxDxPN1AuZC5qA==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
       size-limit: 8.1.2
     dependencies:
       semver: 7.3.8
-      size-limit: 8.1.1
+      size-limit: 8.1.2
     dev: true
 
-  /@size-limit/preset-big-lib/8.1.2_acokbxyqwktm4fvnaothyvcnte:
+  /@size-limit/preset-big-lib/8.1.2_vz6ovteq6jkaja37afn4f732fy:
     resolution: {integrity: sha512-yrJ/rrYtyNUadTJ4OPktHjZ9CzNYT7yOsKExQZy3QTUBaFgd9QvZFl7Dmaxs7j5FVaZalEj8f6xmWpvFLUryYA==}
     peerDependencies:
       size-limit: 8.1.2
     dependencies:
-      '@size-limit/file': 8.1.2_size-limit@8.1.1
-      '@size-limit/time': 8.1.2_size-limit@8.1.1
-      '@size-limit/webpack': 8.1.2_acokbxyqwktm4fvnaothyvcnte
-      size-limit: 8.1.1
+      '@size-limit/file': 8.1.2_size-limit@8.1.2
+      '@size-limit/time': 8.1.2_size-limit@8.1.2
+      '@size-limit/webpack': 8.1.2_vz6ovteq6jkaja37afn4f732fy
+      size-limit: 8.1.2
     transitivePeerDependencies:
       - '@swc/core'
       - bufferutil
@@ -2339,7 +2339,7 @@ packages:
       - webpack-cli
     dev: true
 
-  /@size-limit/time/8.1.2_size-limit@8.1.1:
+  /@size-limit/time/8.1.2_size-limit@8.1.2:
     resolution: {integrity: sha512-RHSjav64OiW2BOS59OHOCN21pDchzj1BU3/DzHZ1iWxJrfnij1zNXhfF+tgNbVFadWTpeGMMYl1APtHvnIDYfw==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
@@ -2347,7 +2347,7 @@ packages:
     dependencies:
       estimo: 2.3.6
       react: 17.0.2
-      size-limit: 8.1.1
+      size-limit: 8.1.2
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -2355,14 +2355,14 @@ packages:
       - utf-8-validate
     dev: true
 
-  /@size-limit/webpack/8.1.2_acokbxyqwktm4fvnaothyvcnte:
+  /@size-limit/webpack/8.1.2_vz6ovteq6jkaja37afn4f732fy:
     resolution: {integrity: sha512-rgKIqhPP73QiWHaH8Ef4nre9w2UZLiYsaHi0ZP6jGwr2Lxw5pE5aG6Sl9ahlVHhY/nWUnTwJHA5KmgRcZRg3Bg==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     peerDependencies:
       size-limit: 8.1.2
     dependencies:
       nanoid: 3.3.4
-      size-limit: 8.1.1
+      size-limit: 8.1.2
       webpack: 5.75.0_webpack-cli@5.0.1
     transitivePeerDependencies:
       - '@swc/core'
@@ -3168,10 +3168,6 @@ packages:
 
   /ci-info/3.3.2:
     resolution: {integrity: sha512-xmDt/QIAdeZ9+nfdPsaBCpMvHNLFiLdjj59qjqn+6iPe6YmHGQ35sBnQ8uslRBXFmXkiZQOJRjvQeoGppoTjjg==}
-    dev: true
-
-  /ci-job-number/1.2.2:
-    resolution: {integrity: sha512-CLOGsVDrVamzv8sXJGaILUVI6dsuAkouJP/n6t+OxLPeeA4DDby7zn9SB6EUpa1H7oIKoE+rMmkW80zYsFfUjA==}
     dev: true
 
   /cjs-module-lexer/1.2.2:
@@ -5247,12 +5243,6 @@ packages:
     resolution: {integrity: sha512-gKLcREMhtuZRwRAfqP3RFW+TK4JqApVBtOIftVgjuABpAtpxhPGaDcfvbhNvD0B8iD1oUr/txX35NjcaY6Ns/A==}
     dev: true
 
-  /mkdirp/1.0.4:
-    resolution: {integrity: sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==}
-    engines: {node: '>=10'}
-    hasBin: true
-    dev: true
-
   /mobx-keystone/1.2.0_mobx@6.7.0:
     resolution: {integrity: sha512-K5Gw2zJ+l/n19R6fxXtDmBukiv5RkIzSD26cw20yV6JhM2WlmlN7c0R4fPVDgHqIxAhMho9CM011JIBRN2K2qQ==}
     peerDependencies:
@@ -6015,17 +6005,15 @@ packages:
     resolution: {integrity: sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg==}
     dev: true
 
-  /size-limit/8.1.1:
-    resolution: {integrity: sha512-8Zx+SJVxwcsDBYEl3Xt+FilpuxshVcgq446L8e1k8xD+Qa4LuUmFeesb+oiaRpoJnWCrOd7QUaiU9kFVocIeHQ==}
+  /size-limit/8.1.2:
+    resolution: {integrity: sha512-/EfKz9I/K2ouBN+BcrTX2WiaPTOX5yiCXtM07jYpuVtyzX9r4FDUsuCq13nNmoWqRFYbtH/7wqgRLvF40AGKoQ==}
     engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
     hasBin: true
     dependencies:
       bytes-iec: 3.1.1
       chokidar: 3.5.3
-      ci-job-number: 1.2.2
       globby: 11.1.0
       lilconfig: 2.0.6
-      mkdirp: 1.0.4
       nanospinner: 1.1.0
       picocolors: 1.0.0
     dev: true
