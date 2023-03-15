@@ -9,7 +9,7 @@ specifiers:
   '@fermuch/telematree': 11.10.0
   '@jsdevtools/version-bump-prompt': 6.1.0
   '@size-limit/preset-big-lib': 8.2.4
-  '@types/jest': 29.4.1
+  '@types/jest': 29.4.2
   '@types/lodash': 4.14.191
   '@types/node': 18.15.3
   '@types/uuid': 9.0.1
@@ -49,7 +49,7 @@ devDependencies:
   '@babel/preset-typescript': 7.21.0_@babel+core@7.21.3
   '@jsdevtools/version-bump-prompt': 6.1.0
   '@size-limit/preset-big-lib': 8.2.4_jq3zfrd2t7krmlvulwp5qjl2f4
-  '@types/jest': 29.4.1
+  '@types/jest': 29.4.2
   '@types/lodash': 4.14.191
   '@types/node': 18.15.3
   '@types/uuid': 9.0.1
@@ -2435,8 +2435,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jest/29.4.1:
-    resolution: {integrity: sha512-zDQSWXG+ZkEvs2zFFMszePhx4euKz+Yt3Gg1P+RHjfJBinTTr6L2DEyovO4V/WrKXuF0Dgn56GWGZPDa6TW9eQ==}
+  /@types/jest/29.4.2:
+    resolution: {integrity: sha512-bbne90W7is+m88ezmZrLiTpp41tIoTdvPC5t3gLoNgu/6qbGdWTC2JWqPWQRJn2Q7rVYTr8aTWqOjhGJDXyvAQ==}
     dependencies:
       expect: 29.5.0
       pretty-format: 29.5.0
