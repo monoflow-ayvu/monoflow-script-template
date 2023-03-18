@@ -55,7 +55,7 @@
     "@babel/preset-typescript": "7.21.0",
     "@jsdevtools/version-bump-prompt": "6.1.0",
     "@size-limit/preset-big-lib": "8.2.4",
-    "@types/jest": "29.4.4",
+    "@types/jest": "29.5.0",
     "@types/lodash": "4.14.191",
     "@types/node": "18.15.3",
     "@types/uuid": "9.0.1",
