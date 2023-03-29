@@ -5,8 +5,8 @@ dependencies:
     specifier: 0.2.0
     version: 0.2.0(cross-fetch@3.1.5)(mobx-keystone@1.4.1)(mobx@6.9.0)
   '@fermuch/telematree':
-    specifier: 11.10.0
-    version: 11.10.0(cross-fetch@3.1.5)(mobx-keystone@1.4.1)(mobx@6.9.0)
+    specifier: 12.5.0
+    version: 12.5.0(cross-fetch@3.1.5)(mobx-keystone@1.4.1)(mobx@6.9.0)
   cross-fetch:
     specifier: 3.1.5
     version: 3.1.5
@@ -1369,8 +1369,8 @@ packages:
       - mobx-keystone
     dev: false
 
-  /@fermuch/telematree@11.10.0(cross-fetch@3.1.5)(mobx-keystone@1.4.1)(mobx@6.9.0):
-    resolution: {integrity: sha512-rtYJKLAanNo5kxsYR8+OBHxBD7fmR0AjvdBS2f/SBDfnAGvkUWL0Trmu69UQZoPwi9F+QRgtin0dYxI/eSGKBA==}
+  /@fermuch/telematree@12.5.0(cross-fetch@3.1.5)(mobx-keystone@1.4.1)(mobx@6.9.0):
+    resolution: {integrity: sha512-WXvg8VgwHEVW7mDdwj7c22g9q6VlKYkLDMz43iGr1KHvZi6FnxzhEDes5r5nlsFEUwBrTygytFlGsDO8qW4HyA==}
     peerDependencies:
       cross-fetch: ^3.1.5
       mobx: ^6.4.2
