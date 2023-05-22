@@ -70,8 +70,8 @@ devDependencies:
     specifier: 6.0.0
     version: 6.0.0(graphql@16.6.0)
   inquirer:
-    specifier: 9.2.5
-    version: 9.2.5
+    specifier: 9.2.6
+    version: 9.2.6
   jest:
     specifier: 29.5.0
     version: 29.5.0(@types/node@18.16.14)
@@ -4251,8 +4251,8 @@ packages:
       through: 2.3.8
     dev: true
 
-  /inquirer@9.2.5:
-    resolution: {integrity: sha512-Vy3qZFUPKILCgfeg6eEfKSlv4QbwwfGmdoAYqXYGlPEhY4HH0jQv+ynHkEYYE4eBDCDMWKHs77ByfHcy1GyDfA==}
+  /inquirer@9.2.6:
+    resolution: {integrity: sha512-y71l237eJJKS4rl7sQcEUiMhrR0pB/ZnRMMTxLpjJhWL4hdWCT03a6jJnC1w6qIPSRZWEozuieGt3v7XaEJYFw==}
     engines: {node: '>=14.18.0'}
     dependencies:
       ansi-escapes: 4.3.2
