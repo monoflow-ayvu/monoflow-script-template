@@ -58,7 +58,7 @@
     "@types/jest": "29.5.2",
     "@types/lodash": "4.14.195",
     "@types/node": "18.16.16",
-    "@types/uuid": "9.0.1",
+    "@types/uuid": "9.0.2",
     "babel-loader": "9.1.2",
     "brotli-webpack-plugin": "1.1.0",
     "commander": "10.0.1",

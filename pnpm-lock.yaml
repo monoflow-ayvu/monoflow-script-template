@@ -53,8 +53,8 @@ devDependencies:
     specifier: 18.16.16
     version: 18.16.16
   '@types/uuid':
-    specifier: 9.0.1
-    version: 9.0.1
+    specifier: 9.0.2
+    version: 9.0.2
   babel-loader:
     specifier: 9.1.2
     version: 9.1.2(@babel/core@7.22.5)(webpack@5.86.0)
@@ -2538,8 +2538,8 @@ packages:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
     dev: true
 
-  /@types/uuid@9.0.1:
-    resolution: {integrity: sha512-rFT3ak0/2trgvp4yYZo5iKFEPsET7vKydKF+VRCxlQ9bpheehyAJH89dAkaLEq/j/RZXJIqcgsmPJKUP1Z28HA==}
+  /@types/uuid@9.0.2:
+    resolution: {integrity: sha512-kNnC1GFBLuhImSnV7w4njQkUiJi0ZXUycu1rUaouPqiKlXkh77JKgdRnTAp1x5eBwcIwbtI+3otwzuIDEuDoxQ==}
     dev: true
 
   /@types/yargs-parser@21.0.0:
