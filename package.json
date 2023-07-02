@@ -79,7 +79,7 @@
   "dependencies": {
     "@fermuch/monoutils": "0.2.0",
     "@fermuch/telematree": "11.10.0",
-    "cross-fetch": "3.1.6",
+    "cross-fetch": "3.1.7",
     "firebase": "9.23.0",
     "lodash": "4.17.21",
     "mobx": "6.9.0"
