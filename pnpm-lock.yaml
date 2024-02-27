@@ -65,8 +65,8 @@ devDependencies:
     specifier: 12.0.0
     version: 12.0.0
   compression-webpack-plugin:
-    specifier: 11.0.0
-    version: 11.0.0(webpack@5.90.3)
+    specifier: 11.1.0
+    version: 11.1.0(webpack@5.90.3)
   graphql:
     specifier: 16.8.1
     version: 16.8.1
@@ -3379,8 +3379,8 @@ packages:
     resolution: {integrity: sha512-WQfnbDcrYnGr55UwbxKiQKASnTtNnaAWVi8jZyy8NTpVAXWACSne8lMD1iaIo9AiU6mnuLvSVshCzewVuWxHUg==}
     dev: false
 
-  /compression-webpack-plugin@11.0.0(webpack@5.90.3):
-    resolution: {integrity: sha512-Nz9dMiu0sag+mgJ5QTkRx0+vwrDZPU/gps7IdrkFE+oRSkgyoX4wbMol7QnXjI5/TEWx8yEwew9MiMjZgdLtjg==}
+  /compression-webpack-plugin@11.1.0(webpack@5.90.3):
+    resolution: {integrity: sha512-zDOQYp10+upzLxW+VRSjEpRRwBXJdsb5lBMlRxx1g8hckIFBpe3DTI0en2w7h+beuq89576RVzfiXrkdPGrHhA==}
     engines: {node: '>= 18.12.0'}
     peerDependencies:
       webpack: ^5.1.0
