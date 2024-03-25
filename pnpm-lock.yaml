@@ -7,13 +7,13 @@ settings:
 dependencies:
   '@fermuch/monoutils':
     specifier: 0.2.0
-    version: 0.2.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1)
+    version: 0.2.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1)
   '@fermuch/telematree':
     specifier: 11.10.0
-    version: 11.10.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1)
+    version: 11.10.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1)
   cross-fetch:
-    specifier: 3.1.8
-    version: 3.1.8
+    specifier: 4.0.0
+    version: 4.0.0
   firebase:
     specifier: 9.23.0
     version: 9.23.0
@@ -1381,10 +1381,10 @@ packages:
     engines: {node: '>=10.0.0'}
     dev: true
 
-  /@fermuch/monoutils@0.2.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1):
+  /@fermuch/monoutils@0.2.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1):
     resolution: {integrity: sha512-bbeNmaCiIJRdQYP8IsAQJ2qMFZTnLxyCidtSOO+0RgbaGqYXL1xoKlXMiX3FzNWrgBkftfZuD+o013ORahHNBA==}
     dependencies:
-      '@fermuch/telematree': 9.23.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1)
+      '@fermuch/telematree': 9.23.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1)
       typed-emitter: 2.1.0
     transitivePeerDependencies:
       - cross-fetch
@@ -1393,7 +1393,7 @@ packages:
       - mobx-keystone
     dev: false
 
-  /@fermuch/telematree@11.10.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1):
+  /@fermuch/telematree@11.10.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1):
     resolution: {integrity: sha512-rtYJKLAanNo5kxsYR8+OBHxBD7fmR0AjvdBS2f/SBDfnAGvkUWL0Trmu69UQZoPwi9F+QRgtin0dYxI/eSGKBA==}
     peerDependencies:
       cross-fetch: ^3.1.5
@@ -1401,7 +1401,7 @@ packages:
       mobx-keystone: 0.69.9
     dependencies:
       '@stablelib/snappy': 1.0.1
-      cross-fetch: 3.1.8
+      cross-fetch: 4.0.0
       eta: 1.12.3
       eval5: 1.4.7
       fflate: 0.7.3
@@ -1415,7 +1415,7 @@ packages:
       - encoding
     dev: false
 
-  /@fermuch/telematree@9.23.0(cross-fetch@3.1.8)(mobx-keystone@1.10.1)(mobx@6.12.1):
+  /@fermuch/telematree@9.23.0(cross-fetch@4.0.0)(mobx-keystone@1.10.1)(mobx@6.12.1):
     resolution: {integrity: sha512-lsKuzVtnsutsgUvCG/LHTnq29MFvT5nkKDYZ1Tr50Q5SmxTZN4NrsvIzoiGbOovPg6u64xGsdqsmRFFPOZNdMA==}
     peerDependencies:
       cross-fetch: ^3.1.5
@@ -1423,7 +1423,7 @@ packages:
       mobx-keystone: 0.67.3
     dependencies:
       '@stablelib/snappy': 1.0.1
-      cross-fetch: 3.1.8
+      cross-fetch: 4.0.0
       eta: 1.12.3
       eval5: 1.4.7
       fflate: 0.7.3
@@ -3486,6 +3486,7 @@ packages:
       node-fetch: 2.6.12
     transitivePeerDependencies:
       - encoding
+    dev: true
 
   /cross-fetch@4.0.0:
     resolution: {integrity: sha512-e4a5N8lVvuLgAWgnCrLr2PP0YyDOTHa9H/Rj54dirp61qXnNq46m82bRhNqIA5VccJtWBvPTFRV3TtvHUKPB1g==}
@@ -3493,7 +3494,6 @@ packages:
       node-fetch: 2.6.12
     transitivePeerDependencies:
       - encoding
-    dev: true
 
   /cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
