@@ -73,8 +73,8 @@ importers:
         specifier: 16.8.1
         version: 16.8.1
       graphql-request:
-        specifier: 7.0.0
-        version: 7.0.0(graphql@16.8.1)
+        specifier: 7.0.1
+        version: 7.0.1(graphql@16.8.1)
       inquirer:
         specifier: 9.2.20
         version: 9.2.20
@@ -2275,8 +2275,8 @@ packages:
   graceful-fs@4.2.11:
     resolution: {integrity: sha512-RbJ5/jmFcNNCcDV5o9eTnBLJ/HszWV0P73bc+Ff4nS/rJj+YaS6IGyiOL0VoBYX+l1Wrl3k63h/KrH+nhJ0XvQ==}
 
-  graphql-request@7.0.0:
-    resolution: {integrity: sha512-KJ7+YFvxSqSUFHsnBGZtT6lCuyieiaBaKKDor+G2dghKA68//WsmHKKiugoc9CW0oH8l3NYuCdXAAiUSaDkTcw==}
+  graphql-request@7.0.1:
+    resolution: {integrity: sha512-hfGBZF6o6lC3C0th+aTMOFP6p8Ev+ydXn4PUlT8rvqPDUFCbaynXszjBCyu0saZIP3VGbJ67GpxW8UGK+tphSw==}
     hasBin: true
     peerDependencies:
       graphql: 14 - 16
@@ -6622,7 +6622,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-request@7.0.0(graphql@16.8.1):
+  graphql-request@7.0.1(graphql@16.8.1):
     dependencies:
       '@dprint/formatter': 0.3.0
       '@dprint/typescript': 0.90.5
