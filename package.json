@@ -65,7 +65,7 @@
     "compression-webpack-plugin": "11.1.0",
     "graphql": "16.8.1",
     "graphql-request": "7.0.1",
-    "inquirer": "9.2.20",
+    "inquirer": "9.2.21",
     "jest": "29.7.0",
     "mobx-keystone": "1.10.1",
     "semver": "7.6.2",
