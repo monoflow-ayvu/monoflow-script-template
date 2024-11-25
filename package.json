@@ -57,7 +57,7 @@
     "@size-limit/preset-big-lib": "11.1.6",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.13",
-    "@types/node": "22.9.3",
+    "@types/node": "22.9.4",
     "@types/uuid": "10.0.0",
     "babel-loader": "9.2.1",
     "brotli-webpack-plugin": "1.1.0",
