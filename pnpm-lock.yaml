@@ -10,13 +10,13 @@ importers:
     dependencies:
       '@fermuch/monoutils':
         specifier: 0.2.0
-        version: 0.2.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
+        version: 0.2.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
       '@fermuch/telematree':
         specifier: 11.10.0
-        version: 11.10.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
+        version: 11.10.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
       cross-fetch:
-        specifier: 3.1.8
-        version: 3.1.8
+        specifier: 3.2.0
+        version: 3.2.0
       firebase:
         specifier: 9.23.0
         version: 9.23.0
@@ -1763,8 +1763,8 @@ packages:
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
 
-  cross-fetch@3.1.8:
-    resolution: {integrity: sha512-cvA+JwZoU0Xq+h6WkMvAUqPEYy92Obet6UdKLfW60qn99ftItKjB5T+BkyWOFWe2pUyfQ+IJHmpOTznqk1M6Kg==}
+  cross-fetch@3.2.0:
+    resolution: {integrity: sha512-Q+xVJLoGOeIMXZmbUK4HYk+69cQH6LudR0Vu/pRm2YlU/hDV9CiS0gKUMaWY5f2NeUH9C1nV3bsTlCo0FsTV1Q==}
 
   cross-spawn@7.0.3:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
@@ -2829,6 +2829,15 @@ packages:
 
   node-fetch@2.6.7:
     resolution: {integrity: sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==}
+    engines: {node: 4.x || >=6.0.0}
+    peerDependencies:
+      encoding: ^0.1.0
+    peerDependenciesMeta:
+      encoding:
+        optional: true
+
+  node-fetch@2.7.0:
+    resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
     peerDependencies:
       encoding: ^0.1.0
@@ -4473,9 +4482,9 @@ snapshots:
 
   '@discoveryjs/json-ext@0.6.3': {}
 
-  '@fermuch/monoutils@0.2.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
+  '@fermuch/monoutils@0.2.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
     dependencies:
-      '@fermuch/telematree': 9.23.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
+      '@fermuch/telematree': 9.23.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)
       typed-emitter: 2.1.0
     transitivePeerDependencies:
       - cross-fetch
@@ -4483,10 +4492,10 @@ snapshots:
       - mobx
       - mobx-keystone
 
-  '@fermuch/telematree@11.10.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
+  '@fermuch/telematree@11.10.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
     dependencies:
       '@stablelib/snappy': 1.0.1
-      cross-fetch: 3.1.8
+      cross-fetch: 3.2.0
       eta: 1.12.3
       eval5: 1.4.7
       fflate: 0.7.3
@@ -4499,10 +4508,10 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@fermuch/telematree@9.23.0(cross-fetch@3.1.8)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
+  '@fermuch/telematree@9.23.0(cross-fetch@3.2.0)(mobx-keystone@1.11.1(mobx@6.13.5))(mobx@6.13.5)':
     dependencies:
       '@stablelib/snappy': 1.0.1
-      cross-fetch: 3.1.8
+      cross-fetch: 3.2.0
       eta: 1.12.3
       eval5: 1.4.7
       fflate: 0.7.3
@@ -5902,9 +5911,9 @@ snapshots:
       - supports-color
       - ts-node
 
-  cross-fetch@3.1.8:
+  cross-fetch@3.2.0:
     dependencies:
-      node-fetch: 2.6.12
+      node-fetch: 2.7.0
     transitivePeerDependencies:
       - encoding
 
@@ -7230,6 +7239,10 @@ snapshots:
       whatwg-url: 5.0.0
 
   node-fetch@2.6.7:
+    dependencies:
+      whatwg-url: 5.0.0
+
+  node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
 
