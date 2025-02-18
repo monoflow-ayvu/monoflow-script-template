@@ -54,7 +54,7 @@
     "@babel/preset-env": "7.26.9",
     "@babel/preset-typescript": "7.26.0",
     "@jsdevtools/version-bump-prompt": "6.1.0",
-    "@size-limit/preset-big-lib": "11.1.6",
+    "@size-limit/preset-big-lib": "11.2.0",
     "@types/jest": "29.5.14",
     "@types/lodash": "4.17.15",
     "@types/node": "22.13.4",
